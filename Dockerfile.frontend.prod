@@ -14,12 +14,11 @@ FROM nginx:alpine
 COPY --from=builder /app/build /usr/share/nginx/html
 
 # Custom entrypoint scripts (optional, but present in your extracted files)
-# COPY frontend-files /frontend-files
+COPY docker-entrypoint.sh /
+COPY start-nginx.sh /
+RUN chmod +x /docker-entrypoint.sh /start-nginx.sh
 
-# Set execution permissions for scripts
-RUN chmod +x docker-entrypoint.sh start-nginx.sh
-
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["start-nginx.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["/start-nginx.sh"]
 
 EXPOSE 80

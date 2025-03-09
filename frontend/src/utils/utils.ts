@@ -1,5 +1,4 @@
 import TableAutoCellRender from "@/components/core/parameterRenderComponent/components/tableComponent/components/tableAutoCellRender";
-import useAlertStore from "@/stores/alertStore";
 import { ColumnField, FormatterType } from "@/types/utils/functions";
 import { ColDef, ColGroupDef, ValueParserParams } from "ag-grid-community";
 import clsx, { ClassValue } from "clsx";
@@ -266,7 +265,6 @@ export function groupByFamily(
     return (
       template?.type &&
       template?.show &&
-      !template?.advanced &&
       ((!excludeTypes.has(template.type) &&
         baseClassesSet.has(template.type)) ||
         (template?.input_types &&
@@ -461,42 +459,39 @@ export const logHasMessage = (
   data: VertexDataTypeAPI,
   outputName: string | undefined,
 ) => {
-  if (!outputName || !data?.outputs) return false;
-  const outputs = data.outputs[outputName];
-  if (!outputs) return false;
-
-  if (Array.isArray(outputs) && outputs.length > 0) {
-    return outputs.some((outputLog) => outputLog?.message);
+  if (!outputName) return;
+  const outputs = data?.outputs[outputName];
+  if (Array.isArray(outputs) && outputs.length > 1) {
+    return outputs.some((outputLog) => outputLog.message);
+  } else {
+    return outputs?.message;
   }
-  return outputs?.message;
 };
 
 export const logTypeIsUnknown = (
   data: VertexDataTypeAPI,
   outputName: string | undefined,
 ) => {
-  if (!outputName || !data?.outputs) return false;
-  const outputs = data.outputs[outputName];
-  if (!outputs) return false;
-
-  if (Array.isArray(outputs) && outputs.length > 0) {
-    return outputs.some((outputLog) => outputLog?.type === "unknown");
+  if (!outputName) return;
+  const outputs = data?.outputs[outputName];
+  if (Array.isArray(outputs) && outputs.length > 1) {
+    return outputs.some((outputLog) => outputLog.type === "unknown");
+  } else {
+    return outputs?.type === "unknown";
   }
-  return outputs?.type === "unknown";
 };
 
 export const logTypeIsError = (
   data: VertexDataTypeAPI,
   outputName: string | undefined,
 ) => {
-  if (!outputName || !data?.outputs) return false;
-  const outputs = data.outputs[outputName];
-  if (!outputs) return false;
-
-  if (Array.isArray(outputs) && outputs.length > 0) {
+  if (!outputName) return;
+  const outputs = data?.outputs[outputName];
+  if (Array.isArray(outputs) && outputs.length > 1) {
     return outputs.some((log) => isErrorLog(log));
+  } else {
+    return isErrorLog(outputs);
   }
-  return isErrorLog(outputs);
 };
 
 export function isEndpointNameValid(name: string, maxLength: number): boolean {
@@ -525,33 +520,23 @@ export function brokenEdgeMessage({
 export function FormatColumns(columns: ColumnField[]): ColDef<any>[] {
   if (!columns) return [];
   const basic_types = new Set(["date", "number"]);
-  const colDefs = columns.map((col) => {
+  const colDefs = columns.map((col, index) => {
     let newCol: ColDef = {
       headerName: col.display_name,
       field: col.name,
       sortable: col.sortable,
       filter: col.filterable,
-      context: col.description ? { info: col.description } : {},
-      cellClass: col.disable_edit ? "cell-disable-edit" : "",
-      hide: col.hidden,
+      editable: !col.disable_edit,
       valueParser: (params: ValueParserParams) => {
-        const { context, newValue, colDef, oldValue } = params;
+        const { context, newValue, colDef } = params;
         if (
           context.field_parsers &&
           context.field_parsers[colDef.field ?? ""]
         ) {
-          try {
-            return parseString(
-              newValue,
-              context.field_parsers[colDef.field ?? ""],
-            );
-          } catch (error: any) {
-            useAlertStore.getState().setErrorData({
-              title: "Error parsing string",
-              list: [String(error.message ?? error)],
-            });
-            return oldValue;
-          }
+          return parseString(
+            newValue,
+            context.field_parsers[colDef.field ?? ""],
+          );
         }
         return newValue;
       },
@@ -566,17 +551,15 @@ export function FormatColumns(columns: ColumnField[]): ColDef<any>[] {
         formatter: col.formatter,
       };
       if (col.formatter !== FormatterType.text || col.edit_mode !== "inline") {
-        if (col.edit_mode === "popover") {
-          newCol.wrapText = false;
-          newCol.autoHeight = false;
-          newCol.cellEditor = "agLargeTextCellEditor";
-          newCol.cellEditorPopup = true;
-          newCol.cellEditorParams = {
-            maxLength: 100000000,
-          };
-        } else {
-          newCol.cellRenderer = TableAutoCellRender;
-        }
+        newCol.cellRenderer = TableAutoCellRender;
+      } else {
+        newCol.wrapText = true;
+        newCol.autoHeight = true;
+        newCol.cellEditor = "agLargeTextCellEditor";
+        newCol.cellEditorPopup = true;
+        newCol.cellEditorParams = {
+          maxLength: 100000000,
+        };
       }
     }
     return newCol;
@@ -597,7 +580,6 @@ export function generateBackendColumnsFromValue(
       sortable: !tableOptions?.block_sort,
       filterable: !tableOptions?.block_filter,
       default: null, // Initialize default to null or appropriate value
-      hidden: false,
     };
 
     // Attempt to infer the default value from the data, if possible
@@ -732,19 +714,6 @@ export const formatPlaceholderName = (name) => {
   const prefix = /^[aeiou]/i.test(firstWord) ? "an" : "a";
 
   return `Select ${prefix} ${formattedName}`;
-};
-
-export const formatName = (name) => {
-  const formattedName = name
-    .split("_")
-    .map((word: string) => word.toLowerCase())
-    .join(" ");
-
-  const firstWord =
-    formattedName.split(" ")[0].charAt(0) +
-    formattedName.split(" ")[0].slice(1);
-
-  return { formattedName, firstWord };
 };
 
 export const isStringArray = (value: unknown): value is string[] => {

@@ -44,7 +44,7 @@ export default function DeleteConfirmationModal({
             </div>
           </DialogTitle>
         </DialogHeader>
-        <span>
+        <span className="px-4">
           Are you sure you want to delete the selected{" "}
           {description ?? "component"}?<br></br>
           {note && (

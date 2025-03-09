@@ -7,7 +7,7 @@ import {
   CSVNoDataError,
   CSVViewErrorTitle,
 } from "../../../constants/constants";
-import { useDarkStore } from "../../../stores/darkStore";
+// import { useDarkStore } from "../../../stores/darkStore";
 import { VertexBuildTypeAPI } from "../../../types/api";
 import ForwardedIconComponent from "../../common/genericIconComponent";
 import Loading from "../../ui/loading";
@@ -48,7 +48,7 @@ function CsvOutputComponent({
 
   const separator = csvNode?.data?.node?.template?.separator?.value || ",";
 
-  const dark = useDarkStore.getState().dark;
+  // const dark = useDarkStore.getState().dark;
 
   const [rowData, setRowData] = useState([]);
   const [colDefs, setColDefs] = useState([]);
@@ -81,7 +81,7 @@ function CsvOutputComponent({
   }, [separator]);
 
   return (
-    <div className="h-full rounded-md border bg-muted">
+    <div className="h-full   border  ">
       {status === "nodata" && (
         <div className="align-center flex h-full w-full flex-col items-center justify-center gap-5">
           <div className="align-center flex w-full justify-center gap-2">
@@ -111,7 +111,7 @@ function CsvOutputComponent({
 
       {status === "loaded" && (
         <div
-          className={`${dark ? "ag-theme-balham-dark" : "ag-theme-balham"}`}
+          className={`${false ? "ag-theme-balham-dark" : "ag-theme-balham"}`}
           style={{ height: "100%", width: "100%" }}
         >
           <TableComponent

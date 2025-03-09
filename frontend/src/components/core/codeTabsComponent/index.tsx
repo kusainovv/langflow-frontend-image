@@ -3,7 +3,7 @@ import { useTweaksStore } from "@/stores/tweaksStore";
 import { useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { useDarkStore } from "../../../stores/darkStore";
+// import { useDarkStore } from "../../../stores/darkStore";
 import { codeTabsPropsType } from "../../../types/components";
 import IconComponent from "../../common/genericIconComponent";
 import { Button } from "../../ui/button";
@@ -22,9 +22,9 @@ export default function CodeTabsComponent({
   activeTweaks,
 }: codeTabsPropsType) {
   const [isCopied, setIsCopied] = useState<Boolean>(false);
-  const dark = useDarkStore((state) => state.dark);
+  // const dark = useDarkStore((state) => state.dark);
   const nodes = useTweaksStore((state) => state.nodes);
-
+  const dark = true
   const copyToClipboard = () => {
     if (!navigator.clipboard || !navigator.clipboard.writeText) {
       return;
@@ -45,7 +45,7 @@ export default function CodeTabsComponent({
       className={
         "api-modal-tabs inset-0 m-0 " +
         (isMessage ? "dark" : "") +
-        (dark && isMessage ? "bg-background" : "")
+        (false && isMessage ? "bg-silver" : "")
       }
       onValueChange={(value) => {
         setActiveTab(value);
@@ -57,7 +57,8 @@ export default function CodeTabsComponent({
             {tabs.map((tab, index) => (
               <TabsTrigger
                 className={
-                  isMessage ? "data-[state=active]:bg-primary-foreground" : ""
+                  // isMessage ? "" : "" // data-[state=active]:bg-silver-foreground
+                  "shadow-tab border h-fit px-2 py-1 items-end rounded-t"
                 }
                 key={index}
                 value={index.toString()}
@@ -81,11 +82,11 @@ export default function CodeTabsComponent({
             <div className="mt-2 flex h-full w-full flex-col">
               {tab.description && (
                 <div
-                  className="mb-2 w-full text-left text-sm"
+                  className="ml-2 mb-2 w-full text-left text-sm"
                   dangerouslySetInnerHTML={{ __html: tab.description }}
                 ></div>
               )}
-              <div className="flex w-full items-center justify-end gap-4 rounded-t-md border border-border bg-muted px-4 py-2">
+              <div className="flex w-full items-center justify-end gap-4  px-4 py-2">
                 {nodes.length > 0 &&
                   tabs.find((tab) => tab.name.toLowerCase() === "tweaks") &&
                   tabs[activeTab].hasTweaks && (
@@ -93,14 +94,14 @@ export default function CodeTabsComponent({
                       <ShadTooltip content="Makes temporary adjustments managed in 'Tweaks'">
                         <div className="flex items-center gap-2">
                           <Label
-                            className={"text-xs font-medium text-white"}
+                            className={"text-xs font-medium text-black"}
                             htmlFor="tweaks-switch"
                           >
                             Enable Tweaks
                           </Label>
                           <IconComponent
                             name="info"
-                            className="h-3.5 w-3.5 text-placeholder-foreground"
+                            className="h-3.5 w-3.5"
                           />
                         </div>
                       </ShadTooltip>
@@ -113,37 +114,41 @@ export default function CodeTabsComponent({
                         checked={activeTweaks}
                         autoFocus={false}
                       />
-                      <span className="text-lg text-accent">|</span>
+                      <span className="text-lg text-black">|</span>
                     </div>
                   )}
 
                 {tabs[activeTab].name.toLowerCase !== "tweaks" && (
-                  <>
+                  <div>
                     <Button
                       variant="ghost"
                       size="icon"
+                      className="p-2"
                       onClick={copyToClipboard}
                       data-testid="btn-copy-code"
                     >
                       {isCopied ? (
                         <IconComponent
                           name="Check"
-                          className="h-4 w-4 text-muted-foreground"
+                          className="h-4 w-4  text-black "
                         />
                       ) : (
                         <IconComponent
                           name="Copy"
-                          className="h-4 w-4 text-muted-foreground"
+                          className="h-4 w-4  text-black "
                         />
                       )}
                     </Button>
-                  </>
+                  </div>
                 )}
               </div>
               <SyntaxHighlighter
                 language={tab.language}
-                style={oneDark}
-                className="!my-0 h-full overflow-auto rounded-sm !rounded-t-none border border-t-0 border-border text-left custom-scroll"
+                style={{
+                  ...oneDark,
+                  borderRadius: "0px!important"
+                }}
+                className="!my-0 h-full overflow-auto text-left custom-scroll"
               >
                 {tab.code}
               </SyntaxHighlighter>

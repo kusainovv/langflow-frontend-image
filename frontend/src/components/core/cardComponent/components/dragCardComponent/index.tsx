@@ -1,4 +1,5 @@
 import { FlowType } from "@/types/flow";
+import { storeComponent } from "../../../../../types/store";
 import { cn } from "../../../../../utils/utils";
 import ForwardedIconComponent from "../../../../common/genericIconComponent";
 import { Card, CardHeader, CardTitle } from "../../../../ui/card";
@@ -10,7 +11,7 @@ export default function DragCardComponent({ data }: { data: FlowType }) {
         draggable
         //TODO check color schema
         className={cn(
-          "group relative flex flex-col justify-between overflow-hidden transition-all hover:bg-muted/50 hover:shadow-md hover:dark:bg-[#ffffff10]",
+          "group relative flex flex-col justify-between overflow-hidden transition-all",
         )}
       >
         <div>

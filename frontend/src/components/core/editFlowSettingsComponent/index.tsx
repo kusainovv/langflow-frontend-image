@@ -69,7 +69,7 @@ export const EditFlowSettings: React.FC<InputProps> = ({
         </div>
         {setName ? (
           <Input
-            className="nopan nodelete nodrag noflow mt-2 font-normal"
+            // className="nopan nodelete nodrag noflow mt-2 font-normal"
             onChange={handleNameChange}
             type="text"
             name="name"
@@ -80,10 +80,9 @@ export const EditFlowSettings: React.FC<InputProps> = ({
             onDoubleClickCapture={(event) => {
               handleFocus(event);
             }}
-            data-testid="input-flow-name"
           />
         ) : (
-          <span className="font-normal text-muted-foreground word-break-break-word">
+          <span className="font-normal    word-break-break-word">
             {name}
           </span>
         )}
@@ -110,7 +109,7 @@ export const EditFlowSettings: React.FC<InputProps> = ({
         ) : (
           <div
             className={cn(
-              "max-h-[250px] overflow-auto pt-2 font-normal text-muted-foreground word-break-break-word",
+              "max-h-[250px] overflow-auto pt-2 font-normal    word-break-break-word",
               description === "" ? "font-light italic" : "",
             )}
           >
@@ -130,7 +129,7 @@ export const EditFlowSettings: React.FC<InputProps> = ({
             )}
           </div>
           <Input
-            className="nopan nodelete nodrag noflow mt-2 font-normal"
+            // className="nopan nodelete nodrag noflow mt-2 font-normal"
             onChange={handleEndpointNameChange}
             type="text"
             name="endpoint_name"

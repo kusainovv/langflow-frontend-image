@@ -15,15 +15,11 @@ export const HeaderMenu = ({ children }) => (
 );
 
 export const HeaderMenuToggle = ({ children }) => (
-  <DropdownMenuTrigger
-    className="group inline-flex w-full items-center justify-center gap-1 rounded-md pr-0"
-    data-testid="user_menu_button"
-    id="user_menu_button"
-  >
-    <div className="flex items-center gap-1 rounded-lg px-2 py-1.5 group-hover:bg-muted">
+  <DropdownMenuTrigger className="group inline-flex w-full items-center justify-center gap-1   pr-0">
+    <div className="flex items-center gap-1   px-2 py-1.5">
       {children}
       <ChevronsUpDown
-        className="text-muted-foreground group-hover:text-foreground"
+        className="text-white"
         size={"15px"}
         strokeWidth={"2px"}
       />
@@ -37,14 +33,14 @@ export const HeaderMenuItemLink = ({
   newPage = false,
   icon = "external-link",
 }) => (
-  <DropdownMenuItem className="cursor-pointer rounded-none p-3 px-4" asChild>
+  <DropdownMenuItem className="cursor-pointer   p-3 px-4" asChild>
     <a
       href={href}
       className="group flex w-full items-center justify-between"
       {...(newPage ? { rel: "noreferrer", target: "_blank" } : {})}
     >
       {children}
-      {icon && (
+      {true && (
         <ForwardedIconComponent
           name={icon}
           className="side-bar-button-size mr-3 h-[18px] w-[18px] opacity-0 transition-all duration-300 group-hover:translate-x-3 group-hover:opacity-100 group-focus-visible:translate-x-3 group-focus-visible:opacity-100"
@@ -60,12 +56,12 @@ export const HeaderMenuItemButton = ({ icon = "", onClick, children }) => (
     onClick={onClick}
   >
     {children}
-    {icon && (
+    {/* {true && (
       <ForwardedIconComponent
         name={icon}
         className="side-bar-button-size mr-3 h-[18px] w-[18px] opacity-0 transition-all duration-300 group-hover:translate-x-3 group-hover:opacity-100 group-focus-visible:translate-x-3 group-focus-visible:opacity-100"
       />
-    )}
+    )} */}
   </DropdownMenuItem>
 );
 
@@ -92,8 +88,8 @@ export const HeaderMenuItemsTitle = ({
   subTitle,
   children,
 }: React.PropsWithChildren<{ subTitle?: React.ReactNode }>) => (
-  <header className="group flex w-full flex-col items-start rounded-md rounded-b-none border px-4 py-3">
-    <h3 className="text-base font-semibold">{children}</h3>
+  <header className="group flex w-full flex-col items-start border px-4 py-3">
+    <h3 className="text-base  ">{children}</h3>
     {subTitle ? <h4 className="text-sm font-normal">{subTitle}</h4> : null}
   </header>
 );

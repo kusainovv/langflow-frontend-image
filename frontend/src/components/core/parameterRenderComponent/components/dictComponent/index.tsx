@@ -39,13 +39,13 @@ export default function DictComponent({
             disabled={disabled}
           >
             <Button
-              variant="primary"
+              // variant="primary"
               size="sm"
               className={cn(
-                "hover:bg-mute w-full font-medium text-primary",
+                "hover:bg-mute w-full font-medium text-black",
                 editNode ? "h-fit px-3 py-0.5" : "",
               )}
-              data-testid={editNode ? `edit_${id}` : `${id}`}
+              data-testid="dict-input"
             >
               <ForwardedIconComponent
                 strokeWidth={ICON_STROKE_WIDTH}

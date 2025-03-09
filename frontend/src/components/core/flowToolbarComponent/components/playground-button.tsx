@@ -1,27 +1,28 @@
 import ForwardedIconComponent from "@/components/common/genericIconComponent";
 import ShadTooltip from "@/components/common/shadTooltipComponent";
+import { Button } from "@/components/ui/button";
 import IOModal from "@/modals/IOModal/new-modal";
 
 const PlaygroundButton = ({ hasIO, open, setOpen, canvasOpen }) => {
   const PlayIcon = () => (
-    <ForwardedIconComponent name="Play" className="h-4 w-4 transition-all" />
+    <ForwardedIconComponent name="Play" className="h-4 w-4 transition-all text-black" />
   );
 
-  const ButtonLabel = () => <span className="hidden md:block">Playground</span>;
+  const ButtonLabel = () => <span className="hidden md:block text-black">Playground</span>;
 
   const ActiveButton = () => (
-    <div
+    <Button
       data-testid="playground-btn-flow-io"
-      className="playground-btn-flow-toolbar hover:bg-accent"
+      className="playground-btn-flow-toolbar"
     >
       <PlayIcon />
       <ButtonLabel />
-    </div>
+    </Button>
   );
 
   const DisabledButton = () => (
     <div
-      className="playground-btn-flow-toolbar cursor-not-allowed text-muted-foreground duration-150"
+      className="playground-btn-flow-toolbar cursor-not-allowed    duration-150"
       data-testid="playground-btn-flow"
     >
       <PlayIcon />

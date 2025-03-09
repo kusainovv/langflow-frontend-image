@@ -1,4 +1,4 @@
-import { useDarkStore } from "@/stores/darkStore";
+// import { useDarkStore } from "@/stores/darkStore";
 import useFlowStore from "@/stores/flowStore";
 import { nodeColorsName } from "@/utils/styleUtils";
 import { Connection, Handle, Position } from "@xyflow/react";
@@ -52,7 +52,7 @@ const HandleContent = memo(function HandleContent({
       styleSheet.textContent = `
         @keyframes pulseNeon-${nodeId} {
           0% {
-            box-shadow: 0 0 0 3px hsl(var(--node-ring)),
+            box-shadow: 0 0 0 2px hsl(var(--node-ring)),
                         0 0 2px ${handleColor},
                         0 0 4px ${handleColor},
                         0 0 6px ${handleColor},
@@ -62,7 +62,7 @@ const HandleContent = memo(function HandleContent({
                         0 0 20px ${handleColor};
           }
           50% {
-            box-shadow: 0 0 0 3px hsl(var(--node-ring)),
+            box-shadow: 0 0 0 2px hsl(var(--node-ring)),
                         0 0 4px ${handleColor},
                         0 0 8px ${handleColor},
                         0 0 12px ${handleColor},
@@ -72,7 +72,7 @@ const HandleContent = memo(function HandleContent({
                         0 0 30px ${handleColor};
           }
           100% {
-            box-shadow: 0 0 0 3px hsl(var(--node-ring)),
+            box-shadow: 0 0 0 2px hsl(var(--node-ring)),
                         0 0 2px ${handleColor},
                         0 0 4px ${handleColor},
                         0 0 6px ${handleColor},
@@ -143,7 +143,7 @@ const HandleContent = memo(function HandleContent({
       data-testid={`div-handle-${testIdComplement}-${title.toLowerCase()}-${
         !showNode ? (left ? "target" : "source") : left ? "left" : "right"
       }`}
-      className="noflow nowheel nopan noselect pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-crosshair rounded-full"
+      className="noflow nowheel nopan noselect pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-crosshair  "
       style={contentStyle}
     />
   );
@@ -202,7 +202,8 @@ const HandleRenderComponent = memo(function HandleRenderComponent({
     ),
   );
 
-  const dark = useDarkStore((state) => state.dark);
+  // const dark = useDarkStore((state) => state.dark);
+  const dark = true
 
   const myId = useMemo(
     () => scapedJSONStringfy(proxy ? { ...id, proxy } : id),
@@ -285,7 +286,7 @@ const HandleRenderComponent = memo(function HandleRenderComponent({
         : "datatype-" + colorName![0];
 
     const handleColor = isNullHandle
-      ? dark
+      ? false
         ? "hsl(var(--accent-gray))"
         : "hsl(var(--accent-gray-foreground)"
       : connectedEdge
@@ -338,7 +339,7 @@ const HandleRenderComponent = memo(function HandleRenderComponent({
     nodes,
     edges,
     getConnection,
-    dark,
+    // dark,
     colors,
     colorName,
     tooltipTitle,

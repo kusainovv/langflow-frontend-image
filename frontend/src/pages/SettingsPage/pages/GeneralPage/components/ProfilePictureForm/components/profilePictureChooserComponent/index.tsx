@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "../../../../../../../../components/ui/button";
 import Loading from "../../../../../../../../components/ui/loading";
 import { BASE_URL_API } from "../../../../../../../../constants/constants";
-import { useDarkStore } from "../../../../../../../../stores/darkStore";
+// import { useDarkStore } from "../../../../../../../../stores/darkStore";
 import { cn } from "../../../../../../../../utils/utils";
 import usePreloadImages from "./hooks/use-preload-images";
 
@@ -21,7 +21,8 @@ export default function ProfilePictureChooserComponent({
   onChange,
 }: ProfilePictureChooserComponentProps) {
   const ref = useRef<HTMLButtonElement>(null);
-  const dark = useDarkStore((state) => state.dark);
+  const dark = true
+  // const dark = useDarkStore((state) => state.dark);
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function ProfilePictureChooserComponent({
               <span className="font-normal">{folder}</span>
             </div>
             <div className="block overflow-hidden">
-              <div className="flex items-center gap-1 overflow-x-auto rounded-lg bg-muted px-1 custom-scroll">
+              <div className="flex items-center gap-1 overflow-x-auto   px-1 custom-scroll">
                 {profilePictures![folder].map((path, idx) => (
                   <Button
                     key={idx}
@@ -60,7 +61,7 @@ export default function ProfilePictureChooserComponent({
                       style={{
                         filter:
                           value === folder + "/" + path
-                            ? dark
+                            ? false
                               ? "drop-shadow(0 0 0.3rem rgb(255, 255, 255))"
                               : "drop-shadow(0 0 0.3rem rgb(0, 0, 0))"
                             : "",

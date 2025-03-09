@@ -4,40 +4,41 @@ import * as React from "react";
 import { cn } from "../../utils/utils";
 import ForwardedIconComponent from "../common/genericIconComponent";
 
+// here is settings for button
 const buttonVariants = cva(
-  "noflow nopan nodelete nodrag inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-100 disabled:disabled-state [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "noflow nopan nodelete nodrag inline-flex items-center bg-silver justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-100 disabled:disabled-state [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-button", // bg-blue-300
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground  hover:bg-primary-hover",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        default: "bg-silver text-black-foreground  hover: ",
+        // destructive:
+        //   "bg-destructive  -foreground hover: ",
         outline:
-          "border border-input hover:bg-input hover:text-accent-foreground ",
+          "border border-input hover:  ",
         primary:
-          "border bg-background text-secondary-foreground hover:bg-muted hover:shadow-sm",
+          "border bg-silver text-black hover: ",
         warning:
-          "bg-warning-foreground text-warning-text hover:bg-warning-foreground/90 hover:shadow-sm",
+          "bg-warning-foreground text-warning-text hover: ",
         secondary:
-          "border border-muted bg-muted text-secondary-foreground hover:bg-secondary-foreground/5",
+          "border      text-black hover: ",
         ghost:
-          "text-foreground hover:bg-accent hover:text-accent-foreground disabled:!bg-transparent",
+          "text-foreground hover:  disabled:!bg-transparent",
         ghostActive:
-          "bg-muted text-foreground hover:bg-secondary-hover hover:text-accent-foreground",
-        menu: "hover:bg-muted hover:text-accent-foreground focus:!ring-0 focus-visible:!ring-0",
+          "  text-foreground hover: ",
+        menu: "hover:  focus:!ring-0 focus-visible:!ring-0",
         "menu-active":
-          "font-semibold hover:bg-muted hover:text-accent-foreground focus-visible:!ring-offset-0",
-        link: "underline-offset-4 hover:underline text-primary",
+          " focus-visible:!ring-offset-0",
+        link: "underline-offset-4text-primary",
       },
       size: {
         default: "h-10 py-2 px-4",
-        sm: "h-9 px-3 rounded-md",
-        xs: "py-0.5 px-3 rounded-md",
-        lg: "h-11 px-8 rounded-md",
-        iconMd: "p-1.5 rounded-md",
-        icon: "p-1 rounded-md",
-        iconSm: "p-0.5 rounded-md",
-        "node-toolbar": "py-[6px] px-[6px] rounded-md",
+        sm: "h-9 px-3",
+        xs: "py-0.5 px-3",
+        lg: "h-11 px-8",
+        iconMd: "p-1.5",
+        icon: "p-1",
+        iconSm: "p-0.5",
+        "node-toolbar": "py-[6px] px-[6px]",
       },
     },
     defaultVariants: {

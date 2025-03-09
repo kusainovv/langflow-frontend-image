@@ -10,10 +10,10 @@ import {
 import { useCustomNavigate } from "@/customization/hooks/use-custom-navigate";
 import useDeleteFlow from "@/hooks/flows/use-delete-flow";
 import DeleteConfirmationModal from "@/modals/deleteConfirmationModal";
-import FlowSettingsModal from "@/modals/flowSettingsModal";
 import useAlertStore from "@/stores/alertStore";
 import useFlowsManagerStore from "@/stores/flowsManagerStore";
 import { FlowType } from "@/types/flow";
+import { getInputsAndOutputs } from "@/utils/storeUtils";
 import { swatchColors } from "@/utils/styleUtils";
 import { cn, getNumberFromString } from "@/utils/utils";
 import { useState } from "react";
@@ -27,7 +27,6 @@ const GridComponent = ({ flowData }: { flowData: FlowType }) => {
   const navigate = useCustomNavigate();
 
   const [openDelete, setOpenDelete] = useState(false);
-  const [openSettings, setOpenSettings] = useState(false);
   const setSuccessData = useAlertStore((state) => state.setSuccessData);
   const { deleteFlow } = useDeleteFlow();
 
@@ -64,10 +63,7 @@ const GridComponent = ({ flowData }: { flowData: FlowType }) => {
       });
   };
 
-  const descriptionModal = useDescriptionModal(
-    [flowData?.id],
-    flowData.is_component ? "component" : "flow",
-  );
+  const descriptionModal = useDescriptionModal([flowData?.id], "flow");
 
   const { onDragStart } = useDragStart(flowData);
 
@@ -84,12 +80,12 @@ const GridComponent = ({ flowData }: { flowData: FlowType }) => {
         draggable
         onDragStart={onDragStart}
         onClick={handleClick}
-        className={`my-1 flex flex-col rounded-lg border border-border bg-background p-4 hover:border-placeholder-foreground hover:shadow-sm ${
+        className={`my-1 flex flex-col border border-border p-4 hover:border-placeholder-foreground ${
           isComponent ? "cursor-default" : "cursor-pointer"
-        }`}
+        } `}
       >
         <div className="flex w-full items-center gap-4">
-          <div className={cn(`flex rounded-lg p-3`, swatchColors[swatchIndex])}>
+          <div className={cn(`flex p-3`, swatchColors[swatchIndex])}>
             <ForwardedIconComponent
               name={getIcon()}
               aria-hidden="true"
@@ -98,10 +94,10 @@ const GridComponent = ({ flowData }: { flowData: FlowType }) => {
           </div>
           <div className="flex w-full min-w-0 items-center justify-between">
             <div className="flex min-w-0 flex-col">
-              <div className="text-md truncate font-semibold">
+              <div className="text-md truncate  ">
                 {flowData.name}
               </div>
-              <div className="truncate text-xs text-muted-foreground">
+              <div className="truncate text-xs   ">
                 Edited {timeElapsed(flowData.updated_at)} ago
               </div>
             </div>
@@ -116,7 +112,7 @@ const GridComponent = ({ flowData }: { flowData: FlowType }) => {
                   <ForwardedIconComponent
                     name="Ellipsis"
                     aria-hidden="true"
-                    className="h-5 w-5 text-muted-foreground group-hover:text-foreground"
+                    className="h-5 w-5    group-hover:text-foreground"
                   />
                 </Button>
               </DropdownMenuTrigger>
@@ -128,16 +124,13 @@ const GridComponent = ({ flowData }: { flowData: FlowType }) => {
                 <DropdownComponent
                   flowData={flowData}
                   setOpenDelete={setOpenDelete}
-                  handleEdit={() => {
-                    setOpenSettings(true);
-                  }}
                 />
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
         </div>
 
-        <div className="line-clamp-2 h-full pt-5 text-sm text-primary">
+        <div className="line-clamp-2 h-full pt-5 text-sm text-black">
           {flowData.description}
         </div>
       </Card>
@@ -148,21 +141,10 @@ const GridComponent = ({ flowData }: { flowData: FlowType }) => {
           setOpen={setOpenDelete}
           onConfirm={handleDelete}
           description={descriptionModal}
-          note={
-            !flowData.is_component
-              ? "Deleting the selected flow will remove all associated messages."
-              : ""
-          }
         >
           <></>
         </DeleteConfirmationModal>
       )}
-      <FlowSettingsModal
-        open={openSettings}
-        setOpen={setOpenSettings}
-        flowData={flowData}
-        details
-      />
     </>
   );
 };

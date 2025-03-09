@@ -48,5 +48,8 @@ export default defineConfig(({ mode }) => {
         ...proxyTargets,
       },
     },
+    preview: {
+      port: 3000
+    }
   };
 });

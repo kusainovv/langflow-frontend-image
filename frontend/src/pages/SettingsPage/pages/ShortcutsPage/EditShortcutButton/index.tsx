@@ -163,13 +163,14 @@ export default function EditShortcutButton({
         <span className="pr-2"> Key Combination </span>
         <ForwardedIconComponent
           name="Keyboard"
-          className="h-6 w-6 pl-1 text-primary"
+          className="h-6 w-6 pl-1 text-black"
           aria-hidden="true"
         />
+        <h1>shortcuts</h1>
       </BaseModal.Header>
       <BaseModal.Trigger>{children}</BaseModal.Trigger>
       <BaseModal.Content>
-        <div className="align-center flex h-full w-full justify-center gap-4 rounded-md border border-border py-2">
+        <div className="align-center flex h-full w-full justify-center gap-4  border border-border py-2">
           <div className="flex items-center justify-center gap-0.5 text-center text-lg font-bold">
             {(key ?? shortcutInitialValue ?? "").split("+").map((k, i) => (
               <RenderKey key={i} value={k} tableRender />

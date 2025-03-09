@@ -5,6 +5,7 @@ import useHandleNodeClass from "@/CustomNodes/hooks/use-handle-node-class";
 import ShadTooltip from "@/components/common/shadTooltipComponent";
 import ToggleShadComponent from "@/components/core/parameterRenderComponent/components/toggleShadComponent";
 import { Button } from "@/components/ui/button";
+import { usePatchUpdateFlow } from "@/controllers/API/queries/flows/use-patch-update-flow";
 import { usePostTemplateValue } from "@/controllers/API/queries/nodes/use-post-template-value";
 import { usePostRetrieveVertexOrder } from "@/controllers/API/queries/vertex";
 import useAddFlow from "@/hooks/flows/use-add-flow";
@@ -20,7 +21,7 @@ import {
   SelectTrigger,
 } from "../../../../components/ui/select-custom";
 import useAlertStore from "../../../../stores/alertStore";
-import { useDarkStore } from "../../../../stores/darkStore";
+// import { useDarkStore } from "../../../../stores/darkStore";
 import useFlowStore from "../../../../stores/flowStore";
 import useFlowsManagerStore from "../../../../stores/flowsManagerStore";
 import { useShortcutsStore } from "../../../../stores/shortcuts";
@@ -54,7 +55,8 @@ const NodeToolbarComponent = memo(
     isOutdated,
     setOpenShowMoreOptions,
   }: nodeToolbarPropsType): JSX.Element => {
-    const version = useDarkStore((state) => state.version);
+    // const version = useDarkStore((state) => state.version);
+    const version = ""
     const [showModalAdvanced, setShowModalAdvanced] = useState(false);
     const [showconfirmShare, setShowconfirmShare] = useState(false);
     const [showOverrideModal, setShowOverrideModal] = useState(false);
@@ -92,6 +94,7 @@ const NodeToolbarComponent = memo(
         });
       },
     });
+    const updateToolMode = useFlowStore((state) => state.updateToolMode);
 
     const flowDataNodes = useMemo(
       () => currentFlow?.data?.nodes,
@@ -112,6 +115,7 @@ const NodeToolbarComponent = memo(
       node: data.node!,
       nodeId: data.id,
       parameterId: "tool_mode",
+      tool_mode: data.node!.tool_mode ?? false,
     });
 
     const isSaved = flows?.some((flow) =>
@@ -138,31 +142,27 @@ const NodeToolbarComponent = memo(
     );
     const addFlow = useAddFlow();
 
+    const { mutate: patchUpdateFlow } = usePatchUpdateFlow();
+
     const isMinimal = useMemo(
       () => countHandlesFn(data) <= 1 && numberOfOutputHandles <= 1,
       [data, numberOfOutputHandles],
     );
 
-    const [toolMode, setToolMode] = useState(
-      () =>
-        data.node?.tool_mode ||
-        data.node?.outputs?.some(
-          (output) => output.name === "component_as_tool",
-        ) ||
-        false,
-    );
-
-    useEffect(() => {
-      if (data.node?.tool_mode !== undefined) {
-        setToolMode(
-          data.node?.tool_mode ||
-            data.node?.outputs?.some(
-              (output) => output.name === "component_as_tool",
-            ) ||
-            false,
-        );
+    const [toolMode, setToolMode] = useState(() => {
+      // Check if tool mode is explicitly set on the node
+      const hasToolModeProperty = data.node?.tool_mode;
+      if (hasToolModeProperty) {
+        return hasToolModeProperty;
       }
-    }, [data.node?.tool_mode, data.node?.outputs]);
+
+      // Otherwise check if node has component_as_tool output
+      const hasComponentAsTool = data.node?.outputs?.some(
+        (output) => output.name === "component_as_tool",
+      );
+
+      return hasComponentAsTool ?? false;
+    });
 
     const { handleNodeClass: handleNodeClassHook } = useHandleNodeClass(
       data.id,
@@ -173,8 +173,13 @@ const NodeToolbarComponent = memo(
     };
 
     const handleActivateToolMode = () => {
-      const newValue = !toolMode;
+      const newValue = !flowDataNodes![index]!.data.node.tool_mode;
+
+      updateToolMode(data.id, newValue);
+      data.node!.tool_mode = newValue;
+
       setToolMode(newValue);
+
       mutateTemplate(
         newValue,
         data.node!,
@@ -182,9 +187,21 @@ const NodeToolbarComponent = memo(
         postToolModeValue,
         setErrorData,
         "tool_mode",
-        () => updateNodeInternals(data.id),
-        newValue,
+        () => {
+          currentFlow!.data!.nodes[index]!.data.node.tool_mode = newValue;
+          patchUpdateFlow({
+            id: currentFlow?.id!,
+            name: currentFlow?.name!,
+            data: currentFlow?.data!,
+            description: currentFlow?.description!,
+            folder_id: currentFlow?.folder_id!,
+            endpoint_name: currentFlow?.endpoint_name!,
+          });
+        },
       );
+
+      updateNodeInternals(data.id);
+      return newValue;
     };
 
     const handleMinimize = useCallback(() => {
@@ -421,7 +438,6 @@ const NodeToolbarComponent = memo(
         setLastCopiedSelection,
         paste,
         handleActivateToolMode,
-        toolMode,
       ],
     );
 
@@ -501,7 +517,7 @@ const NodeToolbarComponent = memo(
               <Button
                 className={cn(
                   "node-toolbar-buttons h-[2rem]",
-                  toolMode && "text-primary",
+                  toolMode && "text-black",
                 )}
                 variant="ghost"
                 onClick={(event) => {
@@ -516,7 +532,7 @@ const NodeToolbarComponent = memo(
                   name="Hammer"
                   className={cn(
                     "h-4 w-4 transition-all",
-                    toolMode ? "text-primary" : "",
+                    toolMode ? "text-black" : "",
                   )}
                 />
                 <span className="text-[13px] font-medium">Tool Mode</span>
@@ -581,7 +597,7 @@ const NodeToolbarComponent = memo(
                 </ShadTooltip>
               </SelectTrigger>
               <SelectContentWithoutPortal
-                className={"relative top-1 w-56 bg-background"}
+                className={"relative top-1 w-56 bg-silver"}
               >
                 {hasCode && (
                   <SelectItem value={"code"}>
@@ -721,7 +737,7 @@ const NodeToolbarComponent = memo(
                     value={"Freeze"}
                     icon={"Snowflake"}
                     dataTestId="freeze-button"
-                    style={`${frozen ? " text-ice" : ""} transition-all`}
+                    style={`${frozen ? " text-black" : ""} transition-all`}
                   />
                 </SelectItem>
                 <SelectItem value="freezeAll">
@@ -733,7 +749,7 @@ const NodeToolbarComponent = memo(
                     value={"Freeze Path"}
                     icon={"FreezeAll"}
                     dataTestId="freeze-path-button"
-                    style={`${frozen ? " text-ice" : ""} transition-all`}
+                    style={`${frozen ? " text-black" : ""} transition-all`}
                   />
                 </SelectItem>
                 <SelectItem value="Download">
@@ -755,7 +771,7 @@ const NodeToolbarComponent = memo(
                     />{" "}
                     <span className="">Delete</span>{" "}
                     <span
-                      className={`absolute right-2 top-2 flex items-center justify-center rounded-sm px-1 py-[0.2]`}
+                      className={`absolute right-2 top-2 flex items-center justify-center px-1 py-[0.2]`}
                     >
                       <IconComponent
                         name="Delete"
@@ -774,7 +790,7 @@ const NodeToolbarComponent = memo(
                       value={"Tool Mode"}
                       icon={"Hammer"}
                       dataTestId="tool-mode-button"
-                      style={`${toolMode ? "text-primary" : ""} transition-all`}
+                      style={`${toolMode ? "text-black" : ""} transition-all`}
                     />
                   </SelectItem>
                 )}

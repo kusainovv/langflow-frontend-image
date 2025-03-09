@@ -1,11 +1,11 @@
-import { useDarkStore } from "@/stores/darkStore";
+// import { useDarkStore } from "@/stores/darkStore";
 import React, { forwardRef } from "react";
 import HCDSVG from "./HCD";
 
 export const HCDIcon = forwardRef<SVGSVGElement, React.PropsWithChildren<{}>>(
   (props, ref) => {
-    const isdark = useDarkStore((state) => state.dark).toString();
-
+    // const isdark = useDarkStore((state) => state.dark).toString();
+    const isdark = true
     return <HCDSVG ref={ref} isdark={isdark} {...props} />;
   },
 );

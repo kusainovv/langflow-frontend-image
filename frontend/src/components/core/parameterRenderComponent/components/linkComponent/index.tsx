@@ -23,7 +23,7 @@ export default function LinkComponent({
 
   const buttonClassName = classNames(
     "nopan w-full shrink-0",
-    disabled ? "cursor-not-allowed text-ring" : "hover:text-accent-foreground",
+    disabled ? "cursor-not-allowed text-ring" : "hover:  ",
   );
 
   const ButtonContent = ({ icon, text }: { icon: string; text: string }) => {
@@ -40,13 +40,13 @@ export default function LinkComponent({
   };
 
   return (
-    <div className="flex w-full items-center gap-3">
+    <div className="flex w-full items-center gap-1">
       <Button
         data-testid={id}
         onClick={handleOpenLink}
         disabled={disabled || !value}
         type="button"
-        variant="primary"
+        // variant="primary"
         size="sm"
         className={buttonClassName}
       >

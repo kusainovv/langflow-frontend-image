@@ -1,5 +1,6 @@
 import ForwardedIconComponent from "../../../../../components/common/genericIconComponent";
 import RenderIcons from "../../../../../components/common/renderIconComponent";
+import { IS_MAC } from "../../../../../constants/constants";
 import { toolbarSelectItemProps } from "../../../../../types/components";
 
 export default function ToolbarSelectItem({
@@ -25,9 +26,9 @@ export default function ToolbarSelectItem({
         {value}
       </span>
       <span
-        className={`absolute right-2 top-[0.43em] flex items-center rounded-sm bg-muted px-1.5 py-[0.1em] text-muted-foreground`}
+        className={`absolute right-2 top-[0.43em] flex items-center   px-1.5 py-[0.1em]   `}
       >
-        <RenderIcons filteredShortcut={fixedShortcut} />
+        {/* <RenderIcons filteredShortcut={fixedShortcut} /> */}
       </span>
     </div>
   );

@@ -10,6 +10,7 @@ import { ZERO_NOTIFICATIONS } from "../../constants/constants";
 import useAlertStore from "../../stores/alertStore";
 import { AlertDropdownType } from "../../types/alerts";
 import SingleAlert from "./components/singleAlertComponent";
+import { Button } from "@/components/ui/button";
 
 export default function AlertDropdown({
   children,
@@ -50,28 +51,28 @@ export default function AlertDropdown({
       <PopoverContent
         ref={notificationRef}
         data-testid="notification-dropdown-content"
-        className="noflow nowheel nopan nodelete nodrag z-10 flex h-[500px] w-[500px] flex-col"
+        className="noflow nowheel nopan nodelete nodrag p-0 z-10 flex h-[500px] w-[500px] flex-col shadow-tooltip-custom"
       >
-        <div className="text-md flex flex-row justify-between pl-3 font-medium text-foreground">
+        <div className="text-md flex flex-row items-start py-2 px-2 items-center justify-between bg-navy text-white text-sm">
           Notifications
-          <div className="flex gap-3 pr-3">
-            <button
-              className="text-foreground hover:text-status-red"
+          <div className="flex gap-1">
+            <Button
+              className="w-[24px] h-[24px] p-0 text-black"
               onClick={() => {
                 setOpen(false);
                 setTimeout(clearNotificationList, 100);
               }}
             >
               <IconComponent name="Trash2" className="h-4 w-4" />
-            </button>
-            <button
-              className="text-foreground opacity-70 hover:opacity-100"
+            </Button>
+            <Button
+              className="w-[24px] h-[24px] p-0 text-black"
               onClick={() => {
                 setOpen(false);
               }}
             >
               <Cross2Icon className="h-4 w-4" />
-            </button>
+            </Button>
           </div>
         </div>
         <div className="text-high-foreground mt-3 flex h-full w-full flex-col overflow-y-scroll scrollbar-hide">

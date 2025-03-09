@@ -41,7 +41,7 @@ const AdminPage = lazy(() => import("./pages/AdminPage"));
 const LoginAdminPage = lazy(() => import("./pages/AdminPage/LoginPage"));
 const DeleteAccountPage = lazy(() => import("./pages/DeleteAccountPage"));
 
-// const PlaygroundPage = lazy(() => import("./pages/Playground"));
+const PlaygroundPage = lazy(() => import("./pages/Playground"));
 
 const SignUp = lazy(() => import("./pages/SignUpPage"));
 const router = createBrowserRouter(
@@ -147,12 +147,13 @@ const router = createBrowserRouter(
                   </Route>
                 </Route>
                 <Route path="settings" element={<SettingsPage />}>
-                  <Route
+                  {/* <Route
                     index
                     element={<CustomNavigate replace to={"general"} />}
-                  />
+                  /> */}
                   <Route
-                    path="global-variables"
+                    index
+                   // global-variables
                     element={<GlobalVariablesPage />}
                   />
                   <Route path="api-keys" element={<ApiKeysPage />} />
@@ -203,9 +204,9 @@ const router = createBrowserRouter(
                 </Route>
                 <Route path="view" element={<ViewPage />} />
               </Route>
-              {/* <Route path="playground/:id/">
+              <Route path="playground/:id/">
                 <Route path="" element={<PlaygroundPage />} />
-              </Route> */}
+              </Route>
             </Route>
           </Route>
           <Route

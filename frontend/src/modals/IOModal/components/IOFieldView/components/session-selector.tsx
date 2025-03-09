@@ -116,45 +116,47 @@ export default function SessionSelector({
         else toggleVisibility();
       }}
       className={cn(
-        "file-component-accordion-div group cursor-pointer rounded-md text-left text-[13px] hover:bg-secondary-hover",
-        isVisible ? "bg-secondary-hover font-semibold" : "font-normal",
+        "flex bg-silver cursor-pointer px-4 py-2",
+        // "file-component-accordion-div group cursor-pointer   text-left text-[13px] hover:bg-secondary-hover",
+        isVisible ? "shadow-tab-deactivated" : "shadow-tab-activated",
       )}
     >
-      <div className="flex w-full items-center justify-between overflow-hidden px-2 py-1 align-middle">
-        <div className="flex w-full min-w-0 items-center">
+      <div className="flex w-full justify-between items-center">
+        <div className="w-fit min-w-0">
           {isEditing ? (
-            <div className="flex items-center">
-              <Input
-                ref={inputRef}
-                value={editedSession}
-                onKeyDown={onKeyDown}
-                onChange={handleInputChange}
-                onBlur={handleOnBlur}
-                autoFocus
-                className="h-6 flex-grow px-1 py-0"
-              />
-              <button
-                onClick={handleCancel}
-                className="hover:text-status-red-hover ml-2 text-status-red"
-              >
-                <IconComponent name="X" className="h-4 w-4" />
-              </button>
-              <button
-                onClick={handleConfirm}
-                data-confirm="true"
-                className="ml-2 text-green-500 hover:text-green-600"
-              >
-                <IconComponent name="Check" className="h-4 w-4" />
-              </button>
-            </div>
+            // <div className="flex items-center">
+            //   <Input
+            //     ref={inputRef}
+            //     value={editedSession}
+            //     onKeyDown={onKeyDown}
+            //     onChange={handleInputChange}
+            //     onBlur={handleOnBlur}
+            //     autoFocus
+            //     className="h-6 flex-grow px-1 py-0"
+            //   />
+            //   <button
+            //     onClick={handleCancel}
+            //     className="hover:text-status-red-hover ml-2 text-status-red"
+            //   >
+            //     <IconComponent name="X" className="h-4 w-4" />
+            //   </button>
+            //   <button
+            //     onClick={handleConfirm}
+            //     data-confirm="true"
+            //     className="ml-2 text-green-500 hover:text-green-600"
+            //   >
+            //     <IconComponent name="Check" className="h-4 w-4" />
+            //   </button>
+            // </div>
+            <></>
           ) : (
             <ShadTooltip styleClasses="z-50" content={session}>
               <div
                 className={cn(
-                  "w-full whitespace-nowrap group-hover:truncate-secondary-hover",
+                  "w-full whitespace-nowrap text-xs",
                   isVisible
-                    ? "truncate-secondary-hover"
-                    : "truncate-muted dark:truncate-canvas",
+                    ? ""
+                    : "",
                 )}
               >
                 {session === currentFlowId ? "Default Session" : session}
@@ -181,9 +183,9 @@ export default function SessionSelector({
             </SelectTrigger>
           </ShadTooltip>
           <SelectContent side="right" align="start" className="p-0">
-            <SelectItem
+            {/* <SelectItem
               value="rename"
-              className="cursor-pointer px-3 py-2 focus:bg-muted"
+              className="cursor-pointer px-3 py-2 focus: "
             >
               <div className="flex items-center">
                 <IconComponent name="SquarePen" className="mr-2 h-4 w-4" />
@@ -192,7 +194,7 @@ export default function SessionSelector({
             </SelectItem>
             <SelectItem
               value="messageLogs"
-              className="cursor-pointer px-3 py-2 focus:bg-muted"
+              className="cursor-pointer px-3 py-2 focus: "
             >
               <div className="flex w-full items-center justify-between">
                 <div className="flex items-center">
@@ -200,10 +202,10 @@ export default function SessionSelector({
                   Message logs
                 </div>
               </div>
-            </SelectItem>
+            </SelectItem> */}
             <SelectItem
               value="delete"
-              className="cursor-pointer px-3 py-2 focus:bg-muted"
+              className="cursor-pointer px-3 py-2 focus: "
             >
               <div className="flex items-center text-status-red hover:text-status-red">
                 <IconComponent name="Trash2" className="mr-2 h-4 w-4" />

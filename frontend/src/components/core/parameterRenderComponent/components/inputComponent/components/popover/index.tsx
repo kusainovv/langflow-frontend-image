@@ -1,5 +1,4 @@
 import ForwardedIconComponent from "@/components/common/genericIconComponent";
-import ShadTooltip from "@/components/common/shadTooltipComponent";
 import { Badge } from "@/components/ui/badge";
 import {
   Command,
@@ -38,8 +37,8 @@ const OptionBadge = ({
     | "errorStatic";
   className?: string;
   onRemove: (e: React.MouseEvent<HTMLButtonElement>) => void;
-}) => (
-  <Badge
+}) => {
+  return <Badge
     variant={
       variant as
         | "default"
@@ -53,38 +52,33 @@ const OptionBadge = ({
         | "successStatic"
         | "errorStatic"
     }
-    className={cn("flex items-center gap-1 truncate", className)}
+    className={cn("flex items-center gap-1 truncate border-none shadow-button", className)}
   >
     <div className="truncate">{option}</div>
     <X
-      className="h-3 w-3 cursor-pointer bg-transparent hover:text-destructive"
+      className="h-3 w-3 cursor-pointer bg-transparent"
       onClick={(e) =>
         onRemove(e as unknown as React.MouseEvent<HTMLButtonElement>)
       }
       data-testid="remove-icon-badge"
     />
   </Badge>
-);
+}
+
 
 const CommandItemContent = ({
   option,
   isSelected,
   optionButton,
-  nodeStyle,
 }: {
   option: string;
   isSelected: boolean;
   optionButton: (option: string) => ReactNode;
-  nodeStyle?: string;
 }) => (
   <div className="group flex w-full items-center justify-between">
     <div className="flex items-center justify-between">
       <SelectionIndicator isSelected={isSelected} />
-      <ShadTooltip content={option} side="left">
-        <div className={cn("truncate pr-2", nodeStyle ? "max-w-52" : "w-full")}>
-          <span>{option}</span>
-        </div>
-      </ShadTooltip>
+      <span className="max-w-52 truncate pr-2">{option}</span>
     </div>
     {optionButton && optionButton(option)}
   </div>
@@ -100,7 +94,7 @@ const SelectionIndicator = ({ isSelected }: { isSelected: boolean }) => (
     <div className="absolute opacity-100 transition-all group-hover:opacity-0">
       <ForwardedIconComponent
         name="Check"
-        className="mr-2 h-4 w-4 text-primary"
+        className="mr-2 h-4 w-4 text-black"
         aria-hidden="true"
       />
     </div>
@@ -121,11 +115,11 @@ const getInputClassName = (
   selectedOptions: string[],
 ) => {
   return cn(
-    "popover-input nodrag w-full truncate px-1 pr-4",
+    "popover-input nodrag w-full truncate px-1 pr-4 min-h-[36px]",
     editNode && "px-2",
     editNode && disabled && "h-fit w-fit",
     disabled &&
-      "disabled:text-muted disabled:opacity-100 placeholder:disabled:text-muted-foreground",
+      "disabled:   disabled:opacity-100 placeholder:disabled:  ",
     password && "text-clip pr-14",
     selectedOptions?.length >= 0 && "cursor-default",
   );
@@ -137,12 +131,13 @@ const getAnchorClassName = (
   isFocused: boolean,
 ) => {
   return cn(
-    "primary-input noflow nopan nodelete nodrag border-1 flex h-full min-h-[2.375rem] cursor-default flex-wrap items-center px-2",
-    editNode && "min-h-7 p-0 px-1",
-    editNode && disabled && "min-h-5 border-muted",
-    disabled && "bg-muted text-muted",
+    "primary-input noflow nopan nodelete nodrag flex h-full cursor-default flex-wrap items-center px-2 ",
+    editNode && "min-h-7 p-0 pl-4",
+    editNode && disabled && "min-h-5",
+    disabled && "    ",
     isFocused &&
-      "border-foreground ring-1 ring-foreground hover:border-foreground",
+      "ring-1 ring-foreground hover:border-foreground",
+    "min-h-[36px] py-0"
   );
 };
 
@@ -224,26 +219,20 @@ const CustomInputPopover = ({
                   key={option}
                   option={option}
                   onRemove={(e) => handleRemoveOption(option, e)}
-                  className="rounded-[3px] p-1 font-mono"
+                  className="p-1 font-w95fa"
                 />
               ))}
             </div>
           ) : selectedOption?.length > 0 ? (
-            <ShadTooltip content={selectedOption} side="left">
-              <div>
-                <OptionBadge
-                  option={selectedOption}
-                  onRemove={(e) => handleRemoveOption(selectedOption, e)}
-                  variant={nodeStyle ? "emerald" : "secondary"}
-                  className={cn(
-                    editNode && "text-xs",
-                    nodeStyle
-                      ? "max-w-60 rounded-[3px] px-1 font-mono"
-                      : "bg-muted",
-                  )}
-                />
-              </div>
-            </ShadTooltip>
+            <OptionBadge
+              option={selectedOption}
+              onRemove={(e) => handleRemoveOption(selectedOption, e)}
+              variant={nodeStyle ? "emerald" : "secondary"}
+              className={cn(
+                editNode && "text-xs",
+                nodeStyle ? "px-1 font-w95fa" : " ",
+              )}
+            />
           ) : null}
 
           {!selectedOption?.length && !selectedOptions?.length && (
@@ -261,12 +250,12 @@ const CustomInputPopover = ({
               value={value || ""}
               disabled={disabled}
               required={required}
-              className={getInputClassName(
-                editNode,
-                disabled,
-                password,
-                selectedOptions,
-              )}
+              // className={getInputClassName(
+              //   editNode,
+              //   disabled,
+              //   password,
+              //   selectedOptions,
+              // )}
               placeholder={
                 selectedOptions?.length > 0 || selectedOption ? "" : placeholder
               }
@@ -317,7 +306,6 @@ const CustomInputPopover = ({
                       selectedOptions?.includes(option)
                     }
                     optionButton={optionButton}
-                    nodeStyle={nodeStyle}
                   />
                 </CommandItem>
               ))}

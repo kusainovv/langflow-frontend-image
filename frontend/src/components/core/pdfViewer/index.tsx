@@ -80,7 +80,7 @@ export default function PdfViewer({ pdf }: { pdf: string }): JSX.Element {
       ref={container}
       onMouseEnter={(_) => setShowControl(true)}
       onMouseLeave={(_) => setShowControl(false)}
-      className="flex h-full w-full flex-col items-center justify-end overflow-clip rounded-lg border border-border"
+      className="flex h-full w-full flex-col items-center justify-end overflow-clip   border border-border"
     >
       <div className={"h-full min-h-0 w-full overflow-auto custom-scroll"}>
         <Document
@@ -110,7 +110,7 @@ export default function PdfViewer({ pdf }: { pdf: string }): JSX.Element {
           "absolute z-50 pb-5 " + (showControl && numPages > 0 ? "" : " hidden")
         }
       >
-        <div className="flex w-min items-center justify-center gap-0.5 rounded-xl bg-muted px-2 align-middle">
+        <div className="flex w-min items-center justify-center gap-0.5     px-2 align-middle">
           <button
             type="button"
             disabled={pageNumber <= 1}

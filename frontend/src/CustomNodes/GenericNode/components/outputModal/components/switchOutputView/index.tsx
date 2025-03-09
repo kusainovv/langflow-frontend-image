@@ -25,15 +25,13 @@ const SwitchOutputView: React.FC<SwitchOutputViewProps> = ({
   type,
 }) => {
   const flowPool = useFlowStore((state) => state.flowPool);
-
   const flowPoolNode = (flowPool[nodeId] ?? [])[
     (flowPool[nodeId]?.length ?? 1) - 1
   ];
-
   let results: OutputLogType | LogsLogType =
     (type === "Outputs"
-      ? flowPoolNode?.data?.outputs?.[outputName]
-      : flowPoolNode?.data?.logs?.[outputName]) ?? {};
+      ? flowPoolNode?.data?.outputs[outputName]
+      : flowPoolNode?.data?.logs[outputName]) ?? {};
   const resultType = results?.type;
   let resultMessage = results?.message ?? {};
   const RECORD_TYPES = ["data", "object", "array", "message"];
@@ -42,20 +40,18 @@ const SwitchOutputView: React.FC<SwitchOutputViewProps> = ({
   }
 
   const resultMessageMemoized = useMemo(() => {
-    if (!resultMessage) return "";
-
     if (
       typeof resultMessage === "string" &&
       resultMessage.length > MAX_TEXT_LENGTH
     ) {
-      return `${resultMessage.substring(0, MAX_TEXT_LENGTH)}...`;
+      resultMessage = `${resultMessage.substring(0, MAX_TEXT_LENGTH)}...`;
     }
 
     if (Array.isArray(resultMessage)) {
-      return resultMessage.map((item) => {
-        if (item?.data && typeof item?.data === "object") {
+      resultMessage = resultMessage.map((item) => {
+        if (item && typeof item.data === "object") {
           const truncatedData = Object.fromEntries(
-            Object.entries(item?.data).map(([key, value]) => {
+            Object.entries(item.data).map(([key, value]) => {
               if (typeof value === "string" && value.length > MAX_TEXT_LENGTH) {
                 return [key, `${value.substring(0, MAX_TEXT_LENGTH)}...`];
               }
@@ -78,8 +74,8 @@ const SwitchOutputView: React.FC<SwitchOutputViewProps> = ({
       </Case>
       <Case condition={resultType === "error" || resultType === "ValueError"}>
         <ErrorOutput
-          value={`${resultMessageMemoized?.errorMessage}\n\n${resultMessageMemoized?.stackTrace}`}
-        />
+          value={`${resultMessageMemoized.errorMessage}\n\n${resultMessageMemoized.stackTrace}`}
+        ></ErrorOutput>
       </Case>
 
       <Case condition={resultType === "text"}>
@@ -90,14 +86,10 @@ const SwitchOutputView: React.FC<SwitchOutputViewProps> = ({
         <DataOutputComponent
           rows={
             Array.isArray(resultMessageMemoized)
-              ? (resultMessageMemoized as Array<any>).every(
-                  (item) => item?.data,
-                )
-                ? (resultMessageMemoized as Array<any>).map(
-                    (item) => item?.data,
-                  )
+              ? (resultMessageMemoized as Array<any>).every((item) => item.data)
+                ? (resultMessageMemoized as Array<any>).map((item) => item.data)
                 : resultMessageMemoized
-              : Object.keys(resultMessageMemoized)?.length > 0
+              : Object.keys(resultMessageMemoized).length > 0
                 ? [resultMessageMemoized]
                 : []
           }
@@ -111,7 +103,7 @@ const SwitchOutputView: React.FC<SwitchOutputViewProps> = ({
           <Alert variant={"default"} className="w-fit">
             <ForwardedIconComponent
               name="AlertCircle"
-              className="h-5 w-5 text-primary"
+              className="h-5 w-5 text-black"
             />
             <AlertTitle>{"Streaming is not supported"}</AlertTitle>
             <AlertDescription>
@@ -127,10 +119,10 @@ const SwitchOutputView: React.FC<SwitchOutputViewProps> = ({
     <DataOutputComponent
       rows={
         Array.isArray(results)
-          ? (results as Array<any>).every((item) => item?.data)
-            ? (results as Array<any>).map((item) => item?.data)
+          ? (results as Array<any>).every((item) => item.data)
+            ? (results as Array<any>).map((item) => item.data)
             : results
-          : Object.keys(results)?.length > 0
+          : Object.keys(results).length > 0
             ? [results]
             : []
       }

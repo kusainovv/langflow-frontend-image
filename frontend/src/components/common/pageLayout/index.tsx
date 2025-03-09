@@ -22,19 +22,20 @@ export default function PageLayout({
   const navigate = useCustomNavigate();
 
   return (
-    <div className="flex w-full flex-1 flex-col justify-between overflow-auto overflow-x-hidden bg-background">
+    <div className="flex w-full flex-1 flex-col justify-between overflow-auto overflow-x-hidden bg-silver">
       <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col">
         <div className="flex flex-col gap-4 p-6 pt-0">
           <CustomBanner />
           <div className="flex w-full items-center justify-between gap-4 space-y-0.5 pb-2 pt-10">
             <div className="flex w-full flex-col">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-4">
                 {backTo && (
                   <Button
                     unstyled
                     onClick={() => {
                       navigate(backTo);
                     }}
+                    className="shadow-button p-1"
                   >
                     <ForwardedIconComponent
                       name="ChevronLeft"
@@ -43,14 +44,14 @@ export default function PageLayout({
                   </Button>
                 )}
                 <h2
-                  className="text-2xl font-bold tracking-tight"
+                  className="text-2xl tracking-tight"
                   data-testid="mainpage_title"
                 >
                   {title}
                   {betaIcon && <span className="store-beta-icon">Beta</span>}
                 </h2>
               </div>
-              <p className="text-muted-foreground">{description}</p>
+              <p className="  ">{description}</p>
             </div>
             <div className="flex-shrink-0">{button && button}</div>
           </div>

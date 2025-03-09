@@ -9,7 +9,7 @@ export default function CrashErrorComponent({
 }: crashComponentPropsType): JSX.Element {
   return (
     <div className="z-50 flex h-screen w-screen items-center justify-center bg-foreground bg-opacity-50">
-      <div className="flex h-screen w-screen flex-col bg-background text-start shadow-lg">
+      <div className="flex h-screen w-screen flex-col bg-silver text-start shadow-lg">
         <div className="m-auto grid w-1/2 justify-center gap-5 text-center">
           <Card className="p-8">
             <CardHeader>
@@ -44,9 +44,9 @@ export default function CrashErrorComponent({
 
             <CardFooter>
               <div className="m-auto mt-4 flex justify-center">
-                <Button onClick={resetErrorBoundary}>Restart Langflow</Button>
+                <Button onClick={resetErrorBoundary}>Restart ShadowForge</Button>
 
-                <a
+                {/* <a
                   href="https://github.com/langflow-ai/langflow/issues/new"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -54,7 +54,7 @@ export default function CrashErrorComponent({
                   <Button className="ml-3" ignoreTitleCase variant={"outline"}>
                     Report on GitHub
                   </Button>
-                </a>
+                </a> */}
               </div>
             </CardFooter>
           </Card>

@@ -5,10 +5,10 @@ import {
   useGetUsers,
   useUpdateUser,
 } from "@/controllers/API/queries/auth";
-import CustomLoader from "@/customization/components/custom-loader";
 import { cloneDeep } from "lodash";
 import { useContext, useEffect, useRef, useState } from "react";
 import IconComponent from "../../components/common/genericIconComponent";
+import LoadingComponent from "../../components/common/loadingComponent";
 import ShadTooltip from "../../components/common/shadTooltipComponent";
 import { Button } from "../../components/ui/button";
 import { CheckBoxDiv } from "../../components/ui/checkbox";
@@ -56,16 +56,15 @@ export default function AdminPage() {
   const { mutate: mutateDeleteUser } = useDeleteUsers();
   const { mutate: mutateUpdateUser } = useUpdateUser();
   const { mutate: mutateAddUser } = useAddUser();
-
+  
   const userList = useRef([]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      getUsers();
-    }, 500);
-  }, []);
-
   const [filterUserList, setFilterUserList] = useState(userList.current);
+  useEffect(() => {
+    // setTimeout(() => {
+      getUsers();
+    // }, 500);
+  }, [window.location.href, userList.current, totalRowsCount, index, size]);
 
   const { mutate: mutateGetUsers, isPending, isIdle } = useGetUsers({});
 
@@ -297,13 +296,13 @@ export default function AdminPage() {
                 }}
                 asChild
               >
-                <Button variant="primary">New User</Button>
+                <Button >New User</Button>
               </UserManagementModal>
             </div>
           </div>
           {isPending || isIdle ? (
             <div className="flex h-full w-full items-center justify-center">
-              <CustomLoader remSize={12} />
+              <LoadingComponent remSize={12} />
             </div>
           ) : userList.current.length === 0 && !isIdle ? (
             <>
@@ -315,14 +314,14 @@ export default function AdminPage() {
             <>
               <div
                 className={
-                  "m-4 h-fit overflow-x-hidden overflow-y-scroll rounded-md border-2 bg-background custom-scroll" +
+                  "m-4 h-fit overflow-x-hidden overflow-y-scroll border-2 bg-silver custom-scroll" +
                   (isPending ? " border-0" : "")
                 }
               >
                 <Table className={"table-fixed outline-1"}>
                   <TableHeader
                     className={
-                      isPending ? "hidden" : "table-fixed bg-muted outline-1"
+                      isPending ? "hidden" : "table-fixed   outline-1"
                     }
                   >
                     <TableRow>
@@ -371,7 +370,7 @@ export default function AdminPage() {
                               }}
                             >
                               <ConfirmationModal.Content>
-                                <span>
+                                <span className="!bg-red-500">
                                   Are you completely confident about the changes
                                   you are making to this user?
                                 </span>
@@ -461,11 +460,12 @@ export default function AdminPage() {
                                 icon={"UserMinus2"}
                                 data={user}
                                 index={index}
+                                className="p-4"
                                 onConfirm={(index, user) => {
                                   handleDeleteUser(user);
                                 }}
                               >
-                                <ConfirmationModal.Content>
+                                <ConfirmationModal.Content                                >
                                   <span>
                                     Are you sure you want to delete this user?
                                     This action cannot be undone.

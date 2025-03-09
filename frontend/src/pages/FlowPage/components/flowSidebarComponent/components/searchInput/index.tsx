@@ -19,24 +19,26 @@ export const SearchInput = memo(function SearchInput({
   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
-    <div className="relative w-full flex-1">
+    <div className="relative w-full flex-1 bg-green-500">
       <ForwardedIconComponent
         name="Search"
-        className="absolute inset-y-0 left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-primary"
+        className="absolute inset-y-0 left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-black"
       />
       <Input
         ref={searchInputRef}
         type="search"
         data-testid="sidebar-search-input"
-        className="w-full rounded-lg bg-background pl-8 text-sm"
+        // className="w-full bg-white !pl-8 text-sm"
         placeholder=""
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
+        className="!pl-8"
+
         onChange={handleInputChange}
         value={search}
       />
       {!isInputFocused && search === "" && (
-        <div className="pointer-events-none absolute inset-y-0 left-8 top-1/2 flex w-4/5 -translate-y-1/2 items-center justify-between gap-2 text-sm text-muted-foreground">
+        <div className="pointer-events-none absolute inset-y-0 left-8 top-1/2 flex w-4/5 -translate-y-1/2 items-center justify-between gap-2 text-sm   ">
           Search{" "}
           <span>
             <ShortcutDisplay sidebar shortcut="/" />

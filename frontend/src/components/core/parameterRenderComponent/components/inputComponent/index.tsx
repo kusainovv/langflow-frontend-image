@@ -10,6 +10,7 @@ import { getIconName } from "./components/helpers/get-icon-name";
 import CustomInputPopover from "./components/popover";
 import CustomInputPopoverObject from "./components/popoverObject";
 
+// icons and etc
 export default function InputComponent({
   autoFocus = false,
   onBlur,
@@ -69,15 +70,15 @@ export default function InputComponent({
             value={value}
             disabled={disabled}
             required={required}
-            className={classNames(
-              password && !pwdVisible && value !== ""
-                ? "text-clip password"
-                : "",
-              editNode ? "input-edit-node" : "",
-              password && editNode ? "pr-8" : "",
-              password && !editNode ? "pr-10" : "",
-              className!,
-            )}
+            // className={classNames(
+            //   password && !pwdVisible && value !== ""
+            //     ? "text-clip password"
+            //     : "",
+            //   editNode ? "input-edit-node" : "",
+            //   password && editNode ? "pr-8" : "",
+            //   password && !editNode ? "pr-10" : "",
+            //   className!,
+            // )}
             placeholder={password && editNode ? "Key" : placeholder}
             onChange={(e) => {
               if (onChangeFolderName) {
@@ -174,8 +175,8 @@ export default function InputComponent({
             }}
             className={cn(
               onChange && setSelectedOption && selectedOption !== ""
-                ? "text-accent-emerald-foreground"
-                : "text-placeholder-foreground",
+                ? "text-white"
+                : "",
               !disabled && "hover:text-foreground",
             )}
           >
@@ -190,7 +191,7 @@ export default function InputComponent({
                 ) || "ChevronsUpDown"
               }
               className={cn(
-                disabled ? "cursor-grab text-placeholder" : "cursor-pointer",
+                disabled ? "cursor-grab" : "cursor-pointer",
                 "icon-size",
               )}
               strokeWidth={ICON_STROKE_WIDTH}
@@ -218,12 +219,12 @@ export default function InputComponent({
           {pwdVisible ? (
             <ForwardedIconComponent
               name="Eye"
-              className="relative top-[1px] h-5 w-5 text-placeholder-foreground hover:text-foreground"
+              className="relative top-[1px] h-5 w-5 hover:text-foreground"
             />
           ) : (
             <ForwardedIconComponent
               name="EyeOff"
-              className="relative top-[1px] h-5 w-5 text-placeholder-foreground hover:text-foreground"
+              className="relative top-[1px] h-5 w-5 hover:text-foreground"
             />
           )}
         </button>

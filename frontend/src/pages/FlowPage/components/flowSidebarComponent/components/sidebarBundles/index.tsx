@@ -7,6 +7,7 @@ import {
 import { memo, useMemo } from "react";
 import { BundleItem } from "../bundleItems";
 
+// bundles sidebar
 export const MemoizedSidebarGroup = memo(
   ({
     BUNDLES,
@@ -45,8 +46,8 @@ export const MemoizedSidebarGroup = memo(
     }, [BUNDLES, search, sortedCategories]);
 
     return (
-      <SidebarGroup className="p-3">
-        <SidebarGroupLabel>Bundles</SidebarGroupLabel>
+      <SidebarGroup className="p-4">
+        {/* <SidebarGroupLabel>Bundles</SidebarGroupLabel> */}
         <SidebarGroupContent>
           <SidebarMenu>
             {sortedBundles.map((item) => (

@@ -51,7 +51,9 @@ export function NodeIcon({
           className={cn(
             hasToolMode ? "text-white" : "text-foreground",
             !showNode && "flex min-h-8 min-w-8 items-center justify-center",
-            "bg-lucide-icon",
+            // "bg-lucide-icon",
+            // "bg-si"
+            "text-white"
           )}
           style={{
             backgroundImage: hasToolMode ? bgToolMode : "",

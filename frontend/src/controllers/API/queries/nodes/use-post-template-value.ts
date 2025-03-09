@@ -17,6 +17,7 @@ interface IPostTemplateValueParams {
   node: APIClassType;
   nodeId: string;
   parameterId: string;
+  tool_mode: boolean;
 }
 
 export const usePostTemplateValue: useMutationFunctionType<
@@ -24,7 +25,7 @@ export const usePostTemplateValue: useMutationFunctionType<
   IPostTemplateValue,
   APIClassType,
   ResponseErrorDetailAPI
-> = ({ parameterId, nodeId, node }, options?) => {
+> = ({ parameterId, nodeId, node, tool_mode }, options?) => {
   const { mutate } = UseRequestProcessor();
 
   const postTemplateValueFn = async (
@@ -40,7 +41,7 @@ export const usePostTemplateValue: useMutationFunctionType<
         template: template,
         field: parameterId,
         field_value: payload.value,
-        tool_mode: payload.tool_mode,
+        tool_mode: tool_mode,
       },
     );
 

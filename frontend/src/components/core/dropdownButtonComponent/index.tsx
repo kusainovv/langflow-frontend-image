@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
+import { cn } from "@/utils/utils";
 
 export default function DropdownButton({
   firstButtonName,
@@ -25,9 +26,12 @@ export default function DropdownButton({
         <DropdownMenuTrigger asChild>
           <Button
             id="new-project-btn"
-            variant="primary"
+            // variant="primary"
             className={
+              cn(
+              "!justify-center",
               "relative" + dropdownOptions ? "pl-[12px]" : "pl-[12px] pr-10"
+              )
             }
             onClick={(event) => {
               event.stopPropagation();
@@ -42,7 +46,7 @@ export default function DropdownButton({
             {firstButtonName}
             {dropdownOptions && (
               <div
-                className="absolute right-2 items-center text-muted-foreground"
+                className="absolute right-2 items-center   "
                 onClick={(event) => {
                   event.stopPropagation();
                   event.preventDefault();

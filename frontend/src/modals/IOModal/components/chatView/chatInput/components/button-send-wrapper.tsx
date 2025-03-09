@@ -6,12 +6,12 @@ import { FilePreviewType } from "../../../../../../types/components";
 import { classNames } from "../../../../../../utils/utils";
 
 const BUTTON_STATES = {
-  NO_INPUT: "bg-high-indigo text-background",
-  HAS_CHAT_VALUE: "text-primary",
+  NO_INPUT: "bg-high-indigo text-black",
+  HAS_CHAT_VALUE: "text-black",
   SHOW_STOP:
-    "bg-muted hover:bg-secondary-hover dark:hover:bg-input text-foreground cursor-pointer",
+    "text-foreground cursor-pointer",
   DEFAULT:
-    "bg-primary text-primary-foreground hover:bg-primary-hover hover:text-secondary",
+    "bg-silver text-black-foreground hover:bg-silver-hover hover:text-black",
 };
 
 type ButtonSendWrapperProps = {
@@ -20,6 +20,7 @@ type ButtonSendWrapperProps = {
   chatValue: string;
   files: FilePreviewType[];
 };
+
 
 const ButtonSendWrapper = ({
   send,
@@ -60,7 +61,7 @@ const ButtonSendWrapper = ({
       data-testid={showStopButton ? "button-stop" : "button-send"}
     >
       <Case condition={showStopButton}>
-        <div className="flex items-center gap-2 rounded-md text-[14px] font-medium">
+        <div className="flex items-center gap-2   text-[14px] font-medium">
           Stop
           <Loading className="h-[16px] w-[16px]" />
         </div>

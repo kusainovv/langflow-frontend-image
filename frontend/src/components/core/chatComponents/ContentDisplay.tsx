@@ -30,7 +30,7 @@ export default function ContentDisplay({
             <Markdown
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeMathjax]}
-              className="inline-block w-fit max-w-full text-[14px] font-semibold text-foreground"
+              className="inline-block w-fit max-w-full text-[14px]   text-foreground"
             >
               {content.header.title}
             </Markdown>
@@ -55,7 +55,7 @@ export default function ContentDisplay({
             remarkPlugins={[remarkGfm]}
             linkTarget="_blank"
             rehypePlugins={[rehypeMathjax]}
-            className="markdown prose max-w-full text-[14px] font-normal dark:prose-invert"
+            className="markdown prose max-w-full text-[14px] text-red-400 font-normal dark:prose-invert"
             components={{
               p({ node, ...props }) {
                 return (
@@ -209,7 +209,7 @@ export default function ContentDisplay({
             language="json"
             code={JSON.stringify(content.tool_input, null, 2)}
           />
-          {content.output && (
+          {content.output !== undefined && (
             <>
               <Markdown
                 remarkPlugins={[remarkGfm]}

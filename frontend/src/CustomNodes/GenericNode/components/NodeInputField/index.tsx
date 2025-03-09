@@ -49,6 +49,7 @@ export default function NodeInputField({
     node: data.node!,
     nodeId: data.id,
     parameterId: name,
+    tool_mode: data.node!.tool_mode ?? false,
   });
   const setFilterEdge = useFlowStore((state) => state.setFilterEdge);
   const { handleNodeClass } = useHandleNodeClass(data.id);
@@ -108,9 +109,9 @@ export default function NodeInputField({
     <div
       ref={ref}
       className={cn(
-        "relative flex min-h-10 w-full flex-wrap items-center justify-between px-5 py-2",
-        lastInput ? "rounded-b-[0.69rem] pb-5" : "",
-        isToolMode && "bg-primary/10",
+        "relative mt-1 flex min-h-10 w-full flex-wrap items-center justify-between px-5 py-2",
+        lastInput ? "" : "",
+        isToolMode && "bg-silver/10",
         (name === "code" && type === "code") || (name.includes("code") && proxy)
           ? "hidden"
           : "",
@@ -161,7 +162,7 @@ export default function NodeInputField({
                     <IconComponent
                       name="Info"
                       strokeWidth={ICON_STROKE_WIDTH}
-                      className="relative bottom-px ml-1 h-3 w-3 text-placeholder"
+                      className="relative bottom-px ml-1 h-3 w-3"
                     />
                   </div>
                 </ShadTooltip>
@@ -187,11 +188,7 @@ export default function NodeInputField({
             handleNodeClass={handleNodeClass}
             nodeClass={data.node!}
             disabled={disabled}
-            placeholder={
-              isToolMode
-                ? DEFAULT_TOOLSET_PLACEHOLDER
-                : data.node?.template[name].placeholder
-            }
+            placeholder={isToolMode ? DEFAULT_TOOLSET_PLACEHOLDER : undefined}
             isToolMode={isToolMode}
           />
         )}

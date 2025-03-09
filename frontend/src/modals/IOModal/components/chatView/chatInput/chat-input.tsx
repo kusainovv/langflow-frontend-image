@@ -5,7 +5,7 @@ import useFileSizeValidator from "@/shared/hooks/use-file-size-validator";
 import useAlertStore from "@/stores/alertStore";
 import useFlowStore from "@/stores/flowStore";
 import { useUtilityStore } from "@/stores/utilityStore";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import ShortUniqueId from "short-unique-id";
 import {
   ALLOWED_IMAGE_INPUT_EXTENSIONS,
@@ -25,6 +25,7 @@ import TextAreaWrapper from "./components/text-area-wrapper";
 import UploadFileButton from "./components/upload-file-button";
 import useAutoResizeTextArea from "./hooks/use-auto-resize-text-area";
 import useFocusOnUnlock from "./hooks/use-focus-unlock";
+import { Frame } from "react95";
 export default function ChatInput({
   sendMessage,
   inputRef,
@@ -166,11 +167,11 @@ export default function ChatInput({
   if (noInput) {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center">
-        <div className="flex w-full flex-col items-center justify-center gap-3 rounded-md border border-input bg-muted p-2 py-4">
+        <div className="flex w-full flex-col items-center justify-center gap-3   border border-input   p-2 py-4">
           {!isBuilding ? (
             <Button
               data-testid="button-send"
-              className="font-semibold"
+              className=" "
               onClick={() => {
                 sendMessage({
                   repeat: 1,
@@ -184,24 +185,18 @@ export default function ChatInput({
               onClick={stopBuilding}
               data-testid="button-stop"
               unstyled
-              className="form-modal-send-button cursor-pointer bg-muted text-foreground hover:bg-secondary-hover dark:hover:bg-input"
+              className="form-modal-send-button cursor-pointer bg-silver text-foreground"
             >
-              <div className="flex items-center gap-2 rounded-md text-[14px] font-medium">
+              <div className="flex items-center gap-2   text-[14px] font-medium">
                 Stop
                 <Loading className="h-[16px] w-[16px]" />
               </div>
             </Button>
           )}
 
-          <p className="text-muted-foreground">
+          <p className="  ">
             Add a{" "}
-            <a
-              className="underline underline-offset-4"
-              target="_blank"
-              href="https://docs.langflow.org/components-io#chat-input"
-            >
-              Chat Input
-            </a>{" "}
+            Chat Input
             component to your flow to send messages.
           </p>
         </div>
@@ -210,21 +205,39 @@ export default function ChatInput({
   }
 
   return (
-    <div className="flex w-full flex-col-reverse">
-      <div className="flex w-full flex-col rounded-md border border-input p-4 hover:border-muted-foreground focus:border-[1.75px] has-[:focus]:border-primary">
+    <div className="flex w-full flex-col">
+
+      <div>
+        <div className="flex w-full items-end justify-between mb-2">
+            <div className={isBuilding ? "cursor-not-allowed" : ""}>
+              <UploadFileButton
+               isBuilding={isBuilding}
+               fileInputRef={fileInputRef}
+               handleFileChange={handleFileChange}
+               handleButtonClick={handleButtonClick}
+              />
+            </div>
+
+        </div>
+      </div>
+
+      <Frame variant="field" className="flex w-full flex-col h-[120px] bg-white focus:border-[1.75px] has-[:focus]:border-primary">
         <TextAreaWrapper
-          isBuilding={isBuilding}
-          checkSendingOk={checkSendingOk}
-          send={send}
-          noInput={noInput}
-          chatValue={chatValue}
-          CHAT_INPUT_PLACEHOLDER={CHAT_INPUT_PLACEHOLDER}
-          CHAT_INPUT_PLACEHOLDER_SEND={CHAT_INPUT_PLACEHOLDER_SEND}
-          inputRef={inputRef}
-          files={files}
-          isDragging={isDragging}
+                  isBuilding={isBuilding}
+                  checkSendingOk={checkSendingOk}
+                  send={send}
+                  noInput={noInput}
+                  chatValue={chatValue}
+                  CHAT_INPUT_PLACEHOLDER={CHAT_INPUT_PLACEHOLDER}
+                  CHAT_INPUT_PLACEHOLDER_SEND={CHAT_INPUT_PLACEHOLDER_SEND}
+                  inputRef={inputRef}
+                  files={files}
+                  isDragging={isDragging}
         />
-        <div className={classNameFilePreview}>
+       
+      </Frame>
+
+      <div className={classNameFilePreview}>
           {files.map((file) => (
             <FilePreview
               error={file.error}
@@ -237,25 +250,17 @@ export default function ChatInput({
             />
           ))}
         </div>
-        <div className="flex w-full items-end justify-between">
-          <div className={isBuilding ? "cursor-not-allowed" : ""}>
-            <UploadFileButton
-              isBuilding={isBuilding}
-              fileInputRef={fileInputRef}
-              handleFileChange={handleFileChange}
-              handleButtonClick={handleButtonClick}
-            />
-          </div>
-          <div className="">
+
+      <div className="mt-1 ml-auto">
             <ButtonSendWrapper
-              send={send}
-              noInput={noInput}
-              chatValue={chatValue}
-              files={files}
+               send={send}
+               noInput={noInput}
+               chatValue={chatValue}
+               files={files}
             />
           </div>
-        </div>
-      </div>
+
+          
     </div>
   );
 }

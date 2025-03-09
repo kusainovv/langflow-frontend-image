@@ -15,7 +15,8 @@ import { useShortcutsStore } from "../../../stores/shortcuts";
 import { useStoreStore } from "../../../stores/storeStore";
 import { classNames, isThereModal } from "../../../utils/utils";
 import ForwardedIconComponent from "../../common/genericIconComponent";
-
+import { Button } from "@/components/ui/button";
+// right panel in react flow
 export default function FlowToolbar(): JSX.Element {
   const preventDefault = true;
   const [open, setOpen] = useState<boolean>(false);
@@ -79,10 +80,10 @@ export default function FlowToolbar(): JSX.Element {
           <button
             disabled={!hasApiKey || !validApiKey || !hasStore}
             className={classNames(
-              "relative inline-flex h-8 w-full items-center justify-center gap-1.5 rounded px-3 py-1.5 text-sm font-semibold text-foreground transition-all duration-150 ease-in-out",
+              "relative inline-flex h-8 w-full items-center justify-center gap-1.5 px-3 py-1.5 text-sm font-semibold text-foreground transition-all duration-150 ease-in-out",
               !hasApiKey || !validApiKey || !hasStore
-                ? "cursor-not-allowed text-muted-foreground"
-                : "hover:bg-accent",
+                ? "cursor-not-allowed   "
+                : "",
             )}
             data-testid="shared-button-flow"
             onClick={() => {
@@ -120,11 +121,11 @@ export default function FlowToolbar(): JSX.Element {
       <Panel className="!m-2" position="top-right">
         <div
           className={
-            "hover:shadow-round-btn-shadow flex items-center justify-center gap-7 rounded-md border bg-background p-1.5 shadow transition-all"
+            "hover:shadow-round-btn-shadow flex items-center justify-center gap-7 border bg-silver p-1 shadow transition-all"
           }
         >
-          <div className="flex gap-1.5">
-            <div className="flex h-full w-full gap-1.5 rounded-sm transition-all">
+          <div className="flex items-center gap-1.5">
+            <div className="flex h-full w-full gap-1.5   transition-all">
               <PlaygroundButton
                 hasIO={hasIO}
                 open={open}
@@ -134,34 +135,30 @@ export default function FlowToolbar(): JSX.Element {
             </div>
             {ENABLE_API && (
               <>
-                <div
-                  className="flex cursor-pointer items-center gap-2"
-                  data-testid="api_button_modal"
-                  id="api_button_modal"
-                >
+                <div className="flex cursor-pointer items-center gap-2">
                   {currentFlow && currentFlow.data && (
                     <ApiModal
                       flow={currentFlow}
                       open={openCodeModal}
                       setOpen={setOpenCodeModal}
                     >
-                      <div
+                      <Button
                         className={classNames(
-                          "relative inline-flex h-8 w-full items-center justify-center gap-1.5 rounded px-3 py-1.5 text-sm font-semibold text-foreground transition-all duration-150 ease-in-out hover:bg-accent",
+                          "relative inline-flex h-full w-full items-center justify-center gap-1.5 text-sm transition-all duration-150 ease-in-out",
                         )}
                       >
                         <ForwardedIconComponent
                           name="Code2"
-                          className={"h-4 w-4"}
+                          className={"h-4 w-4 text-black"}
                         />
-                        <span className="hidden md:block">API</span>
-                      </div>
+                        <span className="hidden md:block text-black">API</span>
+                      </Button>
                     </ApiModal>
                   )}
                 </div>
               </>
             )}
-            {ENABLE_LANGFLOW_STORE && (
+            {/* {ENABLE_LANGFLOW_STORE && (
               <div className="flex items-center gap-2">
                 <div
                   className={`side-bar-button ${
@@ -173,7 +170,7 @@ export default function FlowToolbar(): JSX.Element {
                   {ModalMemo}
                 </div>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </Panel>

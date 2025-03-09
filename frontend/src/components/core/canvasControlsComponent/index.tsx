@@ -38,17 +38,17 @@ export const CustomControlButton = ({
   return (
     <ControlButton
       data-testid={testId}
-      className="!h-8 !w-8 rounded !p-0"
+      className="!h-8 !w-8 !p-0"
       onClick={onClick}
       disabled={disabled}
       title={testId?.replace(/_/g, " ")}
     >
       <ShadTooltip content={tooltipText}>
-        <div className={cn("rounded p-2.5", backgroundClasses)}>
+        <div className={cn("p-2.5", backgroundClasses)}>
           <IconComponent
             name={iconName}
             aria-hidden="true"
-            className={cn("scale-150 text-muted-foreground", iconClasses)}
+            className={cn("scale-150   ", iconClasses)}
           />
         </div>
       </ShadTooltip>
@@ -106,7 +106,7 @@ const CanvasControls = ({ children }) => {
   return (
     <Panel
       data-testid="canvas_controls"
-      className="react-flow__controls !m-2 flex !flex-row gap-1.5 rounded-md border border-secondary-hover bg-background fill-foreground stroke-foreground p-1.5 text-primary shadow [&>button]:border-0 [&>button]:bg-background hover:[&>button]:bg-accent"
+      className="react-flow__controls !m-2 flex !flex-row gap-1.5 bg-silver fill-foreground stroke-foreground p-1.5 text-black shadow [&>button]:border-0 [&>button]:bg-silver [&>button]:shadow-button "
       position="bottom-left"
     >
       {/* Zoom In */}
@@ -137,9 +137,8 @@ const CanvasControls = ({ children }) => {
         iconName={isInteractive ? "LockOpen" : "Lock"}
         tooltipText={isInteractive ? "Lock" : "Unlock"}
         onClick={onToggleInteractivity}
-        backgroundClasses={isInteractive ? "" : "bg-destructive"}
         iconClasses={
-          isInteractive ? "" : "text-primary-foreground dark:text-primary"
+          isInteractive ? "" : "text-black-foreground dark:text-black"
         }
         testId="lock_unlock"
       />

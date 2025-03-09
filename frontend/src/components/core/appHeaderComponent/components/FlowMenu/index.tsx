@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { useCustomNavigate } from "@/customization/hooks/use-custom-navigate";
 import useAddFlow from "@/hooks/flows/use-add-flow";
@@ -17,7 +17,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { UPLOAD_ERROR_ALERT } from "@/constants/alerts_constants";
 import { SAVED_HOVER } from "@/constants/constants";
 import { useGetRefreshFlowsQuery } from "@/controllers/API/queries/flows/use-get-refresh-flows-query";
@@ -55,26 +54,8 @@ export const MenuBar = ({}: {}): JSX.Element => {
   const onFlowPage = useFlowStore((state) => state.onFlowPage);
   const setCurrentFlow = useFlowsManagerStore((state) => state.setCurrentFlow);
   const stopBuilding = useFlowStore((state) => state.stopBuilding);
-  const [editingName, setEditingName] = useState(false);
-  const [flowName, setFlowName] = useState(currentFlow?.name ?? "");
-  const [isInvalidName, setIsInvalidName] = useState(false);
-  const nameInputRef = useRef<HTMLInputElement>(null);
-  const [inputWidth, setInputWidth] = useState<number>(0);
-  const measureRef = useRef<HTMLSpanElement>(null);
 
   const { data: folders, isFetched: isFoldersFetched } = useGetFoldersQuery();
-  const flows = useFlowsManagerStore((state) => state.flows);
-  const [nameLists, setNameList] = useState<string[]>([]);
-
-  useEffect(() => {
-    if (flows) {
-      const tempNameList: string[] = [];
-      flows.forEach((flow) => {
-        tempNameList.push(flow.name);
-      });
-      setNameList(tempNameList.filter((name) => name !== currentFlow?.name));
-    }
-  }, [flows, currentFlow?.name]);
 
   useGetRefreshFlowsQuery(
     {
@@ -91,12 +72,6 @@ export const MenuBar = ({}: {}): JSX.Element => {
 
   const changesNotSaved =
     customStringify(currentFlow) !== customStringify(currentSavedFlow);
-
-  useEffect(() => {
-    if (measureRef.current) {
-      setInputWidth(measureRef.current.offsetWidth);
-    }
-  }, [flowName]);
 
   function handleAddFlow() {
     try {
@@ -123,11 +98,7 @@ export const MenuBar = ({}: {}): JSX.Element => {
     }
     // return savedText;
     return (
-      <div
-        data-testid="menu_status_saved_flow_button"
-        id="menu_status_saved_flow_button"
-        className="shrink-0 text-xs font-medium text-accent-emerald-foreground"
-      >
+      <div className="shrink-0 text-xs font-medium text-white">
         Saved
       </div>
     );
@@ -142,106 +113,13 @@ export const MenuBar = ({}: {}): JSX.Element => {
   const changes = useShortcutsStore((state) => state.changesSave);
   useHotkeys(changes, handleSave, { preventDefault: true });
 
-  const handleEditName = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { value } = e.target;
-      let invalid = false;
-      for (let i = 0; i < nameLists.length; i++) {
-        if (value === nameLists[i]) {
-          invalid = true;
-          break;
-        }
-      }
-      setIsInvalidName(invalid);
-      setFlowName(value);
-    },
-    [nameLists],
-  );
-
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Escape") {
-        setEditingName(false);
-        setFlowName(currentFlow?.name ?? "");
-        setIsInvalidName(false);
-      }
-      if (e.key === "Enter") {
-        nameInputRef.current?.blur();
-      }
-    },
-    [currentFlow?.name],
-  );
-
-  const handleNameSubmit = useCallback(() => {
-    if (
-      flowName.trim() !== "" &&
-      flowName !== currentFlow?.name &&
-      !isInvalidName
-    ) {
-      const newFlow = {
-        ...currentFlow!,
-        name: flowName,
-        id: currentFlow!.id,
-      };
-      setCurrentFlow(newFlow);
-      saveFlow(newFlow)
-        .then(() => {
-          setSuccessData({ title: "Flow name updated successfully" });
-        })
-        .catch((error) => {
-          setErrorData({
-            title: "Error updating flow name",
-            list: [(error as Error).message],
-          });
-          setFlowName(currentFlow?.name ?? "");
-        });
-    } else if (isInvalidName) {
-      setErrorData({
-        title: "Invalid flow name",
-        list: ["Name already exists"],
-      });
-      setFlowName(currentFlow?.name ?? "");
-    } else {
-      setFlowName(currentFlow?.name ?? "");
-    }
-    setEditingName(false);
-    setIsInvalidName(false);
-  }, [
-    flowName,
-    currentFlow,
-    setCurrentFlow,
-    saveFlow,
-    setSuccessData,
-    setErrorData,
-    isInvalidName,
-  ]);
-
-  useEffect(() => {
-    if (currentFlow && !editingName) {
-      setFlowName(currentFlow.name);
-    }
-  }, [currentFlow, editingName]);
-
-  useEffect(() => {
-    if (measureRef.current) {
-      setInputWidth(measureRef.current.offsetWidth + 10);
-    }
-  }, [flowName]);
-
   return currentFlow && onFlowPage ? (
-    <div
-      className="flex items-center justify-center gap-2 truncate"
-      data-testid="menu_bar_wrapper"
-    >
-      <div
-        className="header-menu-bar hidden w-20 max-w-fit grow justify-end truncate md:flex"
-        data-testid="menu_flow_bar"
-        id="menu_flow_bar_navigation"
-      >
+    <div className="flex items-center justify-center gap-2 truncate">
+      <div className="header-menu-bar hidden w-20 max-w-fit grow justify-end truncate md:flex">
         {currentFolder?.name && (
           <div className="hidden truncate md:flex">
             <div
-              className="cursor-pointer truncate pr-1 text-muted-foreground hover:text-primary"
+              className="cursor-pointer truncate text-white"
               onClick={() => {
                 navigate(
                   currentFolder?.id
@@ -255,216 +133,153 @@ export const MenuBar = ({}: {}): JSX.Element => {
           </div>
         )}
       </div>
-      <div
-        className="hidden w-fit shrink-0 select-none font-normal text-muted-foreground md:flex"
-        data-testid="menu_bar_separator"
-      >
+      <div className="hidden w-fit shrink-0 select-none font-normal text-white md:flex">
         /
       </div>
 
-      <div
-        className="overflow-hidden truncate text-sm sm:whitespace-normal"
-        data-testid="menu_bar_display"
-      >
-        <div
-          className="header-menu-bar-display-2 truncate"
-          data-testid="menu_bar_display_wrapper"
-        >
-          <div
-            className="header-menu-flow-name-2 truncate"
-            data-testid="flow-configuration-button"
-          >
-            <div
-              className="relative inline-flex"
-              style={{ width: Math.max(10, inputWidth) }}
-            >
-              <Input
-                className={cn(
-                  "h-6 w-full cursor-text font-semibold",
-                  "bg-transparent pl-1 pr-0 transition-colors duration-200",
-                  "border-0 outline-none focus:border-0 focus:outline-none focus:ring-0 focus:ring-offset-0",
-                  !editingName && "text-primary hover:opacity-80",
-                  isInvalidName && "text-status-red",
-                )}
-                onChange={handleEditName}
-                maxLength={38}
-                ref={nameInputRef}
-                onKeyDown={handleKeyDown}
-                onFocus={() => {
-                  setEditingName(true);
-                  setFlowName(currentFlow.name);
-                }}
-                onBlur={handleNameSubmit}
-                value={flowName}
-                id="input-flow-name"
-                data-testid="input-flow-name"
-              />
-              <span
-                ref={measureRef}
-                className="invisible absolute left-0 top-0 -z-10 w-fit whitespace-pre pl-1 font-semibold"
-                aria-hidden="true"
-                data-testid="flow_name"
+      <div className="overflow-hidden truncate text-sm sm:whitespace-normal">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <div className="header-menu-bar-display-2 group truncate">
+              <div
+                className="header-menu-flow-name-2 truncate"
+                data-testid="flow-configuration-button"
               >
-                {flowName}
-              </span>
-            </div>
-          </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              className="group"
-              data-testid="flow_menu_trigger"
-            >
+                <div
+                  className="truncate text-white"
+                  data-testid="flow_name"
+                >
+                  {currentFlow.name}
+                </div>
+              </div>
               <IconComponent
                 name="ChevronDown"
-                className="flex h-5 w-5 text-muted-foreground hover:text-primary"
+                className="flex h-5 w-5 text-white group-hover:text-white"
               />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-44 bg-white dark:bg-background">
-              <DropdownMenuLabel>Options</DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() => {
-                  handleAddFlow();
-                }}
-                className="cursor-pointer"
-                data-testid="menu_new_flow_button"
-                id="menu_new_flow_button"
-              >
-                <IconComponent name="Plus" className="header-menu-options" />
-                New
-              </DropdownMenuItem>
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-44 bg-white dark:bg-silver">
+            <DropdownMenuLabel>Options</DropdownMenuLabel>
+            <DropdownMenuItem
+              onClick={() => {
+                handleAddFlow();
+              }}
+              className="cursor-pointer"
+            >
+              <IconComponent name="Plus" className="header-menu-options" />
+              New
+            </DropdownMenuItem>
 
-              <DropdownMenuItem
-                onClick={() => {
-                  setOpenSettings(true);
-                }}
-                className="cursor-pointer"
-                data-testid="menu_edit_flow_button"
-                id="menu_edit_flow_button"
-              >
-                <IconComponent
-                  name="SquarePen"
-                  className="header-menu-options"
+            <DropdownMenuItem
+              onClick={() => {
+                setOpenSettings(true);
+              }}
+              className="cursor-pointer"
+            >
+              <IconComponent name="Settings2" className="header-menu-options" />
+              Flow Settings
+            </DropdownMenuItem>
+            {!autoSaving && (
+              <DropdownMenuItem onClick={handleSave} className="cursor-pointer">
+                <ToolbarSelectItem
+                  value="Save"
+                  icon="Save"
+                  dataTestId=""
+                  shortcut={
+                    shortcuts.find(
+                      (s) => s.name.toLowerCase() === "changes save",
+                    )?.shortcut!
+                  }
                 />
-                Edit Details
               </DropdownMenuItem>
-              {!autoSaving && (
-                <DropdownMenuItem
-                  onClick={handleSave}
-                  className="cursor-pointer"
-                  data-testid="menu_save_flow_button"
-                  id="menu_save_flow_button"
-                >
-                  <ToolbarSelectItem
-                    value="Save"
-                    icon="Save"
-                    dataTestId=""
-                    shortcut={
-                      shortcuts.find(
-                        (s) => s.name.toLowerCase() === "changes save",
-                      )?.shortcut!
-                    }
-                  />
-                </DropdownMenuItem>
-              )}
-              <DropdownMenuItem
-                onClick={() => {
-                  setOpenLogs(true);
-                }}
-                className="cursor-pointer"
-                data-testid="menu_logs_flow_button"
-                id="menu_logs_flow_button"
-              >
-                <IconComponent
-                  name="ScrollText"
-                  className="header-menu-options"
-                />
-                Logs
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="cursor-pointer"
-                onClick={() => {
-                  uploadFlow({ position: { x: 300, y: 100 } })
-                    .then(() => {
-                      setSuccessData({
-                        title: "Uploaded successfully",
-                      });
-                    })
-                    .catch((error) => {
-                      setErrorData({
-                        title: UPLOAD_ERROR_ALERT,
-                        list: [(error as Error).message],
-                      });
+            )}
+            <DropdownMenuItem
+              onClick={() => {
+                setOpenLogs(true);
+              }}
+              className="cursor-pointer"
+            >
+              <IconComponent
+                name="ScrollText"
+                className="header-menu-options"
+              />
+              Logs
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={() => {
+                uploadFlow({ position: { x: 300, y: 100 } })
+                  .then(() => {
+                    setSuccessData({
+                      title: "Uploaded successfully",
                     });
-                }}
-                data-testid="menu_import_flow_button"
-                id="menu_import_flow_button"
-              >
-                <IconComponent name="FileUp" className="header-menu-options" />
-                Import
-              </DropdownMenuItem>
-              <ExportModal>
-                <div className="header-menubar-item">
-                  <IconComponent
-                    name="FileDown"
-                    className="header-menu-options"
-                  />
-                  Export
-                </div>
-              </ExportModal>
-              <DropdownMenuItem
-                onClick={() => {
-                  undo();
-                }}
-                className="cursor-pointer"
-                data-testid="menu_undo_flow_button"
-                id="menu_undo_flow_button"
-              >
-                <ToolbarSelectItem
-                  value="Undo"
-                  icon="Undo"
-                  dataTestId=""
-                  shortcut={
-                    shortcuts.find((s) => s.name.toLowerCase() === "undo")
-                      ?.shortcut!
-                  }
-                />
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => {
-                  redo();
-                }}
-                className="cursor-pointer"
-                data-testid="menu_redo_flow_button"
-                id="menu_redo_flow_button"
-              >
-                <ToolbarSelectItem
-                  value="Redo"
-                  icon="Redo"
-                  dataTestId=""
-                  shortcut={
-                    shortcuts.find((s) => s.name.toLowerCase() === "redo")
-                      ?.shortcut!
-                  }
-                />
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => {
-                  handleReloadComponents();
-                }}
-                className="cursor-pointer"
-                data-testid="menu_refresh_flow_button"
-                id="menu_refresh_flow_button"
-              >
+                  })
+                  .catch((error) => {
+                    setErrorData({
+                      title: UPLOAD_ERROR_ALERT,
+                      list: [(error as Error).message],
+                    });
+                  });
+              }}
+            >
+              <IconComponent name="FileUp" className="header-menu-options" />
+              Import
+            </DropdownMenuItem>
+            <ExportModal>
+              <div className="header-menubar-item">
                 <IconComponent
-                  name="RefreshCcw"
+                  name="FileDown"
                   className="header-menu-options"
                 />
-                Refresh All
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-
+                Export
+              </div>
+            </ExportModal>
+            <DropdownMenuItem
+              onClick={() => {
+                undo();
+              }}
+              className="cursor-pointer"
+            >
+              <ToolbarSelectItem
+                value="Undo"
+                icon="Undo"
+                dataTestId=""
+                shortcut={
+                  shortcuts.find((s) => s.name.toLowerCase() === "undo")
+                    ?.shortcut!
+                }
+              />
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                redo();
+              }}
+              className="cursor-pointer"
+            >
+              <ToolbarSelectItem
+                value="Redo"
+                icon="Redo"
+                dataTestId=""
+                shortcut={
+                  shortcuts.find((s) => s.name.toLowerCase() === "redo")
+                    ?.shortcut!
+                }
+              />
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                handleReloadComponents();
+              }}
+              className="cursor-pointer"
+            >
+              <IconComponent
+                name="RefreshCcw"
+                className="header-menu-options"
+              />
+              Refresh All
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
         <FlowSettingsModal
           open={openSettings}
           setOpen={setOpenSettings}
@@ -474,7 +289,7 @@ export const MenuBar = ({}: {}): JSX.Element => {
       <div className={"hidden w-28 shrink-0 items-center sm:flex"}>
         {!autoSaving && (
           <Button
-            variant="primary"
+            // variant="primary"
             size="icon"
             disabled={autoSaving || !changesNotSaved || isBuilding}
             className={cn("mr-1 h-9 px-2")}
@@ -496,13 +311,13 @@ export const MenuBar = ({}: {}): JSX.Element => {
                 : "Never")
             ) : (
               <div className="flex w-48 flex-col gap-1 py-1">
-                <h2 className="text-base font-semibold">
+                <h2 className="text-base">
                   Auto-saving is disabled
                 </h2>
-                <p className="text-muted-foreground">
+                <p className="  ">
                   <a
                     href="https://docs.langflow.org/configuration-auto-saving"
-                    className="text-primary underline"
+                    className="text-white underline"
                   >
                     Enable auto-saving
                   </a>{" "}
@@ -514,9 +329,9 @@ export const MenuBar = ({}: {}): JSX.Element => {
           side="bottom"
           styleClasses="cursor-default z-10"
         >
-          <div className="flex cursor-default items-center gap-2 truncate text-sm text-muted-foreground">
+          <div className="flex cursor-default items-center gap-2 truncate text-sm   ">
             <div className="flex cursor-default items-center gap-2 truncate text-sm">
-              <div className="w-full truncate text-xs">
+              <div className="w-full truncate text-xs text-white">
                 {printByBuildStatus()}
               </div>
             </div>
@@ -530,7 +345,7 @@ export const MenuBar = ({}: {}): JSX.Element => {
               }}
               className={
                 isBuilding
-                  ? "hidden items-center gap-1.5 text-xs text-status-red sm:flex"
+                  ? "hidden items-center gap-1.5 text-xs text-white sm:flex"
                   : "hidden"
               }
             >

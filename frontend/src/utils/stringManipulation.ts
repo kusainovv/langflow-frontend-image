@@ -33,34 +33,6 @@ function toUpperCase(str: string): string {
   return str.toUpperCase();
 }
 
-function noBlank(str: string): string {
-  const trim = str.trim();
-  if (trim === "") {
-    throw new Error("String is blank");
-  }
-  return trim;
-}
-
-function validCsv(str: string): string {
-  return str.trim().replace(/\s+/g, ",");
-}
-
-function validCommands(str: string): string {
-  return str
-    .trim()
-    .split(/[\s,]+/)
-    .flatMap((cmd) => {
-      cmd = cmd.trim();
-      cmd = cmd.replace(/\\/g, "/");
-      return cmd
-        .split("/")
-        .filter((part) => part.length > 0)
-        .map((part) => `/${part}`);
-    })
-    .filter((cmd) => cmd.length > 1)
-    .join(", ");
-}
-
 export function parseString(
   str: string,
   parsers: FieldParserType[] | FieldParserType,
@@ -76,61 +48,27 @@ export function parseString(
   }
 
   for (const parser of parsersArray) {
-    try {
-      switch (parser) {
-        case "snake_case":
-          result = toSnakeCase(result);
-          break;
-        case "camel_case":
-          result = toCamelCase(result);
-          break;
-        case "pascal_case":
-          result = toPascalCase(result);
-          break;
-        case "kebab_case":
-          result = toKebabCase(result);
-          break;
-        case "lowercase":
-          result = toLowerCase(result);
-          break;
-        case "uppercase":
-          result = toUpperCase(result);
-          break;
-        case "no_blank":
-          result = noBlank(result);
-          break;
-        case "valid_csv":
-          result = validCsv(result);
-          break;
-        case "commands":
-          result = validCommands(result);
-          break;
-      }
-    } catch (error) {
-      throw new Error(`Error in parser ${parser}`);
+    switch (parser) {
+      case "snake_case":
+        result = toSnakeCase(result);
+        break;
+      case "camel_case":
+        result = toCamelCase(result);
+        break;
+      case "pascal_case":
+        result = toPascalCase(result);
+        break;
+      case "kebab_case":
+        result = toKebabCase(result);
+        break;
+      case "lowercase":
+        result = toLowerCase(result);
+        break;
+      case "uppercase":
+        result = toUpperCase(result);
+        break;
     }
   }
 
   return result;
 }
-
-export const getStatusColor = (status: string): string => {
-  const amberStatuses = [
-    "initializing",
-    "pending",
-    "hibernating",
-    "hiberated",
-    "maintenance",
-    "parked",
-  ];
-
-  if (amberStatuses.includes(status?.toLowerCase())) {
-    return "text-accent-amber-foreground";
-  }
-
-  if (status?.toLowerCase() === "terminating") {
-    return "red-500";
-  }
-
-  return "";
-};

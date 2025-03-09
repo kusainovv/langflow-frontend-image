@@ -44,21 +44,21 @@ export default function AccordionComponent({
         value={value}
         onValueChange={!disabled ? setValue : () => {}}
       >
-        <AccordionItem value={keyValue!} className="border-b">
+        <AccordionItem value={keyValue!} className="border-b shadow-button bg-silver">
           <AccordionTrigger
             onClick={() => {
               handleClick();
             }}
             disabled={disabled}
             className={cn(
-              sideBar ? "w-full bg-muted px-[0.75rem] py-[0.5rem]" : "ml-3",
+              sideBar ? "w-full   px-[0.75rem] py-[0.5rem]" : "ml-3",
               disabled ? "cursor-not-allowed" : "cursor-pointer",
             )}
           >
             {trigger}
           </AccordionTrigger>
           <AccordionContent>
-            <div className="AccordionContent flex flex-col">{children}</div>
+            <div className="AccordionContent flex flex-col bg-light-gray">{children}</div>
           </AccordionContent>
         </AccordionItem>
       </Accordion>

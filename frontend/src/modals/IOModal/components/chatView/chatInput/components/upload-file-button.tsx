@@ -14,7 +14,7 @@ const UploadFileButton = ({
       side="right"
       content="Attach image (png, jpg, jpeg)"
     >
-      <div>
+      <Button disabled={isBuilding}>
         <input
           disabled={isBuilding}
           type="file"
@@ -22,19 +22,18 @@ const UploadFileButton = ({
           style={{ display: "none" }}
           onChange={handleFileChange}
         />
-        <Button
-          disabled={isBuilding}
-          className={`flex h-[32px] w-[32px] items-center justify-center rounded-md bg-muted font-bold transition-all ${
+        <div
+          className={`flex items-center justify-center font-bold transition-all ${
             isBuilding
               ? "cursor-not-allowed"
-              : "text-muted-foreground hover:text-primary"
-          }`}
+              : "   hover:text-black"
+          } p-0`}
           onClick={handleButtonClick}
-          unstyled
+          
         >
-          <ForwardedIconComponent className="h-[18px] w-[18px]" name="Image" />
-        </Button>
-      </div>
+          <ForwardedIconComponent className="h-[6px] w-[6px]" name="Image" />
+        </div>
+      </Button>
     </ShadTooltip>
   );
 };

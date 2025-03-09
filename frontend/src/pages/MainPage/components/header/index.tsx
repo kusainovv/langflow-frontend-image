@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { debounce } from "lodash";
 import { useCallback, useEffect, useState } from "react";
+import { styleText } from "util";
 
 interface HeaderComponentProps {
   flowType: "flows" | "components";
@@ -52,7 +53,7 @@ const HeaderComponent = ({
   return (
     <>
       <div
-        className="flex items-center pb-8 text-xl font-semibold"
+        className="flex items-center pb-8 text-xl  "
         data-testid="mainpage_title"
       >
         <div className="h-7 w-10 transition-all group-data-[open=true]/sidebar-wrapper:md:w-0 lg:hidden">
@@ -79,11 +80,11 @@ const HeaderComponent = ({
                 id={`${type}-btn`}
                 data-testid={`${type}-btn`}
                 onClick={() => setFlowType(type as "flows" | "components")}
-                className={`border-b ${
+                className={`shadow-tab ${
                   flowType === type
-                    ? "border-b-2 border-foreground text-foreground"
-                    : "border-border text-muted-foreground hover:text-foreground"
-                } px-3 pb-2 text-sm`}
+                    ? "text-sm" // border-b-2 border-foreground text-foreground
+                    : "text-xs" // border-border    hover:text-foreground
+                } py-1 px-3 bg-silver border rounded-t-lg`}
               >
                 <div className={flowType === type ? "-mb-px" : ""}>
                   {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -103,10 +104,10 @@ const HeaderComponent = ({
                 value={debouncedSearch}
                 onChange={handleSearch}
               />
-              <div className="relative mr-2 flex rounded-lg border border-muted bg-muted">
+              <div className="relative mr-2 flex border     ">
                 {/* Sliding Indicator */}
                 <div
-                  className={`absolute top-[3px] h-[33px] w-8 transform rounded-lg bg-background shadow-md transition-transform duration-300 ${
+                  className={`absolute top-[3px] h-[33px] w-8 transform bg-silver shadow-md transition-transform duration-300 ${
                     view === "list"
                       ? "left-[2px] translate-x-0"
                       : "left-[6px] translate-x-full"
@@ -119,10 +120,10 @@ const HeaderComponent = ({
                     key={viewType}
                     unstyled
                     size="icon"
-                    className={`group relative z-10 mx-[2px] my-[2px] flex-1 rounded-lg p-2 ${
+                    className={`group relative z-10 mx-[2px] my-[2px] flex-1 p-2 ${
                       view === viewType
                         ? "text-foreground"
-                        : "text-muted-foreground hover:bg-muted"
+                        : "   hover: "
                     }`}
                     onClick={() => setView(viewType as "list" | "grid")}
                   >
@@ -136,22 +137,24 @@ const HeaderComponent = ({
               </div>
             </div>
             <ShadTooltip content="New Flow" side="bottom">
-              <Button
-                variant="default"
-                className="!px-3 md:!px-4 md:!pl-3.5"
-                onClick={() => setNewProjectModal(true)}
-                id="new-project-btn"
-                data-testid="new-project-btn"
-              >
-                <ForwardedIconComponent
-                  name="Plus"
-                  aria-hidden="true"
-                  className="h-4 w-4"
-                />
-                <span className="hidden whitespace-nowrap font-semibold md:inline">
-                  New Flow
-                </span>
-              </Button>
+              <div >
+                <Button
+                  variant="default"
+                  className="!px-3 !justify-center md:!px-4 md:!pl-3.5"
+                  onClick={() => setNewProjectModal(true)}
+                  id="new-project-btn"
+                  data-testid="new-project-btn"
+                >
+                  <ForwardedIconComponent
+                    name="Plus"
+                    aria-hidden="true"
+                    className="h-4 w-4"
+                  />
+                  <span className="hidden whitespace-nowrap   md:inline">
+                    New Flow
+                  </span>
+                </Button>
+              </div>
             </ShadTooltip>
           </div>
         </>

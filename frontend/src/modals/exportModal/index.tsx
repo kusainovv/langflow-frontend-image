@@ -11,24 +11,25 @@ import {
   SAVE_WITH_API_CHECKBOX,
 } from "../../constants/constants";
 import useAlertStore from "../../stores/alertStore";
-import { useDarkStore } from "../../stores/darkStore";
+// import { useDarkStore } from "../../stores/darkStore";
 import { downloadFlow, removeApiKeys } from "../../utils/reactflowUtils";
 import BaseModal from "../baseModal";
 
 const ExportModal = forwardRef(
   (props: { children: ReactNode }, ref): JSX.Element => {
-    const version = useDarkStore((state) => state.version);
+    const version = ""
+    // const version = useDarkStore((state) => state.version);
     const setNoticeData = useAlertStore((state) => state.setNoticeData);
     const [checked, setChecked] = useState(false);
     const currentFlow = useFlowStore((state) => state.currentFlow);
+
     useEffect(() => {
-      setName(currentFlow?.name ?? "");
-      setDescription(currentFlow?.description ?? "");
-    }, [currentFlow?.name, currentFlow?.description]);
-    const [name, setName] = useState(currentFlow?.name ?? "");
-    const [description, setDescription] = useState(
-      currentFlow?.description ?? "",
-    );
+      setName(currentFlow!.name);
+      setDescription(currentFlow!.description);
+    }, [currentFlow!.name, currentFlow!.description]);
+    
+    const [name, setName] = useState(currentFlow!.name);
+    const [description, setDescription] = useState(currentFlow!.description);
     const [open, setOpen] = useState(false);
 
     return (
@@ -44,7 +45,7 @@ const ExportModal = forwardRef(
                 data: currentFlow!.data!,
                 description,
                 name,
-                last_tested_version: version,
+                // last_tested_version: version,
                 endpoint_name: currentFlow!.endpoint_name,
                 is_component: false,
               },
@@ -61,7 +62,7 @@ const ExportModal = forwardRef(
                 data: currentFlow!.data!,
                 description,
                 name,
-                last_tested_version: version,
+                // last_tested_version: version,
                 endpoint_name: currentFlow!.endpoint_name,
                 is_component: false,
               }),
@@ -81,7 +82,7 @@ const ExportModal = forwardRef(
             aria-hidden="true"
           />
         </BaseModal.Header>
-        <BaseModal.Content>
+        <BaseModal.Content className="p-4">
           <EditFlowSettings
             name={name}
             description={description}
@@ -100,7 +101,7 @@ const ExportModal = forwardRef(
               {SAVE_WITH_API_CHECKBOX}
             </label>
           </div>
-          <span className="mt-1 text-xs text-destructive">
+          <span className="mt-1 text-xs  ">
             {ALERT_SAVE_WITH_API}
           </span>
         </BaseModal.Content>

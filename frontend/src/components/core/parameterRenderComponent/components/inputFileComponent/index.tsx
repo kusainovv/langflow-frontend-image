@@ -100,9 +100,9 @@ export default function InputFileComponent({
                 data-testid="input-file-component"
                 type="text"
                 className={cn(
-                  "primary-input h-9 w-full cursor-pointer rounded-r-none text-sm focus:border-border focus:outline-none focus:ring-0",
-                  !value && "text-placeholder-foreground",
-                  editNode && "h-6",
+                  "primary-input h-9 w-full cursor-pointer text-sm focus:border-border min-h-[32px] focus:outline-none focus:ring-0",
+                  !value && "",
+                  editNode && "w-full h-6",
                 )}
                 value={value || "Upload a file..."}
                 readOnly
@@ -113,12 +113,12 @@ export default function InputFileComponent({
             <div>
               <Button
                 className={cn(
-                  "h-9 w-9 rounded-l-none",
+                  "h-full w-9  ",
                   value &&
-                    "bg-accent-emerald-foreground ring-accent-emerald-foreground hover:bg-accent-emerald-foreground",
+                    "bg-navy",
                   isDisabled &&
                     "relative top-[1px] h-9 ring-1 ring-border ring-offset-0 hover:ring-border",
-                  editNode && "h-6",
+                  editNode && "w-full h-6",
                 )}
                 onClick={handleButtonClick}
                 disabled={isDisabled}
@@ -128,9 +128,9 @@ export default function InputFileComponent({
                 <IconComponent
                   name={value ? "CircleCheckBig" : "Upload"}
                   className={cn(
-                    value && "text-background",
-                    isDisabled && "text-muted-foreground",
-                    "h-4 w-4",
+                    value && "text-black",
+                    isDisabled && "  ",
+                    "h-full w-4",
                   )}
                   strokeWidth={2}
                 />

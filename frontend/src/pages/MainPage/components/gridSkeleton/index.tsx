@@ -3,11 +3,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const GridSkeleton = () => {
   return (
-    <Card className="my-1 flex flex-col rounded-lg border border-border bg-background p-4">
+    <Card className="my-1 flex flex-col border border-border bg-silver p-4">
       <div className="flex w-full items-center gap-4">
         {/* Icon skeleton */}
-        <div className="flex rounded-lg">
-          <Skeleton className="h-[44px] w-[44px] rounded-lg" />
+        <div className="flex">
+          <Skeleton className="h-[44px] w-[44px]" />
         </div>
 
         <div className="flex w-full min-w-0 items-center justify-between">
@@ -18,7 +18,7 @@ const GridSkeleton = () => {
             <Skeleton className="h-4 w-[150px]" />
           </div>
           {/* Dropdown button skeleton */}
-          <Skeleton className="ml-2 h-10 w-10 rounded-md" />
+          <Skeleton className="ml-2 h-10 w-10" />
         </div>
       </div>
 

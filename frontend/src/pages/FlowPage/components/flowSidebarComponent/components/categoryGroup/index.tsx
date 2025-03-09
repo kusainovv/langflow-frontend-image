@@ -3,11 +3,11 @@ import {
   SidebarGroupContent,
   SidebarMenu,
 } from "@/components/ui/sidebar";
-import { SIDEBAR_BUNDLES } from "@/utils/styleUtils";
 import { memo } from "react";
 import { CategoryGroupProps } from "../../types";
 import { CategoryDisclosure } from "../categoryDisclouse";
 
+// components sidebar
 export const CategoryGroup = memo(function CategoryGroup({
   dataFilter,
   sortedCategories,
@@ -21,45 +21,24 @@ export const CategoryGroup = memo(function CategoryGroup({
   sensitiveSort,
 }: CategoryGroupProps) {
   return (
-    <SidebarGroup className="p-3">
+    <SidebarGroup className="p-4">
       <SidebarGroupContent>
         <SidebarMenu>
-          {Object.entries(dataFilter)
-            .filter(
-              ([categoryName, items]) =>
-                // filter out bundles
-                !SIDEBAR_BUNDLES.some((cat) => cat.name === categoryName) &&
-                categoryName !== "custom_component" &&
-                Object.keys(items).length > 0,
-            )
-            .sort(([aName], [bName]) => {
-              const categoryList =
-                search !== ""
-                  ? sortedCategories
-                  : CATEGORIES.map((c) => c.name);
-              const aIndex = categoryList.indexOf(aName);
-              const bIndex = categoryList.indexOf(bName);
-
-              // If neither is in CATEGORIES, keep their relative order
-              if (aIndex === -1 && bIndex === -1) return 0;
-              // If only a is not in CATEGORIES, put it after b
-              if (aIndex === -1) return 1;
-              // If only b is not in CATEGORIES, put it after a
-              if (bIndex === -1) return -1;
-              // If both are in CATEGORIES, sort by their index
-              return aIndex - bIndex;
-            })
-            .map(([categoryName]) => {
-              const item = CATEGORIES.find(
-                (cat) => cat.name === categoryName,
-              ) ?? {
-                name: categoryName,
-                icon: "folder",
-                display_name: categoryName,
-              };
-              return (
+          
+          {CATEGORIES.toSorted(
+            (a, b) =>
+              (search !== "" ? sortedCategories : CATEGORIES).findIndex(
+                (value) => value === a.name,
+              ) -
+              (search !== "" ? sortedCategories : CATEGORIES).findIndex(
+                (value) => value === b.name,
+              ),
+          ).map(
+            (item) =>
+              dataFilter[item.name] &&
+              Object.keys(dataFilter[item.name]).length > 0 && (
                 <CategoryDisclosure
-                  key={categoryName}
+                  key={item.name}
                   item={item}
                   openCategories={openCategories}
                   setOpenCategories={setOpenCategories}
@@ -69,8 +48,8 @@ export const CategoryGroup = memo(function CategoryGroup({
                   onDragStart={onDragStart}
                   sensitiveSort={sensitiveSort}
                 />
-              );
-            })}
+              ),
+          )}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>

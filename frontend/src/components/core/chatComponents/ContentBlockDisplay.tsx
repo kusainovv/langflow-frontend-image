@@ -58,7 +58,7 @@ export function ContentBlockDisplay({
           ease: "easeOut",
         }}
         className={cn(
-          "relative rounded-lg border border-border bg-background",
+          "relative border border-border bg-silver",
           "overflow-hidden",
         )}
       >
@@ -94,7 +94,7 @@ export function ContentBlockDisplay({
                 <Markdown
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeMathjax]}
-                  className="inline-block w-fit max-w-full text-[14px] font-semibold text-primary"
+                  className="inline-block w-fit max-w-full text-[14px]   text-black"
                 >
                   {headerTitle}
                 </Markdown>
@@ -160,7 +160,7 @@ export function ContentBlockDisplay({
                         className="overflow-hidden pl-4 pt-[16px] font-medium"
                       >
                         <Markdown
-                          className="text-[14px] font-semibold text-foreground"
+                          className="text-[14px]   text-foreground"
                           remarkPlugins={[remarkGfm]}
                           linkTarget="_blank"
                           rehypePlugins={[rehypeMathjax]}
@@ -177,7 +177,7 @@ export function ContentBlockDisplay({
                       </motion.div>
                     )}
                   </AnimatePresence>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm   ">
                     {block.contents.map((content, index) => (
                       <motion.div key={index}>
                         <AnimatePresence>

@@ -49,14 +49,14 @@ export const SelectOptions = ({
             <IconComponent
               name={"MoreHorizontal"}
               className={cn(
-                `w-4 stroke-[1.5] px-0 text-muted-foreground group-hover/menu-button:block group-hover/menu-button:text-foreground`,
+                `w-4 stroke-[1.5] px-0    group-hover/menu-button:block group-hover/menu-button:text-foreground`,
                 checkPathName(item.id!) ? "block" : "hidden",
               )}
             />
           </SelectTrigger>
         </ShadTooltip>
         <SelectContent align="end" alignOffset={-16} position="popper">
-          {item.name !== "My Projects 2" && (
+          {item.name !== "My Projects" && (
             <SelectItem
               id="rename-button"
               value="rename"
@@ -66,7 +66,7 @@ export const SelectOptions = ({
             </SelectItem>
           )}
           <SelectItem value="download" data-testid="btn-download-folder">
-            <FolderSelectItem name="Download" iconName="Download" />
+            <FolderSelectItem name="Download Content" iconName="Download" />
           </SelectItem>
           {index > 0 && (
             <SelectItem value="delete" data-testid="btn-delete-folder">

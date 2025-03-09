@@ -225,20 +225,20 @@ export default function PromptModal({
             </span>
             <IconComponent
               name="TerminalSquare"
-              className="h-6 w-6 pl-1 text-primary"
+              className="h-6 w-6 pl-1 text-black"
               aria-hidden="true"
             />
           </div>
         </div>
       </BaseModal.Header>
       <BaseModal.Content overflowHidden>
-        <div className={classNames("flex h-full w-full rounded-lg border")}>
+        <div className={classNames("flex h-full w-full border")}>
           {isEdit && !readonly ? (
             <Textarea
               id={"modal-" + id}
               data-testid={"modal-" + id}
               ref={textareaRef}
-              className="form-input h-full w-full resize-none rounded-lg border-0 custom-scroll focus-visible:ring-1"
+              className="form-input h-full w-full resize-none border-0 custom-scroll focus-visible:ring-1"
               value={inputValue}
               onBlur={() => {
                 setScrollPosition(textareaRef.current?.scrollTop || 0);
@@ -276,9 +276,9 @@ export default function PromptModal({
                 <div className="flex flex-wrap items-center gap-2">
                   <IconComponent
                     name="Braces"
-                    className="flex h-4 w-4 text-primary"
+                    className="flex h-4 w-4 text-black"
                   />
-                  <span className="text-md font-semibold text-primary">
+                  <span className="text-md   text-black">
                     Prompt Variables:
                   </span>
 
@@ -306,7 +306,7 @@ export default function PromptModal({
                   ))}
                 </div>
               </div>
-              <span className="mt-2 text-xs text-muted-foreground">
+              <span className="mt-2 text-xs   ">
                 Prompt variables can be created with any chosen name inside
                 curly brackets, e.g. {"{variable_name}"}
               </span>

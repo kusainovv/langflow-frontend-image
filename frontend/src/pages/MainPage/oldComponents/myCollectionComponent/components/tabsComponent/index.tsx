@@ -39,7 +39,7 @@ const TabsSearchComponent = ({
 
   return (
     <>
-      <div className="ml-4 flex w-full gap-2 border-b border-border">
+      <div className="bg-red-500">
         {tabsOptions.map((tabOption, index) => (
           <button
             key={index}
@@ -47,10 +47,11 @@ const TabsSearchComponent = ({
             disabled={loading}
             onClick={() => changeLocation(tabOption)}
             className={
-              (tabActive === tabOption
-                ? "border-b-2 border-primary p-3"
-                : "border-b-2 border-transparent p-3 text-muted-foreground hover:text-primary") +
-              (loading ? " cursor-not-allowed" : "")
+              // (tabActive === tabOption
+              //   ? "border-b-2 border-primary p-3"
+              //   : "border-b-2 border-transparent p-3    hover:text-black") +
+              // (loading ? " cursor-not-allowed" : "")
+              "bg-red-500"
             }
           >
             {tabOption}

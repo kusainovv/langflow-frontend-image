@@ -12,13 +12,14 @@ import {
   ENABLE_NEW_LOGO,
 } from "@/customization/feature-flags";
 import { useCustomNavigate } from "@/customization/hooks/use-custom-navigate";
-import useTheme from "@/customization/hooks/use-custom-theme";
-import { useResetDismissUpdateAll } from "@/hooks/use-reset-dismiss-update-all";
+// import useTheme from "@/customization/hooks/use-custom-theme";
 import useAlertStore from "@/stores/alertStore";
 import { useEffect, useRef, useState } from "react";
 import { AccountMenu } from "./components/AccountMenu";
 import FlowMenu from "./components/FlowMenu";
 import GithubStarComponent from "./components/GithubStarButton";
+import { AspisIcon } from "@/icons/AspisIcon";
+import { ShadowForgeIcon } from "@/icons/ShadowForge";
 
 export default function AppHeader(): JSX.Element {
   const notificationCenter = useAlertStore((state) => state.notificationCenter);
@@ -27,7 +28,7 @@ export default function AppHeader(): JSX.Element {
   const lastPath = window.location.pathname.split("/").filter(Boolean).pop();
   const notificationRef = useRef<HTMLButtonElement | null>(null);
   const notificationContentRef = useRef<HTMLDivElement | null>(null);
-  useTheme();
+  // useTheme();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -47,38 +48,32 @@ export default function AppHeader(): JSX.Element {
     };
   }, []);
 
-  useResetDismissUpdateAll();
-
   return (
-    <div
-      className="flex h-[62px] w-full items-center justify-between gap-2 border-b px-5 py-2.5 dark:bg-background"
-      data-testid="app-header"
-    >
+    <div className="flex h-[62px] w-full bg-gradient-to-r from-navy-gradient-start to-navy-gradient-end items-center justify-between gap-2 border-b px-5 py-2.5 dark:bg-silver">
       {/* Left Section */}
-      <div
-        className={`flex items-center gap-2`}
-        data-testid="header_left_section_wrapper"
-      >
-        <Button
-          unstyled
+      <div className={`flex items-center gap-2`}>
+        <div
           onClick={() => navigate("/")}
-          className="mr-1 flex h-8 w-8 items-center"
+          className="flex h-8 gap-2 text-sm items-center text-white cursor-pointer"
           data-testid="icon-ChevronLeft"
         >
-          {ENABLE_DATASTAX_LANGFLOW ? (
+          {/* {ENABLE_DATASTAX_LANGFLOW ? (
             <DataStaxLogo className="fill-black dark:fill-[white]" />
           ) : ENABLE_NEW_LOGO ? (
             <LangflowLogo className="h-5 w-6" />
           ) : (
-            <span className="fill-black text-2xl dark:fill-white">⛓️</span>
-          )}
-        </Button>
-        {ENABLE_DATASTAX_LANGFLOW && (
+            <></>
+            // <span className="fill-black text-2xl dark:fill-white">⛓️</span>
+          )} */}
+          <ShadowForgeIcon />
+        ShadowForge Foundry
+        </div>
+        {/* {ENABLE_DATASTAX_LANGFLOW && (
           <>
             <CustomOrgSelector />
             <CustomProductSelector />
           </>
-        )}
+        )} */}
       </div>
 
       {/* Middle Section */}
@@ -87,11 +82,8 @@ export default function AppHeader(): JSX.Element {
       </div>
 
       {/* Right Section */}
-      <div
-        className={`flex items-center gap-2`}
-        data-testid="header_right_section_wrapper"
-      >
-        {!ENABLE_DATASTAX_LANGFLOW && (
+      <div className={`flex items-center gap-2`}>
+        {/* {!ENABLE_DATASTAX_LANGFLOW && (
           <>
             <Button
               unstyled
@@ -103,7 +95,7 @@ export default function AppHeader(): JSX.Element {
               <GithubStarComponent />
             </Button>
           </>
-        )}
+        )} */}
         <AlertDropdown
           notificationRef={notificationContentRef}
           onClose={() => setActiveState(null)}
@@ -117,7 +109,7 @@ export default function AppHeader(): JSX.Element {
               <Button
                 ref={notificationRef}
                 variant="ghost"
-                className={`relative ${activeState === "notifications" ? "bg-accent text-accent-foreground" : ""}`}
+                className={`relative ${activeState === "notifications" ? "    " : ""}`}
                 onClick={() =>
                   setActiveState((prev) =>
                     prev === "notifications" ? null : "notifications",
@@ -128,7 +120,7 @@ export default function AppHeader(): JSX.Element {
                 <span
                   className={
                     notificationCenter
-                      ? `absolute left-[31px] top-[10px] h-1 w-1 rounded-full bg-destructive`
+                      ? `absolute w-[12px] h-[12px] right-[-12px] top-[-12px] h-1 w-1   bg-red-500`
                       : "hidden"
                   }
                 />
@@ -143,7 +135,7 @@ export default function AppHeader(): JSX.Element {
             </AlertDropdown>
           </ShadTooltip>
         </AlertDropdown>
-        {!ENABLE_DATASTAX_LANGFLOW && (
+        {/* {!ENABLE_DATASTAX_LANGFLOW && (
           <>
             <ShadTooltip
               content="Go to LangflowStore"
@@ -152,7 +144,7 @@ export default function AppHeader(): JSX.Element {
             >
               <Button
                 variant="ghost"
-                className={` ${lastPath === "store" ? "bg-accent text-accent-foreground" : ""}`}
+                className={` ${lastPath === "store" ? "    " : ""}`}
                 onClick={() => {
                   navigate("/store");
                 }}
@@ -216,7 +208,7 @@ export default function AppHeader(): JSX.Element {
               className="my-auto h-7 dark:border-zinc-700"
             />
           </>
-        )}
+        )} */}
         <div className="flex">
           <AccountMenu />
         </div>

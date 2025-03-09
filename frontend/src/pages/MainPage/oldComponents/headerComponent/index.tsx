@@ -66,7 +66,7 @@ const HeaderComponent = ({
               >
                 <IconComponent
                   name="FileDown"
-                  className={cn("h-5 w-5 text-primary transition-all")}
+                  className={cn("h-5 w-5 text-black transition-all")}
                 />
               </Button>
             </ShadTooltip>
@@ -88,7 +88,7 @@ const HeaderComponent = ({
               >
                 <IconComponent
                   name="Copy"
-                  className={cn("h-5 w-5 text-primary transition-all")}
+                  className={cn("h-5 w-5 text-black transition-all")}
                 />
               </Button>
             </ShadTooltip>
@@ -111,7 +111,7 @@ const HeaderComponent = ({
                 <IconComponent
                   name="Trash2"
                   className={cn(
-                    "h-5 w-5 text-primary transition-all",
+                    "h-5 w-5 text-black transition-all",
                     disableFunctions ? "" : "hover:text-status-red",
                   )}
                 />

@@ -92,7 +92,7 @@ const HomePage = ({ type }) => {
           {/* mt-10 to mt-8 for Datastax LF */}
           <div className="flex flex-1 flex-col justify-start px-5 pt-10">
             <div className="flex h-full flex-col justify-start">
-              <HeaderComponent
+              {/* <HeaderComponent
                 folderName={folderName}
                 flowType={flowType}
                 setFlowType={setFlowType}
@@ -101,7 +101,7 @@ const HomePage = ({ type }) => {
                 setNewProjectModal={setNewProjectModal}
                 setSearch={onSearch}
                 isEmptyFolder={isEmptyFolder}
-              />
+              /> */}
               {isEmptyFolder ? (
                 <EmptyFolder setOpenModal={setNewProjectModal} />
               ) : (
@@ -133,7 +133,7 @@ const HomePage = ({ type }) => {
                       </div>
                     )
                   ) : flowType === "flows" ? (
-                    <div className="pt-2 text-center text-sm text-secondary-foreground">
+                    <div className="pt-2 text-center text-sm text-black">
                       No flows in this folder.{" "}
                       <a
                         onClick={() => setNewProjectModal(true)}
@@ -144,7 +144,7 @@ const HomePage = ({ type }) => {
                       , or browse the store.
                     </div>
                   ) : (
-                    <div className="pt-2 text-center text-sm text-secondary-foreground">
+                    <div className="pt-2 text-center text-sm text-black">
                       No saved or custom components. Learn more about{" "}
                       <a
                         href="https://docs.langflow.org/components-custom-components"

@@ -1,6 +1,9 @@
 import ForwardedIconComponent from "../../components/common/genericIconComponent";
+import Checkmark from "../../components/ui/checkmark";
+import Loading from "../../components/ui/loading";
 import Xmark from "../../components/ui/xmark";
 import { BuildStatus } from "../../constants/enums";
+import { VertexBuildTypeAPI } from "../../types/api";
 
 const useIconStatus = (buildStatus: BuildStatus | undefined) => {
   const conditionError = buildStatus === BuildStatus.ERROR;
@@ -24,7 +27,7 @@ const useIconStatus = (buildStatus: BuildStatus | undefined) => {
         icon: (
           <Xmark
             isVisible={true}
-            className="h-4 w-4 fill-current stroke-2 text-destructive"
+            className="h-4 w-4 fill-current stroke-2  "
           />
         ),
       },
@@ -33,7 +36,7 @@ const useIconStatus = (buildStatus: BuildStatus | undefined) => {
         icon: (
           <ForwardedIconComponent
             name="CircleOff"
-            className="h-4 w-4 text-muted-foreground"
+            className="h-4 w-4   "
           />
         ),
       },

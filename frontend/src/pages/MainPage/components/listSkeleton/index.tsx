@@ -3,12 +3,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const ListSkeleton = () => {
   return (
-    <Card className="my-2 flex flex-row justify-between rounded-lg border border-border bg-background p-4">
+    <Card className="my-2 flex flex-row justify-between border border-border bg-silver p-4">
       {/* left side */}
       <div className="flex min-w-0 items-center gap-4">
         {/* Icon skeleton */}
-        <div className="flex h-[52px] w-[52px] items-center justify-center rounded-lg">
-          <Skeleton className="h-full w-full rounded-lg" />
+        <div className="flex h-[52px] w-[52px] items-center justify-center">
+          <Skeleton className="h-full w-full" />
         </div>
 
         <div className="flex min-w-0 flex-col justify-start gap-2">
@@ -24,7 +24,7 @@ const ListSkeleton = () => {
 
       {/* right side */}
       <div className="ml-5 flex items-center gap-2">
-        <Skeleton className="h-10 w-10 rounded-md" />
+        <Skeleton className="h-10 w-10" />
       </div>
     </Card>
   );

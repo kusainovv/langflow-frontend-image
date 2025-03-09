@@ -29,7 +29,7 @@ export const GradientSave = forwardRef<
     <>
       <ForwardedIconComponent
         name="Save"
-        stroke="url(#x-gradient)"
+        // stroke="url(#x-gradient)"
         ref={ref}
         {...props}
       />

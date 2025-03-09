@@ -28,7 +28,7 @@ export const usePatchUpdateFlow: useMutationFunctionType<
       description: payload.description,
       folder_id: payload.folder_id || null,
       endpoint_name: payload.endpoint_name || null,
-      locked: payload.locked || false,
+      locked: payload.locked || null,
     });
 
     return response.data;

@@ -65,7 +65,7 @@ export default function SelectionMenu({
       <div className="h-10 w-28 overflow-hidden">
         <div
           className={
-            "duration-400 h-10 w-24 rounded-md border border-indigo-300 bg-background px-2.5 text-primary shadow-inner transition-all ease-in-out" +
+            "duration-400 h-10 w-24 border border-indigo-300 bg-silver px-2.5 text-black shadow-inner transition-all ease-in-out" +
             (isTransitioning ? " opacity-100" : " opacity-0")
           }
         >
@@ -75,7 +75,7 @@ export default function SelectionMenu({
                 unstyled
                 className={`${
                   disable
-                    ? "flex h-full w-full cursor-not-allowed items-center justify-between text-sm text-muted-foreground"
+                    ? "flex h-full w-full cursor-not-allowed items-center justify-between text-sm   "
                     : "flex h-full w-full items-center justify-between text-sm"
                 }`}
                 onClick={onClick}
@@ -85,7 +85,7 @@ export default function SelectionMenu({
                 <GradientGroup
                   strokeWidth={1.5}
                   size={22}
-                  className="text-primary"
+                  className="text-black"
                   disabled={disable}
                 />
                 Group
@@ -96,7 +96,7 @@ export default function SelectionMenu({
               unstyled
               className={`${
                 disable
-                  ? "flex h-full w-full cursor-not-allowed items-center justify-between text-sm text-muted-foreground"
+                  ? "flex h-full w-full cursor-not-allowed items-center justify-between text-sm   "
                   : "flex h-full w-full items-center justify-between text-sm"
               }`}
               onClick={onClick}
@@ -106,7 +106,7 @@ export default function SelectionMenu({
               <GradientGroup
                 strokeWidth={1.5}
                 size={22}
-                className="text-primary"
+                className="text-black"
                 disabled={disable}
               />
               Group

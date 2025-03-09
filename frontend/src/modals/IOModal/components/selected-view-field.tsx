@@ -23,7 +23,7 @@ export const SelectedViewField = ({
           !selectedViewField ? "hidden" : "",
         )}
       >
-        <div className="font-xl flex items-center justify-center gap-3 font-semibold">
+        <div className="font-xl flex items-center justify-center gap-3  ">
           {haveChat && (
             <button onClick={() => setSelectedViewField(undefined)}>
               <IconComponent

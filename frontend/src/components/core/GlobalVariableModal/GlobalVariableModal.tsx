@@ -130,7 +130,7 @@ export default function GlobalVariableModal({
       <BaseModal.Header description="This variable will be available for use across your flows.">
         <ForwardedIconComponent
           name="Globe"
-          className="h-6 w-6 pr-1 text-primary"
+          className="h-6 w-6 pr-1 text-black"
           aria-hidden="true"
         />
         {initialData ? "Update Variable" : "Create Variable"}
@@ -139,7 +139,7 @@ export default function GlobalVariableModal({
         {children}
       </BaseModal.Trigger>
       <BaseModal.Content>
-        <div className="flex h-full w-full flex-col gap-4">
+        <div className="flex h-full w-full flex-col gap-4 px-4">
           <div className="space-y-2">
             <Label>Type*</Label>
             <Tabs
@@ -203,16 +203,17 @@ export default function GlobalVariableModal({
               password={false}
               placeholder="Choose a field for the variable..."
               id="apply-to-fields"
-              popoverWidth="29rem"
+              popoverWidth="520px"
               optionsPlaceholder="Fields"
             />
-            <div className="text-xs text-muted-foreground">
+            <div className="text-xs   ">
               Selected fields will auto-apply the variable as a default value.
             </div>
           </div>
         </div>
       </BaseModal.Content>
       <BaseModal.Footer
+      
         submit={{
           label: `${initialData ? "Update" : "Save"} Variable`,
           dataTestId: "save-variable-btn",

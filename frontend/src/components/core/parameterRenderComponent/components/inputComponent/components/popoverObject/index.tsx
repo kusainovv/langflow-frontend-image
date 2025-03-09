@@ -78,7 +78,7 @@ const CustomInputPopoverObject = ({
               setShowOptions(true);
           }}
           required={required}
-          className={classNames(className!)}
+          // className={classNames(className!)}
           placeholder={placeholder}
           onChange={handleInputChange}
           onKeyDown={(e) => {
@@ -142,7 +142,7 @@ const CustomInputPopoverObject = ({
                         <div className="absolute opacity-100 transition-all group-hover:opacity-0">
                           <ForwardedIconComponent
                             name="Check"
-                            className="mr-2 h-4 w-4 text-primary"
+                            className="mr-2 h-4 w-4 text-black"
                             aria-hidden="true"
                           />
                         </div>

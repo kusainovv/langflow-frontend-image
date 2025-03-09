@@ -120,12 +120,19 @@ export function FlowSidebarComponent() {
   const sortedCategories = useMemo(() => {
     if (!searchResults || !searchFilteredData) return [];
 
-    return Object.keys(searchFilteredData).toSorted((a, b) =>
-      searchResults.fuseCategories.indexOf(b) <
-      searchResults.fuseCategories.indexOf(a)
-        ? 1
-        : -1,
-    );
+    return Object.keys(searchFilteredData)
+      .filter(
+        (category) =>
+          Object.keys(searchFilteredData[category]).length > 0 &&
+          (CATEGORIES.find((c) => c.name === category) ||
+            BUNDLES.find((b) => b.name === category)),
+      )
+      .toSorted((a, b) =>
+        searchResults.fuseCategories.indexOf(b) <
+        searchResults.fuseCategories.indexOf(a)
+          ? 1
+          : -1,
+      );
   }, [searchResults, searchFilteredData, CATEGORIES, BUNDLES]);
 
   const finalFilteredData = useMemo(() => {
@@ -298,6 +305,16 @@ export function FlowSidebarComponent() {
     [dataFilter],
   );
 
+  const hasCategoryItems = useMemo(
+    () =>
+      CATEGORIES.some(
+        (item) =>
+          dataFilter[item.name] &&
+          Object.keys(dataFilter[item.name]).length > 0,
+      ),
+    [dataFilter],
+  );
+
   return (
     <Sidebar
       collapsible="offcanvas"
@@ -325,18 +342,20 @@ export function FlowSidebarComponent() {
       <SidebarContent>
         {hasResults ? (
           <>
-            <CategoryGroup
-              dataFilter={dataFilter}
-              sortedCategories={sortedCategories}
-              CATEGORIES={CATEGORIES}
-              openCategories={openCategories}
-              setOpenCategories={setOpenCategories}
-              search={search}
-              nodeColors={nodeColors}
-              chatInputAdded={chatInputAdded}
-              onDragStart={onDragStart}
-              sensitiveSort={sensitiveSort}
-            />
+            {hasCategoryItems && (
+              <CategoryGroup
+                dataFilter={dataFilter}
+                sortedCategories={sortedCategories}
+                CATEGORIES={CATEGORIES}
+                openCategories={openCategories}
+                setOpenCategories={setOpenCategories}
+                search={search}
+                nodeColors={nodeColors}
+                chatInputAdded={chatInputAdded}
+                onDragStart={onDragStart}
+                sensitiveSort={sensitiveSort}
+              />
+            )}
             {hasBundleItems && (
               <MemoizedSidebarGroup
                 BUNDLES={BUNDLES}
@@ -357,13 +376,13 @@ export function FlowSidebarComponent() {
           <NoResultsMessage onClearSearch={handleClearSearch} />
         )}
       </SidebarContent>
-      <SidebarFooter className="border-t p-4 py-3">
+      {/* <SidebarFooter className="border-t p-4 py-3">
         <SidebarMenuButtons
           hasStore={hasStore}
           customComponent={customComponent}
           addComponent={addComponent}
         />
-      </SidebarFooter>
+      </SidebarFooter> */}
     </Sidebar>
   );
 }

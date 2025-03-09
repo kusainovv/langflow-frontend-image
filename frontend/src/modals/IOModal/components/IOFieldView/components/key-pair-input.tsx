@@ -50,7 +50,7 @@ const IOKeyPairInput = ({
                 <Input
                   type="text"
                   value={key.trim()}
-                  className={classNames(duplicateKey ? "input-invalid" : "")}
+                  // className={classNames(duplicateKey ? "input-invalid" : "")}
                   placeholder="Type key..."
                   onChange={(event) => handleChangeKey(event, index)}
                   disabled={!isInputField}
@@ -76,7 +76,7 @@ const IOKeyPairInput = ({
                   >
                     <IconComponent
                       name="Plus"
-                      className={"h-4 w-4 hover:text-accent-foreground"}
+                      className={"h-4 w-4 hover:  "}
                     />
                   </button>
                 ) : isList && isInputField ? (

@@ -7,6 +7,7 @@ import "ace-builds/src-noconflict/theme-twilight";
 import { usePostValidateCode } from "@/controllers/API/queries/nodes/use-post-validate-code";
 import { usePostValidateComponentCode } from "@/controllers/API/queries/nodes/use-post-validate-component-code";
 import useFlowStore from "@/stores/flowStore";
+import { cloneDeep } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import AceEditor from "react-ace";
 import ReactAce from "react-ace/lib/ace";
@@ -25,7 +26,7 @@ import {
   EDIT_CODE_TITLE,
 } from "../../constants/constants";
 import useAlertStore from "../../stores/alertStore";
-import { useDarkStore } from "../../stores/darkStore";
+// import { useDarkStore } from "../../stores/darkStore";
 import { CodeErrorDataTypeAPI } from "../../types/api";
 import { codeAreaModalPropsType } from "../../types/components";
 import BaseModal from "../baseModal";
@@ -48,7 +49,8 @@ export default function CodeAreaModal({
     mySetOpen !== undefined && myOpen !== undefined
       ? [myOpen, mySetOpen]
       : useState(false);
-  const dark = useDarkStore((state) => state.dark);
+      const dark = false
+  // const dark = useDarkStore((state) => state.dark);
   const [height, setHeight] = useState<string | null>(null);
   const setSuccessData = useAlertStore((state) => state.setSuccessData);
   const setErrorData = useAlertStore((state) => state.setErrorData);
@@ -60,7 +62,9 @@ export default function CodeAreaModal({
   } | null>(null);
 
   const { mutate: validateComponentCode } = usePostValidateComponentCode();
-  const setNode = useFlowStore((state) => state.setNode);
+  const currentFlow = useFlowStore((state) => state.currentFlow);
+  const nodes = useFlowStore((state) => state.nodes);
+  const setNodes = useFlowStore((state) => state.setNodes);
 
   useEffect(() => {
     // if nodeClass.template has more fields other than code and dynamic is true
@@ -123,6 +127,17 @@ export default function CodeAreaModal({
           if (data && type) {
             setValue(code);
             setNodeClass(data, type);
+            const currentNode = nodes.find((node) => node.id === componentId);
+            const currentNodeIndex = nodes.findIndex(
+              (node) => node.id === componentId,
+            );
+            const currentNodes = cloneDeep(nodes);
+
+            if (currentNode) {
+              currentNodes[currentNodeIndex].data.node = data;
+            }
+            setNodes(currentNodes);
+
             setError({ detail: { error: undefined, traceback: undefined } });
             setOpen(false);
           }
@@ -194,7 +209,7 @@ export default function CodeAreaModal({
         <span className="pr-2"> {EDIT_CODE_TITLE} </span>
         <IconComponent
           name="prompts"
-          className="h-6 w-6 pl-1 text-primary"
+          className="h-6 w-6 pl-1 text-black"
           aria-hidden="true"
         />
       </BaseModal.Header>
@@ -205,7 +220,7 @@ export default function CodeAreaModal({
           className="absolute left-[500%] top-[500%]"
           id="codeValue"
         />
-        <div className="flex h-full w-full flex-col transition-all">
+        <div className="flex h-full w-full flex-col transition-all p-4">
           <div className="h-full w-full">
             <AceEditor
               ref={codeRef}
@@ -224,7 +239,7 @@ export default function CodeAreaModal({
               onChange={(value) => {
                 setCode(value);
               }}
-              className="h-full min-w-full rounded-lg border-[1px] border-gray-300 custom-scroll dark:border-gray-600"
+              className="h-full min-w-full   border-[1px] border-gray-300 custom-scroll dark:border-gray-600"
             />
           </div>
           <div
@@ -249,7 +264,7 @@ export default function CodeAreaModal({
           </div>
           <div className="flex h-fit w-full justify-end">
             <Button
-              className="mt-3"
+              // className="mt-3"
               onClick={processCode}
               type="submit"
               id="checkAndSaveBtn"

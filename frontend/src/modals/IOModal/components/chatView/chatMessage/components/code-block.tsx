@@ -43,7 +43,7 @@ export function CodeBlock({ language, value }: Props): JSX.Element {
     URL.revokeObjectURL(url);
   };
   return (
-    <div className="codeblock font-sans text-[16px]">
+    <div className="codeblock font-w95fa text-[16px]">
       <div className="code-block-modal">
         <span className="code-block-modal-span">{language}</span>
 

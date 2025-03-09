@@ -7,7 +7,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "../../../../../components/ui/select-custom";
-import { useDarkStore } from "../../../../../stores/darkStore";
+// import { useDarkStore } from "../../../../../stores/darkStore";
 import useFlowsManagerStore from "../../../../../stores/flowsManagerStore";
 import { APIClassType } from "../../../../../types/api";
 import {
@@ -44,7 +44,8 @@ export const SidebarDraggableComponent = forwardRef(
     const { deleteFlow } = useDeleteFlow();
     const flows = useFlowsManagerStore((state) => state.flows);
 
-    const version = useDarkStore((state) => state.version);
+    const version = ""
+    // const version = useDarkStore((state) => state.version);
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
     const popoverRef = useRef<HTMLDivElement>(null);
 
@@ -96,7 +97,7 @@ export const SidebarDraggableComponent = forwardRef(
           <div
             draggable={!error}
             className={
-              "side-bar-components-border bg-background" +
+              "side-bar-components-border bg-silver" +
               (error ? " cursor-not-allowed select-none" : "")
             }
             style={{

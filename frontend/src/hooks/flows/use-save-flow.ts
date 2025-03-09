@@ -3,7 +3,7 @@ import { usePatchUpdateFlow } from "@/controllers/API/queries/flows/use-patch-up
 import useAlertStore from "@/stores/alertStore";
 import useFlowsManagerStore from "@/stores/flowsManagerStore";
 import useFlowStore from "@/stores/flowStore";
-import { AllNodeType, EdgeType, FlowType } from "@/types/flow";
+import { FlowType } from "@/types/flow";
 import { customStringify } from "@/utils/reactflowUtils";
 import { ReactFlowJsonObject } from "@xyflow/react";
 
@@ -52,10 +52,7 @@ const useSaveFlow = () => {
               { id: flow!.id },
               {
                 onSuccess: (flowResponse) => {
-                  flow!.data = flowResponse.data as ReactFlowJsonObject<
-                    AllNodeType,
-                    EdgeType
-                  >;
+                  flow!.data = flowResponse.data as ReactFlowJsonObject;
                 },
               },
             );

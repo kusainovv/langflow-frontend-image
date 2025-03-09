@@ -30,7 +30,7 @@ export const ToolbarButton = memo(
         size="node-toolbar"
         data-testid={dataTestId}
       >
-        <ForwardedIconComponent name={icon} className="h-4 w-4" />
+        {/* <ForwardedIconComponent name={icon} className="h-4 w-4" /> */}
         {label && <span className="text-[13px] font-medium">{label}</span>}
       </Button>
     </ShadTooltip>

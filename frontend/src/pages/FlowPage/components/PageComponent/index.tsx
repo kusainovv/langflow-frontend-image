@@ -2,6 +2,7 @@ import { DefaultEdge } from "@/CustomEdges";
 import NoteNode from "@/CustomNodes/NoteNode";
 
 import ForwardedIconComponent from "@/components/common/genericIconComponent";
+import LoadingComponent from "@/components/common/loadingComponent";
 import CanvasControls, {
   CustomControlButton,
 } from "@/components/core/canvasControlsComponent";
@@ -13,7 +14,6 @@ import {
   NOTE_NODE_MIN_WIDTH,
 } from "@/constants/constants";
 import { useGetBuildsQuery } from "@/controllers/API/queries/_builds";
-import CustomLoader from "@/customization/components/custom-loader";
 import { track } from "@/customization/utils/analytics";
 import useAutoSaveFlow from "@/hooks/flows/use-autosave-flow";
 import useUploadFlow from "@/hooks/flows/use-upload-flow";
@@ -86,9 +86,7 @@ export default function Page({ view }: { view?: boolean }): JSX.Element {
   const templates = useTypesStore((state) => state.templates);
   const setFilterEdge = useFlowStore((state) => state.setFilterEdge);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
-  const setPositionDictionary = useFlowStore(
-    (state) => state.setPositionDictionary,
-  );
+
   const reactFlowInstance = useFlowStore((state) => state.reactFlowInstance);
   const setReactFlowInstance = useFlowStore(
     (state) => state.setReactFlowInstance,
@@ -114,6 +112,7 @@ export default function Page({ view }: { view?: boolean }): JSX.Element {
   );
   const onConnect = useFlowStore((state) => state.onConnect);
   const setErrorData = useAlertStore((state) => state.setErrorData);
+  const setNoticeData = useAlertStore((state) => state.setNoticeData);
   const updateCurrentFlow = useFlowStore((state) => state.updateCurrentFlow);
   const [selectionMenuVisible, setSelectionMenuVisible] = useState(false);
   const edgeUpdateSuccessful = useRef(true);
@@ -186,7 +185,7 @@ export default function Page({ view }: { view?: boolean }): JSX.Element {
 
   useEffect(() => {
     useFlowStore.setState({ autoSaveFlow });
-  }, [autoSaveFlow]);
+  });
 
   function handleUndo(e: KeyboardEvent) {
     if (!isWrappedWithClass(e, "noflow")) {
@@ -339,15 +338,7 @@ export default function Page({ view }: { view?: boolean }): JSX.Element {
     // 👇 make moving the canvas undoable
     autoSaveFlow();
     updateCurrentFlow({ nodes });
-    setPositionDictionary({});
-  }, [
-    takeSnapshot,
-    autoSaveFlow,
-    nodes,
-    edges,
-    reactFlowInstance,
-    setPositionDictionary,
-  ]);
+  }, [takeSnapshot, autoSaveFlow, nodes, edges, reactFlowInstance]);
 
   const onSelectionDragStart: SelectionDragHandler = useCallback(() => {
     // 👇 make dragging a selection undoable
@@ -550,11 +541,10 @@ export default function Page({ view }: { view?: boolean }): JSX.Element {
             onReconnectEnd={onEdgeUpdateEnd}
             onNodeDragStart={onNodeDragStart}
             onSelectionDragStart={onSelectionDragStart}
-            elevateEdgesOnSelect={true}
             onSelectionEnd={onSelectionEnd}
             onSelectionStart={onSelectionStart}
             connectionRadius={30}
-            edgeTypes={edgeTypes}
+            // edgeTypes={edgeTypes}
             connectionLineComponent={ConnectionLineComponent}
             onDragOver={onDragOver}
             onNodeDragStop={onNodeDragStop}
@@ -562,7 +552,7 @@ export default function Page({ view }: { view?: boolean }): JSX.Element {
             onSelectionChange={onSelectionChange}
             deleteKeyCode={[]}
             fitView={isEmptyFlow.current ? false : true}
-            className="theme-attribution"
+            // className="theme-attribution"
             minZoom={0.01}
             maxZoom={8}
             zoomOnScroll={!view}
@@ -573,7 +563,7 @@ export default function Page({ view }: { view?: boolean }): JSX.Element {
             onPaneClick={onPaneClick}
             onEdgeClick={handleEdgeClick}
           >
-            <Background size={2} gap={20} className="" />
+            {/* <Background size={2} gap={20} className="" /> */}
             {!view && (
               <>
                 <CanvasControls>
@@ -589,7 +579,7 @@ export default function Page({ view }: { view?: boolean }): JSX.Element {
                         shadowBox.style.top = `${position.current.y - shadowBoxHeight / 2}px`;
                       }
                     }}
-                    iconClasses="text-primary"
+                    iconClasses="text-black"
                     testId="add_note"
                   />
                 </CanvasControls>
@@ -598,7 +588,7 @@ export default function Page({ view }: { view?: boolean }): JSX.Element {
             )}
             <Panel
               className={cn(
-                "react-flow__controls !m-2 flex gap-1.5 rounded-md border border-secondary-hover bg-background fill-foreground stroke-foreground p-1.5 text-primary shadow transition-all duration-300 [&>button]:border-0 [&>button]:bg-background hover:[&>button]:bg-accent",
+                "react-flow__controls !m-2 flex gap-1.5 border bg-silver fill-foreground stroke-foreground p-1.5 text-black shadow transition-all duration-300 [&>button]:border-0 [&>button]:bg-silver",
                 "pointer-events-auto opacity-100 group-data-[open=true]/sidebar-wrapper:pointer-events-none group-data-[open=true]/sidebar-wrapper:-translate-x-full group-data-[open=true]/sidebar-wrapper:opacity-0",
               )}
               position="top-left"
@@ -611,9 +601,7 @@ export default function Page({ view }: { view?: boolean }): JSX.Element {
                 <span className="text-foreground">Components</span>
               </SidebarTrigger>
             </Panel>
-            <div className={cn(componentsToUpdate.length === 0 && "hidden")}>
-              <UpdateAllComponents />
-            </div>
+            {componentsToUpdate.length > 0 && <UpdateAllComponents />}
             <SelectionMenu
               lastSelection={lastSelection}
               isVisible={selectionMenuVisible}
@@ -632,14 +620,12 @@ export default function Page({ view }: { view?: boolean }): JSX.Element {
               backgroundColor: `${shadowBoxBackgroundColor}`,
               opacity: 0.7,
               pointerEvents: "none",
-              // Prevent shadow-box from showing unexpectedly during initial renders
-              display: "none",
             }}
           ></div>
         </div>
       ) : (
         <div className="flex h-full w-full items-center justify-center">
-          <CustomLoader remSize={30} />
+          <LoadingComponent remSize={30} />
         </div>
       )}
     </div>

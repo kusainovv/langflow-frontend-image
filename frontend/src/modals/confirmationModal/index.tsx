@@ -9,9 +9,13 @@ import {
   TriggerProps,
 } from "../../types/components";
 import BaseModal from "../baseModal";
+import { cn } from "@/utils/utils";
 
-const Content: React.FC<ContentProps> = ({ children }) => {
-  return <div className="h-full w-full">{children}</div>;
+const Content: React.FC<ContentProps & { className?: string }> = ({ children, className }) => {
+  return <div className={cn(
+    "h-full w-full", 
+    // className
+  )}>{children}</div>;
 };
 const Trigger: React.FC<TriggerProps> = ({
   children,
@@ -78,7 +82,7 @@ function ConfirmationModal({
   };
 
   return (
-    <BaseModal {...props} open={open} setOpen={setModalOpen}>
+    <BaseModal {...props} className="" open={open} setOpen={setModalOpen}>
       <BaseModal.Trigger>{triggerChild}</BaseModal.Trigger>
       <BaseModal.Header description={titleHeader ?? null}>
         <span className="pr-2">{title}</span>
@@ -90,7 +94,7 @@ function ConfirmationModal({
           />
         )}
       </BaseModal.Header>
-      <BaseModal.Content>
+      <BaseModal.Content className={props.className}>
         {modalContentTitle && modalContentTitle != "" && (
           <>
             <strong>{modalContentTitle}</strong>

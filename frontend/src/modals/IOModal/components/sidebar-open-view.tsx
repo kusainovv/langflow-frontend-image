@@ -14,7 +14,7 @@ export const SidebarOpenView = ({
 }: SidebarOpenViewProps) => {
   return (
     <>
-      <div className="flex flex-col pl-3">
+      <div className="flex flex-col">
         <div className="flex flex-col gap-2 pb-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -29,7 +29,7 @@ export const SidebarOpenView = ({
                 <Button
                   data-testid="new-chat"
                   variant="ghost"
-                  className="flex h-8 w-8 items-center justify-center !p-0 hover:bg-secondary-hover"
+                  className="flex h-8 w-8 items-center justify-center !p-0"
                   onClick={(_) => {
                     setvisibleSession(undefined);
                     setSelectedViewField(undefined);

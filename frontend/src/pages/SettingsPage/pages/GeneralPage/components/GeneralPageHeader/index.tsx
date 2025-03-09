@@ -5,15 +5,15 @@ const GeneralPageHeaderComponent = () => {
     <>
       <div className="flex w-full items-center justify-between gap-4 space-y-0.5">
         <div className="flex w-full flex-col">
-          <h2 className="flex items-center text-lg font-semibold tracking-tight">
+          <h2 className="flex items-center text-lg   tracking-tight">
             General
             <ForwardedIconComponent
               name="SlidersHorizontal"
-              className="ml-2 h-5 w-5 text-primary"
+              className="ml-2 h-5 w-5 text-black"
             />
           </h2>
-          <p className="text-sm text-muted-foreground">
-            Manage settings related to Langflow and your account.
+          <p className="text-sm   ">
+            Manage settings and your account.
           </p>
         </div>
       </div>

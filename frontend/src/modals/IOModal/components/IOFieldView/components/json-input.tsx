@@ -1,7 +1,7 @@
 import { IOJSONInputComponentType } from "@/types/components";
 import { useEffect, useRef } from "react";
 import JsonView from "react18-json-view";
-import { useDarkStore } from "../../../../../stores/darkStore";
+// import { useDarkStore } from "../../../../../stores/darkStore";
 
 export default function IoJsonInput({
   value = [],
@@ -12,7 +12,8 @@ export default function IoJsonInput({
   useEffect(() => {
     if (value) onChange(value);
   }, [value]);
-  const isDark = useDarkStore((state) => state.dark);
+  const isDark = true
+  // const isDark = useDarkStore((state) => state.dark);
 
   const ref = useRef<any>(null);
   ref.current = value;

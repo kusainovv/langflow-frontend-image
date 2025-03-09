@@ -79,7 +79,7 @@ const ShadTooltip = memo(
           <TooltipTrigger asChild={asChild}>{children}</TooltipTrigger>
           <MemoizedTooltipContent
             ref={ref}
-            className={tooltipClassName}
+            className={"bg-silver px-6 shadow-tooltip"}
             side={side}
             avoidCollisions={avoidCollisions}
             align={align}

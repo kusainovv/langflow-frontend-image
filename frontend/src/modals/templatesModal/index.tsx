@@ -62,25 +62,25 @@ export default function TemplatesModal({
       <BaseModal.Content overflowHidden className="flex flex-col p-0">
         <div className="flex h-full">
           <SidebarProvider width="15rem" defaultOpen={false}>
-            <Nav
+            {/* <Nav
               categories={categories}
               currentTab={currentTab}
               setCurrentTab={setCurrentTab}
-            />
+            /> */}
             <main className="flex flex-1 flex-col gap-4 overflow-hidden p-6 md:gap-8">
-              {currentTab === "get-started" ? (
+              {/* {currentTab === "get-started" ? (
                 <GetStartedComponent />
               ) : (
                 <TemplateContentComponent
                   currentTab={currentTab}
                   categories={categories.flatMap((category) => category.items)}
                 />
-              )}
+              )} */}
               <BaseModal.Footer>
                 <div className="flex w-full flex-col justify-between gap-4 pb-4 sm:flex-row sm:items-center">
                   <div className="flex flex-col items-start justify-center">
-                    <div className="font-semibold">Start from scratch</div>
-                    <div className="text-sm text-muted-foreground">
+                    <div className=" ">Start from scratch</div>
+                    <div className="text-sm   ">
                       Begin with a fresh flow to build from scratch.
                     </div>
                   </div>

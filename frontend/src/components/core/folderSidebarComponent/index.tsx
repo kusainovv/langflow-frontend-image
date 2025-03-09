@@ -16,10 +16,11 @@ export default function FolderSidebarNav({
 }: SidebarNavProps) {
   const location = useLocation();
 
-  return (
+  return <>
+    <h1>folder sidebar main page</h1>
     <SideBarFoldersButtonsComponent
       handleChangeFolder={handleChangeFolder}
       handleDeleteFolder={handleDeleteFolder}
     />
-  );
+    </>
 }

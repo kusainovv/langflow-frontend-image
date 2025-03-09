@@ -49,22 +49,22 @@ export default function LoginAdminPage() {
   }
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center bg-muted">
+    <div className="flex h-full w-full flex-col items-center justify-center  ">
       <div className="flex w-72 flex-col items-center justify-center gap-2">
-        {ENABLE_NEW_LOGO ? (
+        {/* {ENABLE_NEW_LOGO ? (
           <LangflowLogo
             title="Langflow logo"
             className="h-10 w-10 scale-[1.5]"
           />
         ) : (
           <span className="mb-4 text-5xl">⛓️</span>
-        )}
-        <span className="mb-6 text-2xl font-semibold text-primary">Admin</span>
+        )} */}
+        <span className="mb-6 text-2xl   text-black">Admin</span>
         <Input
           onChange={({ target: { value } }) => {
             handleInput({ target: { name: "username", value } });
           }}
-          className="bg-background"
+          // className="bg-silver"
           placeholder="Username"
         />
         <Input
@@ -72,7 +72,7 @@ export default function LoginAdminPage() {
           onChange={({ target: { value } }) => {
             handleInput({ target: { name: "password", value } });
           }}
-          className="bg-background"
+          // className="bg-silver"
           placeholder="Password"
         />
         <Button

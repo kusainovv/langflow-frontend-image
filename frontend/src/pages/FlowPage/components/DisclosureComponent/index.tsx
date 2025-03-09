@@ -23,7 +23,7 @@ export default function DisclosureComponent({
             >
               <div className={"flex gap-4" + (isChild ? " pl-2" : "")}>
                 {/* BUG ON THIS ICON */}
-                <Icon strokeWidth={1.5} size={22} className="text-primary" />
+                <Icon strokeWidth={1.5} size={22} className="text-black" />
                 <span className="components-disclosure-title">{title}</span>
               </div>
               <div className="components-disclosure-div">

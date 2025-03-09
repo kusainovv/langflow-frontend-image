@@ -38,7 +38,7 @@ export const ChatViewWrapper = ({
           </div>
         )}
         <div className={cn(sidebarOpen ? "lg:hidden" : "")}>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 bg-red-500">
             <Button
               variant="ghost"
               size="icon"
@@ -81,7 +81,8 @@ export const ChatViewWrapper = ({
       </div>
       <div
         className={cn(
-          visibleSession ? "h-[95%]" : "h-full",
+          // visibleSession ? "h-[95%]" : "h-full",
+          "h-full",
           sidebarOpen
             ? "pointer-events-none blur-sm lg:pointer-events-auto lg:blur-0"
             : "",

@@ -1,9 +1,9 @@
 import AppHeader from "@/components/core/appHeaderComponent";
-import useTheme from "@/customization/hooks/use-custom-theme";
+// import useTheme from "@/customization/hooks/use-custom-theme";
 import { Outlet } from "react-router-dom";
 
 export function DashboardWrapperPage() {
-  useTheme();
+  // useTheme();
 
   return (
     <div className="flex h-screen w-full flex-col overflow-hidden">

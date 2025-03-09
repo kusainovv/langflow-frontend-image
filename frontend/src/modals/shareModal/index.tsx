@@ -13,7 +13,7 @@ import {
   updateFlowStore,
 } from "../../controllers/API";
 import useAlertStore from "../../stores/alertStore";
-import { useDarkStore } from "../../stores/darkStore";
+// import { useDarkStore } from "../../stores/darkStore";
 import { useStoreStore } from "../../stores/storeStore";
 import { FlowType } from "../../types/flow";
 import {
@@ -41,7 +41,8 @@ export default function ShareModal({
   setOpen?: (open: boolean) => void;
   disabled?: boolean;
 }): JSX.Element {
-  const version = useDarkStore((state) => state.version);
+  const version = ""
+  // const version = useDarkStore((state) => state.version);
   const hasStore = useStoreStore((state) => state.hasStore);
   const hasApiKey = useStoreStore((state) => state.hasApiKey);
 
@@ -98,7 +99,7 @@ export default function ShareModal({
       data: component!.data,
       description,
       name,
-      last_tested_version: version,
+      // last_tested_version: version,
       is_component: is_component,
     });
 
@@ -171,7 +172,7 @@ export default function ShareModal({
               current?
             </span>
             <br></br>
-            <span className="text-xs text-destructive">
+            <span className="text-xs  ">
               Note: This action is irreversible.
             </span>
           </ConfirmationModal.Content>
@@ -223,7 +224,7 @@ export default function ShareModal({
         <BaseModal.Content>
           {open && (
             <>
-              <div className="w-full rounded-lg border border-border p-4">
+              <div className="w-full border border-border p-4">
                 <EditFlowSettings name={name} description={description} />
               </div>
               <div className="mt-3 flex h-8 w-full">
@@ -251,7 +252,7 @@ export default function ShareModal({
                   Set {nameComponent} status to public
                 </label>
               </div>
-              <span className="text-xs text-destructive">
+              <span className="text-xs  ">
                 <b>Attention:</b> API keys in specified fields are automatically
                 removed upon sharing.
               </span>

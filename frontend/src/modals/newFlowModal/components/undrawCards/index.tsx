@@ -18,6 +18,7 @@ import {
 } from "../../../../components/ui/card";
 import { useFolderStore } from "../../../../stores/foldersStore";
 import { UndrawCardComponentProps } from "../../../../types/components";
+import { updateIds } from "../../../../utils/reactflowUtils";
 import { useFlowCardClick } from "../hooks/use-redirect-flow-card-click";
 
 export default function UndrawCardComponent({
@@ -137,15 +138,15 @@ export default function UndrawCardComponent({
   return (
     <Card
       onClick={() => handleFlowCardClick(flow, folderIdUrl!)}
-      className="h-64 w-80 cursor-pointer bg-background pt-4"
+      className="h-64 w-80 cursor-pointer bg-silver pt-4"
     >
       <CardContent className="h-full w-full">
-        <div className="flex h-full w-full flex-col items-center justify-center rounded-md bg-muted p-1 align-middle">
+        <div className="flex h-full w-full flex-col items-center justify-center     p-1 align-middle">
           {selectImage()}
         </div>
       </CardContent>
       <CardDescription className="px-6 pb-4">
-        <CardTitle className="text-lg text-primary">{flow.name}</CardTitle>
+        <CardTitle className="text-lg text-black">{flow.name}</CardTitle>
       </CardDescription>
     </Card>
   );

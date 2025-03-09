@@ -45,8 +45,6 @@ export function getCurlRunCode({
  * @param {string} options.endpointName - The name of the webhook endpoint.
  * @returns {string} The cURL command.
  */
-
-// KEEP THIS FOR LFOSS
 export function getCurlWebhookCode({
   flowId,
   isAuth,

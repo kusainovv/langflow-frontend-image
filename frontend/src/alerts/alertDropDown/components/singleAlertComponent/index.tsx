@@ -1,7 +1,5 @@
 import { CustomLink } from "@/customization/components/custom-link";
 import { useState } from "react";
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import IconComponent from "../../../../components/common/genericIconComponent";
 import { SingleAlertComponentType } from "../../../../types/alerts";
 
@@ -14,7 +12,7 @@ export default function SingleAlert({
 
   return type === "error" ? (
     <div
-      className="mx-2 mb-2 flex rounded-md bg-error-background p-3"
+      className="mx-2 mb-2 flex   bg-error-background p-3"
       key={dropItem.id}
     >
       <div className="flex-shrink-0">
@@ -30,35 +28,10 @@ export default function SingleAlert({
         </h3>
         {dropItem.list ? (
           <div className="mt-2 text-sm text-error-foreground">
-            <ul className="list-disc space-y-1 pl-5 align-top">
+            <ul className="list-disc space-y-1 pl-5">
               {dropItem.list.map((item, idx) => (
                 <li className="word-break-break-word" key={idx}>
-                  <Markdown
-                    linkTarget="_blank"
-                    remarkPlugins={[remarkGfm]}
-                    className="align-text-top"
-                    components={{
-                      a: ({ node, ...props }) => (
-                        <a
-                          href={props.href}
-                          target="_blank"
-                          className="underline"
-                          rel="noopener noreferrer"
-                        >
-                          {props.children}
-                        </a>
-                      ),
-                      p({ node, ...props }) {
-                        return (
-                          <span className="inline-block w-fit max-w-full align-text-top">
-                            {props.children}
-                          </span>
-                        );
-                      },
-                    }}
-                  >
-                    {Array.isArray(item) ? item.join("\n") : item}
-                  </Markdown>
+                  {item}
                 </li>
               ))}
             </ul>
@@ -77,7 +50,7 @@ export default function SingleAlert({
                 removeAlert(dropItem.id);
               }, 500);
             }}
-            className="inline-flex rounded-md p-1.5 text-status-red"
+            className="inline-flex   p-1.5 text-status-red"
           >
             <span className="sr-only">Dismiss</span>
             <IconComponent
@@ -91,7 +64,7 @@ export default function SingleAlert({
     </div>
   ) : type === "notice" ? (
     <div
-      className="mx-2 mb-2 flex rounded-md bg-info-background p-3"
+      className="mx-2 mb-2 flex   bg-info-background p-3"
       key={dropItem.id}
     >
       <div className="flex-shrink-0 cursor-help">
@@ -109,7 +82,7 @@ export default function SingleAlert({
           {dropItem.link ? (
             <CustomLink
               to={dropItem.link}
-              className="whitespace-nowrap font-medium text-info-foreground hover:text-accent-foreground"
+              className="whitespace-nowrap font-medium text-info-foreground hover:  "
             >
               Details
             </CustomLink>
@@ -128,7 +101,7 @@ export default function SingleAlert({
                 removeAlert(dropItem.id);
               }, 500);
             }}
-            className="inline-flex rounded-md p-1.5 text-info-foreground"
+            className="inline-flex   p-1.5 text-info-foreground"
           >
             <span className="sr-only">Dismiss</span>
             <IconComponent
@@ -142,7 +115,7 @@ export default function SingleAlert({
     </div>
   ) : (
     <div
-      className="mx-2 mb-2 flex rounded-md bg-success-background p-3"
+      className="mx-2 mb-2 flex   bg-success-background p-3"
       key={dropItem.id}
     >
       <div className="flex-shrink-0">
@@ -167,7 +140,7 @@ export default function SingleAlert({
                 removeAlert(dropItem.id);
               }, 500);
             }}
-            className="inline-flex rounded-md p-1.5 text-status-green"
+            className="inline-flex   p-1.5 text-status-green"
           >
             <span className="sr-only">Dismiss</span>
             <IconComponent

@@ -78,7 +78,7 @@ export default function UserManagementModal({
           aria-hidden="true"
         />
       </BaseModal.Header>
-      <BaseModal.Content>
+      <BaseModal.Content className="p-4">
         <Form.Root
           onSubmit={(event) => {
             if (password !== confirmPassword) {
@@ -102,7 +102,7 @@ export default function UserManagementModal({
               >
                 <Form.Label className="data-[invalid]:label-invalid">
                   Username{" "}
-                  <span className="font-medium text-destructive">*</span>
+                  <span className="font-medium  ">*</span>
                 </Form.Label>
               </div>
               <Form.Control asChild>
@@ -137,7 +137,7 @@ export default function UserManagementModal({
                   >
                     <Form.Label className="data-[invalid]:label-invalid flex">
                       Password{" "}
-                      <span className="ml-1 mr-1 font-medium text-destructive">
+                      <span className="ml-1 mr-1 font-medium  ">
                         *
                       </span>
                       {pwdVisible && (
@@ -195,7 +195,7 @@ export default function UserManagementModal({
                   >
                     <Form.Label className="data-[invalid]:label-invalid flex">
                       Confirm password{" "}
-                      <span className="ml-1 mr-1 font-medium text-destructive">
+                      <span className="ml-1 mr-1 font-medium  ">
                         *
                       </span>
                       {confirmPwdVisible && (
@@ -235,7 +235,7 @@ export default function UserManagementModal({
                 </Form.Field>
               </div>
             </div>
-            <div className="flex gap-8">
+            <div className="flex mt-2 gap-8">
               <Form.Field name="is_active">
                 <div>
                   <Form.Label className="data-[invalid]:label-invalid mr-3">

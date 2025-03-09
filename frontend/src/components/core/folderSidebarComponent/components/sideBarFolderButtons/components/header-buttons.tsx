@@ -15,11 +15,14 @@ export const HeaderButtons = ({
   addNewFolder: () => void;
 }) => (
   <div className="flex shrink-0 items-center justify-between gap-2">
-    <SidebarTrigger className="lg:hidden">
-      <IconComponent name="PanelLeftClose" className="h-4 w-4" />
-    </SidebarTrigger>
+    <div>
+      {/* <SidebarTrigger className="w-fit lg:hidden"> */}
+        {/* <IconComponent name="PanelLeftClose" className="h-4 w-4" /> */}
+      {/* </SidebarTrigger> */}
+    </div>
 
-    <div className="flex-1 text-sm font-semibold">Folders</div>
+
+    <div className="flex-1 text-sm  ">Folders</div>
     <div className="flex items-center gap-1">
       <UploadFolderButton
         onClick={handleUploadFlowsToFolder}

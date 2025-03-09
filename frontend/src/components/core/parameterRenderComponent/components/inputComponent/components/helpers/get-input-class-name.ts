@@ -35,7 +35,7 @@ export const getInputClassName = ({
     })(),
     selected:
       isSelected || areOptionsSelected
-        ? "font-jetbrains text-sm font-medium text-foreground"
+        ? "font-w95fa text-sm font-medium text-foreground"
         : "",
   };
 

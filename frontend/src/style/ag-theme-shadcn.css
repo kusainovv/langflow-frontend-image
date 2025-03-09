@@ -1,6 +1,6 @@
 /* set the background color of many elements across the grid */
 .ag-theme-shadcn {
-  --ag-foreground-color: hsl(var(--foreground)) !important;
+  /* --ag-foreground-color: hsl(var(--foreground)) !important;
   --ag-background-color: hsl(var(--background)) !important;
   --ag-secondary-foreground-color: hsl(var(--secondary-foreground)) !important;
   --ag-data-color: hsl(var(--foreground)) !important;
@@ -12,8 +12,8 @@
   --ag-selected-row-background-color: hsl(var(--accent)) !important;
   --ag-menu-background-color: hsl(var(--accent)) !important;
   --ag-panel-background-color: hsl(var(--accent)) !important;
-  --ag-row-hover-color: hsl(var(--primary-foreground)) !important;
-  --ag-header-height: 2.5rem !important;
+  --ag-row-hover-color: hsl(var(--primary-foreground)) !important; */
+  /* --ag-header-height: 2.5rem !important; */
 }
 
 .ag-theme-shadcn .ag-paging-panel {
@@ -57,18 +57,18 @@
 
 .ag-body-horizontal-scroll-viewport::-webkit-scrollbar-track,
 .ag-body-vertical-scroll-viewport::-webkit-scrollbar-track {
-  background-color: hsl(var(--muted));
+  /* background-color: hsl(var(--muted)); */
 }
 
 .ag-body-horizontal-scroll-viewport::-webkit-scrollbar-thumb,
 .ag-body-vertical-scroll-viewport::-webkit-scrollbar-thumb {
-  background-color: hsl(var(--border));
-  border-radius: 999px;
+  /* background-color: hsl(var(--border));
+  border-radius: 999px; */
 }
 
 .ag-body-horizontal-scroll-viewport::-webkit-scrollbar-thumb:hover,
 .ag-body-vertical-scroll-viewport::-webkit-scrollbar-thumb:hover {
-  background-color: hsl(var(--placeholder-foreground));
+  /* background-color: hsl(var(--placeholder-foreground)); */
 }
 
 .ag-paging-page-size {

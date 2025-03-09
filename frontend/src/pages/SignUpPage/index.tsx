@@ -89,23 +89,23 @@ export default function SignUp(): JSX.Element {
       }}
       className="h-screen w-full"
     >
-      <div className="flex h-full w-full flex-col items-center justify-center bg-muted">
+      <div className="flex h-full w-full flex-col items-center justify-center  ">
         <div className="flex w-72 flex-col items-center justify-center gap-2">
-          {ENABLE_NEW_LOGO ? (
+          {/* {ENABLE_NEW_LOGO ? (
             <LangflowLogo
               title="Langflow logo"
               className="mb-4 h-10 w-10 scale-[1.5]"
             />
           ) : (
             <span className="mb-4 text-5xl">⛓️</span>
-          )}
-          <span className="mb-6 text-2xl font-semibold text-primary">
-            Sign up for Langflow
+          )} */}
+          <span className="mb-6 text-2xl   text-black">
+            Sign up for ShadowForge
           </span>
           <div className="mb-3 w-full">
             <Form.Field name="username">
               <Form.Label className="data-[invalid]:label-invalid">
-                Username <span className="font-medium text-destructive">*</span>
+                Username <span className="font-medium  ">*</span>
               </Form.Label>
 
               <Form.Control asChild>
@@ -115,7 +115,7 @@ export default function SignUp(): JSX.Element {
                     handleInput({ target: { name: "username", value } });
                   }}
                   value={username}
-                  className="w-full"
+                  // className="w-full"
                   required
                   placeholder="Username"
                 />
@@ -129,7 +129,7 @@ export default function SignUp(): JSX.Element {
           <div className="mb-3 w-full">
             <Form.Field name="password" serverInvalid={password != cnfPassword}>
               <Form.Label className="data-[invalid]:label-invalid">
-                Password <span className="font-medium text-destructive">*</span>
+                Password <span className="font-medium  ">*</span>
               </Form.Label>
               <InputComponent
                 onChange={(value) => {
@@ -161,7 +161,7 @@ export default function SignUp(): JSX.Element {
             >
               <Form.Label className="data-[invalid]:label-invalid">
                 Confirm your password{" "}
-                <span className="font-medium text-destructive">*</span>
+                <span className="font-medium  ">*</span>
               </Form.Label>
 
               <InputComponent
@@ -186,7 +186,7 @@ export default function SignUp(): JSX.Element {
               <Button
                 disabled={isDisabled}
                 type="submit"
-                className="mr-3 mt-6 w-full"
+                className="mr-3 mt-6 w-full !bg-navy !text-white"
                 onClick={() => {
                   handleSignup();
                 }}

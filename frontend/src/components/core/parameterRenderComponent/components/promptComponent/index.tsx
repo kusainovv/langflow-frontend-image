@@ -5,12 +5,13 @@ import IconComponent from "../../../../common/genericIconComponent";
 import { Button } from "../../../../ui/button";
 import { getPlaceholder } from "../../helpers/get-placeholder-disabled";
 import { InputProps, PromptAreaComponentType } from "../../types";
+import { Input } from "@/components/ui/input";
 
 const promptContentClasses = {
-  base: "overflow-hidden text-clip whitespace-nowrap bg-background",
+  base: "overflow-hidden text-clip whitespace-nowrap",
   editNode: "input-edit-node input-dialog",
-  normal: "primary-input text-muted-foreground",
-  disabled: "disabled-state",
+  normal: "primary-input   ",
+  disabled: "",
 };
 
 const externalLinkIconClasses = {
@@ -24,8 +25,8 @@ const externalLinkIconClasses = {
     disabled
       ? ""
       : editNode
-        ? "gradient-fade-input-edit-node "
-        : "gradient-fade-input ",
+        ? "gradient-fade-input-edit-node" // gradient-fade-input-edit-node
+        : "gradient-fade-input", // gradient-fade-input
   background: ({
     disabled,
     editNode,
@@ -39,8 +40,8 @@ const externalLinkIconClasses = {
         ? "background-fade-input-edit-node "
         : "background-fade-input",
   icon: "icons-parameters-comp absolute right-3 h-4 w-4 shrink-0",
-  editNodeTop: "top-[0.375rem]",
-  normalTop: "top-2.5",
+  // editNodeTop: "top-[0.375rem]",
+  normalTop: "top-0",
 };
 
 export default function PromptAreaComponent({
@@ -55,61 +56,58 @@ export default function PromptAreaComponent({
   readonly = false,
 }: InputProps<string, PromptAreaComponentType>): JSX.Element {
   const renderPromptText = () => (
-    <span
+    <Input
       id={id}
       data-testid={id}
       className={cn(
-        promptContentClasses.base,
-        editNode ? promptContentClasses.editNode : promptContentClasses.normal,
-        disabled && !editNode && promptContentClasses.disabled,
+        "primary-input"
+        // promptContentClasses.base,
+        // editNode ? promptContentClasses.editNode : promptContentClasses.normal,
+        // disabled && !editNode && promptContentClasses.disabled,
       )}
-    >
-      {value !== ""
+      placeholder={value !== ""
         ? value
         : getPlaceholder(disabled, "Type your prompt here...")}
-    </span>
+    />
   );
 
   const renderExternalLinkIcon = () => (
     <>
       <div
         className={cn(
-          externalLinkIconClasses.gradient({ disabled, editNode }),
-          editNode
-            ? externalLinkIconClasses.editNodeTop
-            : externalLinkIconClasses.normalTop,
+          // ""
+          // externalLinkIconClasses.gradient({ disabled, editNode }),
+          // "top-1/2 stroke-[1.5] -translate-y-1/2 h-full"
+          // editNode
+          "gradient-fade-input"
+          //   ? "" // externalLinkIconClasses.editNodeTop
+          //   : externalLinkIconClasses.normalTop,
         )}
         style={{
-          pointerEvents: "none",
-          background: disabled ? "" : GRADIENT_CLASS,
+          // pointerEvents: "none",
+          // background: disabled ? "" : GRADIENT_CLASS,
         }}
         aria-hidden="true"
       />
-      <div
+      {/* <div
         className={cn(
-          externalLinkIconClasses.background({ disabled, editNode }),
-          editNode
-            ? externalLinkIconClasses.editNodeTop
-            : externalLinkIconClasses.normalTop,
-          disabled && "bg-border",
+          "absolute top-0 right-0 w-1/4 h-full",
+          externalLinkIconClasses.icon,
+          "absolute top-0 right-0 w-1/4 h-full gradient-fade-input",
         )}
         aria-hidden="true"
-      />
+      /> */}
       <IconComponent
         name={disabled ? "lock" : "Scan"}
         className={cn(
-          externalLinkIconClasses.icon,
-          editNode
-            ? externalLinkIconClasses.editNodeTop
-            : externalLinkIconClasses.normalTop,
-          disabled ? "text-placeholder-foreground" : "text-foreground",
+          "icons-parameters-comp absolute right-3 h-4 w-4 shrink-0 top-1/2 -translate-y-1/2 h-full",
         )}
       />
     </>
   );
 
   return (
-    <div className={cn("w-full", disabled && "pointer-events-none")}>
+    <div className={cn("w-full", disabled && "pointer-events-none", )}>
       <PromptModal
         id={id}
         field_name={field_name}
@@ -119,7 +117,12 @@ export default function PromptAreaComponent({
         nodeClass={nodeClass}
         setNodeClass={handleNodeClass}
       >
-        <Button
+        <div className="relative w-full ">
+          {/* <Input placeholder={`${renderPromptText()}`} /> */}
+          {renderPromptText()}
+          {renderExternalLinkIcon()}
+        </div>
+        {/* <Button
           unstyled
           className="w-full"
           data-testid="button_open_prompt_modal"
@@ -128,7 +131,7 @@ export default function PromptAreaComponent({
             {renderPromptText()}
             {renderExternalLinkIcon()}
           </div>
-        </Button>
+        </Button> */}
       </PromptModal>
     </div>
   );

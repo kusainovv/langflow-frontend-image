@@ -7,7 +7,7 @@ import {
 } from "@/utils/reactflowUtils";
 import { cn } from "@/utils/utils";
 import { cloneDeep } from "lodash";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import IconComponent from "../../../../common/genericIconComponent";
 
 const KeypairListComponent = ({
@@ -98,17 +98,17 @@ const KeypairListComponent = ({
         }
         data-testid={id}
         className={cn(
-          "hit-area-icon group flex items-center justify-center",
+          "hit-area-icon group flex items-center justify-center min-h-[36px] shadow-button",
           disabled
-            ? "pointer-events-none bg-background hover:bg-background"
+            ? "pointer-events-none bg-silver hover:bg-silver"
             : "",
-          isFirstItem ? "bg-background hover:bg-muted" : "hover:bg-smooth-red",
+          isFirstItem ? "bg-silver" : "",
         )}
       >
         <IconComponent
           name={iconName}
           className={cn(
-            "icon-size justify-self-center text-muted-foreground",
+            "icon-size justify-self-center   ",
             !disabled && "hover:cursor-pointer hover:text-foreground",
             isFirstItem
               ? "group-hover:text-foreground"
@@ -128,7 +128,7 @@ const KeypairListComponent = ({
           id={getTestId("keypair", index)}
           type="text"
           value={key.trim()}
-          className={getInputClassName(editNode, duplicateKey)}
+          // className={getInputClassName(editNode, duplicateKey)}
           placeholder="Type key..."
           onChange={(event) => handleChangeKey(event, index)}
         />
@@ -138,7 +138,7 @@ const KeypairListComponent = ({
           type="text"
           disabled={disabled}
           value={obj[key]}
-          className={editNode ? "input-edit-node" : ""}
+          // className={editNode ? "input-edit-node" : ""}
           placeholder="Type a value..."
           onChange={(event) => handleChangeValue(event, index)}
         />

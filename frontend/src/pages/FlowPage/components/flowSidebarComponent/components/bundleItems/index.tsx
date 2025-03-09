@@ -51,15 +51,15 @@ export const BundleItem = memo(
                 >
                   <ForwardedIconComponent
                     name={item.icon}
-                    className="h-4 w-4 text-muted-foreground group-aria-expanded/collapsible:text-primary"
+                    className="h-4 w-4    group-aria-expanded/collapsible:text-black"
                   />
-                  <span className="flex-1 group-aria-expanded/collapsible:font-semibold">
+                  <span className="flex-1 group-aria-expanded/collapsible: ">
                     {item.display_name}
                   </span>
-                  <ForwardedIconComponent
+                  {/* <ForwardedIconComponent
                     name="ChevronRight"
-                    className="-mr-1 h-4 w-4 text-muted-foreground transition-all group-aria-expanded/collapsible:rotate-90"
-                  />
+                    className="-mr-1 h-4 w-4    transition-all group-aria-expanded/collapsible:rotate-90"
+                  /> */}
                 </div>
               </SidebarMenuButton>
             </DisclosureTrigger>

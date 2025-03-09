@@ -14,10 +14,10 @@ const EmptyComponent = ({ handleOpenModal }: EmptyComponentProps) => {
     <div className="mt-2 flex w-full items-center justify-center text-center">
       <div className="flex-max-width h-full flex-col">
         <div className="align-center flex w-full justify-center gap-1">
-          <span className="text-muted-foreground">
+          <span className="  ">
             This folder is empty. New?
           </span>
-          <span className="transition-colors hover:text-muted-foreground">
+          <span className="transition-colors hover:  ">
             <button
               onClick={handleOpenModal}
               disabled={isLoadingFolders}

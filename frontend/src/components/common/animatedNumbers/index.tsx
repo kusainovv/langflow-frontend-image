@@ -50,7 +50,7 @@ export function AnimatedNumberBasic() {
         <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"></path>
       </svg>
       <AnimatedNumber
-        className="inline-flex items-center font-mono text-2xl font-light text-zinc-800 dark:text-zinc-50"
+        className="inline-flex items-center font-w95fa text-2xl font-light text-zinc-800 dark:text-zinc-50"
         springOptions={{
           bounce: 0,
           duration: 2000,

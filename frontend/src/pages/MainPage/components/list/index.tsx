@@ -10,7 +10,6 @@ import {
 import { useCustomNavigate } from "@/customization/hooks/use-custom-navigate";
 import useDeleteFlow from "@/hooks/flows/use-delete-flow";
 import DeleteConfirmationModal from "@/modals/deleteConfirmationModal";
-import FlowSettingsModal from "@/modals/flowSettingsModal";
 import useAlertStore from "@/stores/alertStore";
 import useFlowsManagerStore from "@/stores/flowsManagerStore";
 import { FlowType } from "@/types/flow";
@@ -31,7 +30,6 @@ const ListComponent = ({ flowData }: { flowData: FlowType }) => {
   const { deleteFlow } = useDeleteFlow();
   const setErrorData = useAlertStore((state) => state.setErrorData);
   const { folderId } = useParams();
-  const [openSettings, setOpenSettings] = useState(false);
   const isComponent = flowData.is_component ?? false;
   const setFlowToCanvas = useFlowsManagerStore(
     (state) => state.setFlowToCanvas,
@@ -64,10 +62,7 @@ const ListComponent = ({ flowData }: { flowData: FlowType }) => {
 
   const { onDragStart } = useDragStart(flowData);
 
-  const descriptionModal = useDescriptionModal(
-    [flowData?.id],
-    flowData.is_component ? "component" : "flow",
-  );
+  const descriptionModal = useDescriptionModal([flowData?.id], "flow");
 
   const swatchIndex =
     (flowData.gradient && !isNaN(parseInt(flowData.gradient))
@@ -82,9 +77,9 @@ const ListComponent = ({ flowData }: { flowData: FlowType }) => {
         draggable
         onDragStart={onDragStart}
         onClick={handleClick}
-        className={`my-2 flex flex-row bg-background ${
+        className={`my-2 flex flex-row bg-light-gray ${
           isComponent ? "cursor-default" : "cursor-pointer"
-        } group justify-between rounded-lg border border-border p-4 hover:border-placeholder-foreground hover:shadow-sm`}
+        } group justify-between border border-border p-4`}
         data-testid="list-card"
       >
         {/* left side */}
@@ -96,7 +91,7 @@ const ListComponent = ({ flowData }: { flowData: FlowType }) => {
           {/* Icon */}
           <div
             className={cn(
-              `item-center flex justify-center rounded-lg p-3`,
+              `item-center flex justify-center p-3`,
               swatchColors[swatchIndex],
             )}
           >
@@ -109,14 +104,14 @@ const ListComponent = ({ flowData }: { flowData: FlowType }) => {
 
           <div className="flex min-w-0 flex-col justify-start">
             <div className="line-clamp-1 flex min-w-0 items-baseline truncate max-md:flex-col">
-              <div className="text-md flex truncate pr-2 font-semibold max-md:w-full">
+              <div className="text-md flex truncate pr-2   max-md:w-full">
                 <span className="truncate">{flowData.name}</span>
               </div>
-              <div className="item-baseline flex text-xs text-muted-foreground">
+              <div className="item-baseline flex text-xs   ">
                 Edited {timeElapsed(flowData.updated_at)} ago
               </div>
             </div>
-            <div className="overflow-hidden text-sm text-primary">
+            <div className="overflow-hidden text-sm text-black">
               <span className="block max-w-[110ch] truncate">
                 {flowData.description}
               </span>
@@ -127,7 +122,7 @@ const ListComponent = ({ flowData }: { flowData: FlowType }) => {
         {/* right side */}
         <div className="ml-5 flex items-center gap-2">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger  asChild>
               <Button
                 variant="ghost"
                 size="iconMd"
@@ -137,7 +132,7 @@ const ListComponent = ({ flowData }: { flowData: FlowType }) => {
                 <ForwardedIconComponent
                   name="Ellipsis"
                   aria-hidden="true"
-                  className="h-5 w-5 text-muted-foreground group-hover:text-foreground"
+                  className="h-5 w-5   group-hover:text-foreground"
                 />
               </Button>
             </DropdownMenuTrigger>
@@ -149,9 +144,6 @@ const ListComponent = ({ flowData }: { flowData: FlowType }) => {
               <DropdownComponent
                 flowData={flowData}
                 setOpenDelete={setOpenDelete}
-                handleEdit={() => {
-                  setOpenSettings(true);
-                }}
                 handlePlaygroundClick={() => {
                   // handlePlaygroundClick();
                 }}
@@ -167,21 +159,10 @@ const ListComponent = ({ flowData }: { flowData: FlowType }) => {
           setOpen={setOpenDelete}
           onConfirm={handleDelete}
           description={descriptionModal}
-          note={
-            !flowData.is_component
-              ? "Deleting the selected flow will remove all associated messages."
-              : ""
-          }
         >
           <></>
         </DeleteConfirmationModal>
       )}
-      <FlowSettingsModal
-        open={openSettings}
-        setOpen={setOpenSettings}
-        flowData={flowData}
-        details
-      />
     </>
   );
 };

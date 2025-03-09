@@ -1,4 +1,3 @@
-import ShadTooltip from "@/components/common/shadTooltipComponent";
 import TableModal from "@/modals/tableModal";
 import { FormatColumns, generateBackendColumnsFromValue } from "@/utils/utils";
 import { DataTypeDefinition, SelectionChangedEvent } from "ag-grid-community";
@@ -21,7 +20,6 @@ export default function TableNodeComponent({
   table_options,
   trigger_icon = "Table",
   trigger_text = "Open Table",
-  table_icon,
 }: InputProps<any[], TableComponentType>): JSX.Element {
   const dataTypeDefinitions: {
     [cellDataType: string]: DataTypeDefinition<any>;
@@ -65,37 +63,16 @@ export default function TableNodeComponent({
     };
   }, []);
   const [selectedNodes, setSelectedNodes] = useState<Array<any>>([]);
-  const [tempValue, setTempValue] = useState<any[]>(cloneDeep(value));
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const agGrid = useRef<AgGridReact>(null);
   const componentColumns = columns
     ? columns
-    : generateBackendColumnsFromValue(tempValue ?? [], table_options);
-  let AgColumns = FormatColumns(componentColumns);
-  // add info to each column
-  AgColumns = AgColumns.map((col) => {
-    if (col.context?.info) {
-      return {
-        ...col,
-        headerComponent: () => (
-          <div className="flex items-center gap-1">
-            <div>{col.headerName}</div>
-            <ShadTooltip content={col.context?.info}>
-              <div>
-                <ForwardedIconComponent name="Info" className="h-4 w-4" />
-              </div>
-            </ShadTooltip>
-          </div>
-        ),
-      };
-    }
-    return col;
-  });
+    : generateBackendColumnsFromValue(value ?? [], table_options);
+  const AgColumns = FormatColumns(componentColumns);
   function setAllRows() {
     if (agGrid.current && !agGrid.current.api.isDestroyed()) {
       const rows: any = [];
       agGrid.current.api.forEachNode((node) => rows.push(node.data));
-      setTempValue(rows);
+      handleOnNewValue({ value: rows });
     }
   }
   function deleteRow() {
@@ -111,7 +88,8 @@ export default function TableNodeComponent({
     if (agGrid.current && selectedNodes.length > 0) {
       const toDuplicate = selectedNodes.map((node) => cloneDeep(node.data));
       setSelectedNodes([]);
-      setTempValue([...tempValue, ...toDuplicate]);
+      const rows: any = [];
+      handleOnNewValue({ value: [...value, ...toDuplicate] });
     }
   }
   function addRow() {
@@ -119,28 +97,17 @@ export default function TableNodeComponent({
     componentColumns.forEach((column) => {
       newRow[column.name] = column.default ?? null; // Use the default value if available
     });
-    setTempValue([...tempValue, newRow]);
+    handleOnNewValue({ value: [...value, newRow] });
   }
 
   function updateComponent() {
     setAllRows();
   }
-
-  function handleSave() {
-    handleOnNewValue({ value: tempValue });
-    setIsModalOpen(false);
-  }
-
-  function handleCancel() {
-    setTempValue(cloneDeep(value));
-    setIsModalOpen(false);
-  }
-
   const editable = componentColumns
     .map((column) => {
       const isCustomEdit =
         column.formatter &&
-        ((column.formatter === "text" && column.edit_mode === "modal") ||
+        ((column.formatter === "text" && column.edit_mode !== "inline") ||
           column.formatter === "json");
       return {
         field: column.name,
@@ -159,12 +126,8 @@ export default function TableNodeComponent({
         "flex w-full items-center" + (disabled ? " cursor-not-allowed" : "")
       }
     >
-      <div className="flex w-full items-center gap-3" data-testid={"div-" + id}>
+      <div className="flex w-full items-center gap-1" data-testid={"div-" + id}>
         <TableModal
-          open={isModalOpen}
-          setOpen={setIsModalOpen}
-          stopEditingWhenCellsLoseFocus={true}
-          tableIcon={table_icon}
           tableOptions={table_options}
           dataTypeDefinitions={dataTypeDefinitions}
           autoSizeStrategy={{ type: "fitGridWidth", defaultMinWidth: 100 }}
@@ -175,6 +138,7 @@ export default function TableNodeComponent({
             setSelectedNodes(event.api.getSelectedNodes());
           }}
           rowSelection={table_options?.block_select ? undefined : "multiple"}
+          suppressRowClickSelection={true}
           editable={editable}
           pagination={!table_options?.hide_options}
           addRow={addRow}
@@ -183,14 +147,12 @@ export default function TableNodeComponent({
           displayEmptyAlert={false}
           className="h-full w-full"
           columnDefs={AgColumns}
-          rowData={tempValue}
+          rowData={value}
           context={{ field_parsers: table_options?.field_parsers }}
-          onSave={handleSave}
-          onCancel={handleCancel}
         >
           <Button
             disabled={disabled}
-            variant="primary"
+            // variant="primary"
             size={editNode ? "xs" : "default"}
             className={
               "w-full " +

@@ -2,6 +2,7 @@ import ForwardedIconComponent from "@/components/common/genericIconComponent";
 import { Button } from "@/components/ui/button";
 import { SidebarMenuButton } from "@/components/ui/sidebar";
 import { CustomLink } from "@/customization/components/custom-link";
+import React from "react";
 
 const SidebarMenuButtons = ({
   hasStore = false,
@@ -21,9 +22,9 @@ const SidebarMenuButtons = ({
             <div className="flex w-full items-center gap-2">
               <ForwardedIconComponent
                 name="Store"
-                className="h-4 w-4 text-muted-foreground"
+                className="h-4 w-4   "
               />
-              <span className="flex-1 group-data-[state=open]/collapsible:font-semibold">
+              <span className="flex-1 group-data-[state=open]/collapsible: ">
                 Discover more components
               </span>
               <ForwardedIconComponent
@@ -47,9 +48,9 @@ const SidebarMenuButtons = ({
         >
           <ForwardedIconComponent
             name="Plus"
-            className="h-4 w-4 text-muted-foreground"
+            className="h-4 w-4   "
           />
-          <span className="group-data-[state=open]/collapsible:font-semibold">
+          <span className="group-data-[state=open]/collapsible: ">
             New Custom Component
           </span>
         </Button>

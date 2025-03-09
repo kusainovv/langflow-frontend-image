@@ -1,69 +1,60 @@
-export function createFileUpload(props?: {
+export async function createFileUpload(props?: {
   accept?: string;
   multiple?: boolean;
 }): Promise<File[]> {
   return new Promise((resolve) => {
-    // Create input element
     const input = document.createElement("input");
     input.type = "file";
-    input.style.position = "fixed";
-    input.style.top = "0";
-    input.style.left = "0";
-    input.style.opacity = "0.001";
-    input.style.pointerEvents = "none";
     input.accept = props?.accept ?? ".json";
     input.multiple = props?.multiple ?? true;
+    input.style.display = "none";
 
-    let isHandled = false;
+    let isResolved = false;
 
     const cleanup = () => {
-      if (document.body.contains(input)) {
+      // Check if the input element still exists in the DOM before attempting to remove it
+      if (input && document.body.contains(input)) {
         try {
           document.body.removeChild(input);
         } catch (error) {
           console.warn("Error removing input element:", error);
         }
       }
-      input.removeEventListener("change", handleChange);
-      document.removeEventListener("focus", handleFocus);
+      window.removeEventListener("focus", handleFocus);
     };
 
-    const handleChange = (event: Event) => {
-      if (isHandled) return;
-      isHandled = true;
-
-      const files = Array.from((event.target as HTMLInputElement).files || []);
-      cleanup();
-      resolve(files);
+    const handleChange = (e: Event) => {
+      if (!isResolved) {
+        isResolved = true;
+        const files = Array.from((e.target as HTMLInputElement).files!);
+        cleanup();
+        resolve(files);
+      }
     };
 
     const handleFocus = () => {
       setTimeout(() => {
-        if (!isHandled) {
-          isHandled = true;
+        if (!isResolved) {
+          isResolved = true;
           cleanup();
           resolve([]);
         }
-      }, 100);
+      }, 300);
     };
 
     input.addEventListener("change", handleChange);
-    document.addEventListener("focus", handleFocus);
+    window.addEventListener("focus", handleFocus);
 
     document.body.appendChild(input);
+    input.click();
 
-    requestAnimationFrame(() => {
-      if (!isHandled) {
-        input.click();
-      }
-    });
-
+    // Fallback timeout to ensure resolution
     setTimeout(() => {
-      if (!isHandled) {
-        isHandled = true;
+      if (!isResolved) {
+        isResolved = true;
         cleanup();
         resolve([]);
       }
-    }, 30000);
+    }, 60000);
   });
 }

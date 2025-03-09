@@ -16,6 +16,8 @@ import ChatInput from "./chatInput/chat-input";
 import useDragAndDrop from "./chatInput/hooks/use-drag-and-drop";
 import { useFileHandler } from "./chatInput/hooks/use-file-handler";
 import ChatMessage from "./chatMessage/chat-message";
+import moment from 'moment';
+import { Frame } from "react95";
 
 const MemoizedChatMessage = memo(ChatMessage, (prevProps, nextProps) => {
   return (
@@ -48,6 +50,11 @@ export default function ChatView({
   const displayLoadingMessage = useMessagesStore(
     (state) => state.displayLoadingMessage,
   );
+
+  function transformTo12HourFormat(utcTimestamp) {
+    return moment.utc(utcTimestamp).local().format('h:mm a');
+  }
+
 
   const isBuilding = useFlowStore((state) => state.isBuilding);
 
@@ -85,7 +92,7 @@ export default function ChatView({
           sender_name: message.sender_name,
           files: files,
           id: message.id,
-          timestamp: message.timestamp,
+          timestamp: transformTo12HourFormat(message.timestamp),
           session: message.session_id,
           edit: message.edit,
           background_color: message.background_color || "",
@@ -95,9 +102,10 @@ export default function ChatView({
           properties: message.properties || {},
         };
       });
-    const finalChatHistory = [...messagesFromMessagesStore].sort((a, b) => {
-      return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
-    });
+    // const finalChatHistory = [...messagesFromMessagesStore].sort((a, b) => {
+    //   return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+    // });
+    const finalChatHistory = messagesFromMessagesStore;
 
     if (messages.length === 0 && !isBuilding && chatInputNode && isTabHidden) {
       setChatValueStore(
@@ -156,29 +164,37 @@ export default function ChatView({
 
   return (
     <div
-      className="flex h-full w-full flex-col rounded-md"
+    className="flex h-full w-full m-auto flex-col"
       onDragOver={dragOver}
       onDragEnter={dragEnter}
       onDragLeave={dragLeave}
       onDrop={onDrop}
     >
-      <div ref={messagesRef} className="chat-message-div">
+      <Frame variant="field"  ref={messagesRef} className="bg-white h-[250px] w-full mb-0 mt-0 p-2 shadow-field chat-message-div">
         {chatHistory &&
           (isBuilding || chatHistory?.length > 0 ? (
             <>
-              {chatHistory?.map((chat, index) => (
-                <MemoizedChatMessage
-                  chat={chat}
-                  lastMessage={chatHistory.length - 1 === index}
-                  key={`${chat.id}-${index}`}
-                  updateChat={updateChat}
-                  closeChat={closeChat}
-                />
-              ))}
+              {chatHistory?.map((chat, index) => <div key={index} className="mb-4 w-full">
+                  <div className="flex items-center gap-x-2 text-lg font-bold text-blue-500">
+                    <p className="m-0">{chat.sender_name}{" "}</p>
+                    <span className="text-gray-400">({chat.timestamp})</span>
+                  </div>
+
+                <div className="ml-0">
+                  <MemoizedChatMessage
+                    chat={chat}
+                    lastMessage={chatHistory.length - 1 === index}
+                    key={`${chat.id}-${index}`}
+                    updateChat={updateChat}
+                    closeChat={closeChat}
+                  />
+                </div>
+              </div>)}
             </>
           ) : (
             <div className="flex h-full w-full flex-col items-center justify-center">
-              <div className="flex flex-col items-center justify-center gap-4 p-8">
+              Empty
+              {/* <div className="flex flex-col items-center justify-center gap-4 p-8">
                 {ENABLE_NEW_LOGO ? (
                   <LangflowLogo
                     title="Langflow logo"
@@ -203,12 +219,12 @@ export default function ChatView({
                     </TextEffectPerChar>
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
           ))}
         <div
-          className={
-            displayLoadingMessage
+        className={
+          displayLoadingMessage
               ? "w-full max-w-[768px] py-4 word-break-break-word md:w-5/6"
               : ""
           }
@@ -218,8 +234,9 @@ export default function ChatView({
             !(chatHistory?.[chatHistory.length - 1]?.category === "error") &&
             flowRunningSkeletonMemo}
         </div>
-      </div>
-      <div className="m-auto w-full max-w-[768px] md:w-5/6">
+      </Frame>
+
+      <div className="m-auto mt-auto mb-0 !w-full md:w-5/6">
         <ChatInput
           noInput={!inputTypes.includes("ChatInput")}
           sendMessage={({ repeat, files }) => {

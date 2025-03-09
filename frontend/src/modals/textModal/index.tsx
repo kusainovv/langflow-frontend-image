@@ -26,24 +26,14 @@ export default function TextModal({
   const [open, setOpen] = useState(false);
   const [internalValue, setInternalValue] = useState(value);
 
-  const handleEscapeKeyDown = (event: KeyboardEvent) => {
-    setOpen(false);
-    event.stopPropagation();
-  };
-
   return (
-    <BaseModal
-      size="medium-h-full"
-      open={open}
-      setOpen={setOpen}
-      onEscapeKeyDown={handleEscapeKeyDown}
-    >
+    <BaseModal size="medium-h-full" open={open} setOpen={setOpen}>
       <BaseModal.Trigger className="h-full">{children}</BaseModal.Trigger>
       <BaseModal.Header description={""}>
         <span className="pr-2">View Text</span>
         <IconComponent
           name="Type"
-          className="h-6 w-6 pl-1 text-primary"
+          className="h-6 w-6 pl-1 text-black"
           aria-hidden="true"
         />
       </BaseModal.Header>
@@ -61,17 +51,19 @@ export default function TextModal({
       </BaseModal.Content>
       <BaseModal.Footer>
         <div className="flex w-full justify-end gap-2 pt-2">
-          {editable && (
-            <Button
-              className="flex gap-2 px-3"
-              onClick={() => {
-                setValue(internalValue);
-                setOpen(false);
-              }}
-            >
-              Save
-            </Button>
-          )}
+          <div className="w-fit">
+            {editable && (
+              <Button
+                className="flex gap-2 px-3"
+                onClick={() => {
+                  setValue(internalValue);
+                  setOpen(false);
+                }}
+              >
+                Save
+              </Button>
+            )}
+          </div>
         </div>
       </BaseModal.Footer>
     </BaseModal>

@@ -8,13 +8,13 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 import plugin from "tailwindcss/plugin";
 
 const config = {
-  variants: {
-    extend: {
-      display: ["group-hover"],
-      textColor: ["group-increment-hover", "group-decrement-hover"],
-    },
-  },
-  darkMode: ["class"],
+  // variants: {
+  //   extend: {
+  //     display: ["group-hover"],
+  //     textColor: ["group-increment-hover", "group-decrement-hover"],
+  //   },
+  // },
+  // darkMode: ["class"],
   content: [
     "app/**/*.{ts,tsx}",
     "components/**/*.{ts,tsx}",
@@ -88,6 +88,8 @@ const config = {
         "info-foreground": "var(--info-foreground)",
         "light-blue": "var(--light-blue)",
         "light-gray": "var(--light-gray)",
+        "silver": "var(--silver)",
+        "navy": "var(--navy)",
         "light-slate": "var(--light-slate)",
         "medium-blue": "var(--medium-blue)",
         "status-blue": "var(--status-blue)",
@@ -116,7 +118,6 @@ const config = {
         "success-background": "var(--success-background)",
         "success-foreground": "var(--success-foreground)",
         "accent-pink": "hsl(var(--accent-pink))",
-        "accent-pink-foreground": "hsl(var(--accent-pink-foreground))",
         filter: {
           foreground: "var(--filter-foreground)",
           background: "var(--filter-background)",
@@ -130,75 +131,55 @@ const config = {
         "chat-user-icon": "var(--chat-user-icon)",
         "code-background": "hsl(var(--code-background))",
         "code-description-background":
-          "hsl(var(--code-description-background))",
+          "white", // hsl(var(--code-description-background))
         "code-foreground": "hsl(var(--code-foreground))",
         canvas: {
-          DEFAULT: "hsl(var(--canvas))",
+          DEFAULT: "var(--canvas)",
           dot: "hsl(var(--canvas-dot))",
         },
+        'navy-gradient-start': '#00007B',
+        'navy-gradient-end': '#1085D2',
         ice: "var(--ice)",
         selected: "var(--selected)",
         hover: "var(--hover)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
+        ring: "black", // hsl(var(--ring)
         "error-red": "hsl(var(--error-red))",
         "error-red-border": "hsl(var(--error-red-border))",
         "node-selected": "hsl(var(--node-selected))",
         background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        foreground: "black",
         "emerald-smooth": "hsl(var(--emaral-smooth))",
         "emerald-hard": "hsl(var(--emeral-hard))",
         placeholder: "hsl(var(--placeholder))",
         "hard-zinc": "hsl(var(--hard-zinc))",
-        "smooth-red": "hsl(var(--smooth-red))",
         "placeholder-foreground": "hsl(var(--placeholder-foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-          hover: "hsl(var(--primary-hover))",
+          DEFAULT: "var(--canvas)",
+          foreground: "black",
+          hover: "black",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-          hover: "hsl(var(--secondary-hover))",
+          DEFAULT: "var(--navy)",
+          foreground: "black",
+          hover: "black",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
+        // destructive: {
+        //   DEFAULT: "hsl(var(--destructive))",
+        //   foreground: "hsl(var(--destructive-foreground))",
+        // },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        "accent-amber": {
-          DEFAULT: "hsl(var(--accent-amber))",
-          foreground: "hsl(var(--accent-amber-foreground))",
-        },
-        "accent-emerald": {
-          DEFAULT: "hsl(var(--accent-emerald))",
-          foreground: "hsl(var(--accent-emerald-foreground))",
-          hover: "hsl(var(--accent-emerald-hover))",
-        },
-        "accent-indigo": {
-          DEFAULT: "hsl(var(--accent-indigo))",
-          foreground: "hsl(var(--accent-indigo-foreground))",
-        },
-        "accent-pink": {
-          DEFAULT: "hsl(var(--accent-pink))",
-          foreground: "hsl(var(--accent-pink-foreground))",
+          DEFAULT: "var(--silver)",
+          foreground: "var(--silver)",
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "var(--silver)",
+          foreground: "black", // hsl(var(--popover-foreground))
         },
         card: {
           DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          foreground: "black", // hsl(var(--card-foreground))
         },
         tooltip: {
           DEFAULT: "hsl(var(--tooltip))",
@@ -259,28 +240,60 @@ const config = {
         "electric-blue": "hsl(var(--electric-blue))",
         "holo-frost": "hsl(var(--holo-frost))",
         "terminal-green": "hsl(var(--terminal-green))",
-        "cosmic-void": "hsl(var(--cosmic-void))",
+        "cosmic-void": "white", // hsl(var(--cosmic-void))
         "slider-input-border": "var(--slider-input-border)",
-        "zinc-foreground": "hsl(var(--zinc-foreground))",
       },
       borderRadius: {
-        lg: `var(--radius)`,
-        md: `calc(var(--radius) - 2px)`,
-        sm: "calc(var(--radius) - 4px)",
+        // lg: `var(--radius)`,
+        // md: `calc(var(--radius) - 2px)`,
+        // sm: "calc(var(--radius) - 4px)",
       },
       borderWidth: {
         1.75: "1.75px",
         1.5: "1.5px",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
         mono: ["var(--font-mono)", ...fontFamily.mono],
-        chivo: ["var(--font-chivo)", ...fontFamily.sans],
+        w95fa: ["var(--font-w95fa)"],
       },
       boxShadow: {
         "frozen-ring": "0 0 10px 2px rgba(128, 190, 230, 0.5)",
         node: "0 0px 15px -3px rgb(0 0 0 / 0.1), 0 0px 6px -4px rgb(0 0 0 / 0.1);",
         "frosted-ring": "0 0 10px 2px rgba(128, 190, 230, 0.7)",
+        "field": 'inset 1px 1px 0px 0px #808080, inset -2px -2px 0px 0px #C1C1C1, inset 2px 2px 0px 0px #000000',
+        "button": "inset 2px 2px 0px 0px rgba(223, 223, 223, 1), inset -2px -2px 0px 0px rgba(127, 127, 127, 1), inset 1px 1px 0px 0px rgba(255, 255, 255, 1), inset -1px -1px 0px 0px rgba(0, 0, 0, 1)",
+        "dropdown-item": "inset 2px 2px 0px 0px rgba(0,0,0,1.00), inset -2px -2px 0px 0px rgba(193,193,193,1.00), inset 1px 1px 0px 0px rgba(128,128,128,1.00), inset -1px -1px 0px 0px rgba(255,255,255,1.00)",
+        "sidebar-item-deactivated": "0px 2px 0px 0px rgba(0, 0, 0, 1.00)",
+        "alert-custom": `
+          inset 3px 3px 0px 0px rgba(223, 223, 223, 1), 
+          inset -3px -3px 0px 0px rgba(127, 127, 127, 1), 
+          inset 2px 2px 0px 0px rgba(255, 255, 255, 1), 
+          inset -2px -2px 0px 0px rgba(0, 0, 0, 1), 
+          inset 1px 1px 0px 0px rgba(0, 0, 0, 1), 
+          inset -1px -1px 0px 0px rgba(0, 0, 0, 1); 
+        `,
+        "tab-activated":  `
+          inset 3px 3px 0px 0px rgba(223, 223, 223, 1.00),
+          inset -3px -3px 0px 0px rgba(127, 127, 127, 1.00),
+          inset 2px 2px 0px 0px rgba(255, 255, 255, 1.00),
+          inset -2px -2px 0px 0px rgba(0, 0, 0, 1.00),
+          inset 1px 1px 0px 0px rgba(0, 0, 0, 1.00),
+          inset -1px -1px 0px 0px rgba(0, 0, 0, 1.00)
+        `,
+      "tab-deactivated": `
+          inset 1px 1px 0px 0px rgba(128, 128, 128, 1.00),
+          inset -1px -1px 0px 0px rgba(255, 255, 255, 1.00)
+        `,
+      "sidebar-chat": `
+          inset 1px 1px 0px 0px rgba(128, 128, 128, 1.00),
+          inset -1px -1px 0px 0px rgba(255, 255, 255, 1.00)
+        `,
+      "tab": `
+        inset -2px 0px 0px 0px #808080, 
+        inset -1px 0px 0px 0px #000000, 
+        inset 2px 0px 0px 0px #c0c0c0, 
+        inset 1px 0px 0px 0px #ffffff
+      `
       },
       backdropBlur: {
         xs: "2px",
@@ -344,7 +357,7 @@ const config = {
         },
         ".password": {
           "-webkit-text-security": "disc",
-          "font-family": "text-security-disc",
+          "font-family": "w95fa",
         },
         ".stop": {
           "-webkit-animation-play-state": "paused",
@@ -368,11 +381,11 @@ const config = {
           },
           cursor: "auto",
         },
-        ".dark .theme-attribution .react-flow__attribution": {
+        ".theme-attribution .react-flow__attribution": {
           backgroundColor: "rgba(255, 255, 255, 0.2)",
           padding: "0px 5px",
         },
-        ".dark .theme-attribution .react-flow__attribution a": {
+        ".theme-attribution .react-flow__attribution a": {
           color: "black",
         },
         ".text-align-last-left": {

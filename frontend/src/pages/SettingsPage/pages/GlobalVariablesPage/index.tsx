@@ -105,20 +105,20 @@ export default function GlobalVariablesPage() {
     <div className="flex h-full w-full flex-col justify-between gap-6">
       <div className="flex w-full items-start justify-between gap-6">
         <div className="flex w-full flex-col">
-          <h2 className="flex items-center text-lg font-semibold tracking-tight">
+          <h2 className="flex items-center text-lg   tracking-tight">
             Global Variables
             <ForwardedIconComponent
               name="Globe"
-              className="ml-2 h-5 w-5 text-primary"
+              className="ml-2 h-5 w-5 text-black"
             />
           </h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm   ">
             Manage global variables and assign them to fields.
           </p>
         </div>
         <div className="flex flex-shrink-0 items-center gap-2">
           <GlobalVariableModal asChild>
-            <Button data-testid="api-key-button-store" variant="primary">
+            <Button data-testid="api-key-button-store"> {/*variant="primary"*/}
               <IconComponent name="Plus" className="w-4" />
               Add New
             </Button>

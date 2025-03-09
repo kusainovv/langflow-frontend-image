@@ -1,5 +1,4 @@
-import { EventDeliveryType } from "@/constants/enums";
-import { useGetConfig } from "@/controllers/API/queries/config/use-get-config";
+import { Separator } from "@/components/ui/separator";
 import {
   useDeleteMessages,
   useGetMessagesQuery,
@@ -17,8 +16,13 @@ import { IOModalPropsType } from "../../types/components";
 import { cn } from "../../utils/utils";
 import BaseModal from "../baseModal";
 import { ChatViewWrapper } from "./components/chat-view-wrapper";
+import ChatView from "./components/chatView/chat-view";
 import { SelectedViewField } from "./components/selected-view-field";
 import { SidebarOpenView } from "./components/sidebar-open-view";
+import { useGetConfig } from "@/controllers/API/queries/config/use-get-config";
+import { EventDeliveryType } from "@/constants/enums";
+import { Frame, Window } from "react95";
+import { WindowsModal } from "./window-modal";
 
 export default function IOModal({
   children,
@@ -113,7 +117,8 @@ export default function IOModal({
 
   const buildFlow = useFlowStore((state) => state.buildFlow);
   const setIsBuilding = useFlowStore((state) => state.setIsBuilding);
-
+  // const lockChat = useFlowStore((state) => state.lockChat);
+  // const setLockChat = useFlowStore((state) => state.setLockChat);
   const isBuilding = useFlowStore((state) => state.isBuilding);
   const messages = useMessagesStore((state) => state.messages);
   const [sessions, setSessions] = useState<string[]>(
@@ -136,6 +141,7 @@ export default function IOModal({
 
   const chatValue = useUtilityStore((state) => state.chatValueStore);
   const setChatValue = useUtilityStore((state) => state.setChatValueStore);
+
   const config = useGetConfig();
 
   function shouldStreamEvents() {
@@ -216,54 +222,59 @@ export default function IOModal({
     }
   }, [open]);
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 1024) {
-        // 1024px is Tailwind's 'lg' breakpoint
-        setSidebarOpen(false);
-      } else {
-        setSidebarOpen(true);
-      }
-    };
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     if (window.innerWidth < 1024) {
+  //       // 1024px is Tailwind's 'lg' breakpoint
+  //       setSidebarOpen(false);
+  //     } else {
+  //       setSidebarOpen(true);
+  //     }
+  //   };
 
-    // Initial check
-    handleResize();
+  //   // Initial check
+  //   handleResize();
 
-    // Add event listener
-    window.addEventListener("resize", handleResize);
+  //   // Add event listener
+  //   window.addEventListener("resize", handleResize);
 
-    // Cleanup
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  //   // Cleanup
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
 
   return (
-    <BaseModal
-      open={open}
-      setOpen={setOpen}
-      disable={disable}
-      type={isPlayground ? "full-screen" : undefined}
-      onSubmit={() => sendMessage({ repeat: 1 })}
-      size="x-large"
-      className="!rounded-[12px] p-0"
-    >
-      <BaseModal.Trigger>{children}</BaseModal.Trigger>
+    <>
+       {/* open={open}
+       setOpen={setOpen}
+       disable={disable}
+       type={isPlayground ? "full-screen" : undefined}
+       onSubmit={() => sendMessage({ repeat: 1 })}
+       size="x-large"
+       className="p-0" */}
+     
+      <div onClick={() => {
+        setOpen(true);
+      }}>{children}</div>
       {/* TODO ADAPT TO ALL TYPES OF INPUTS AND OUTPUTS */}
-      <BaseModal.Content overflowHidden className="h-full">
+      <WindowsModal isOpen={open} onClose={() => {
+        setOpen(false)
+      }} title="Playground" maxHeight={600} maxWidth={800} maxContentHeight={600} defaultPosition={{ x: 50, y: 50 }}>
         {open && (
-          <div className="flex-max-width h-full">
+          <div className="flex h-full"> {/**flex-max-width h-full bg-red-500 */}
             <div
               className={cn(
-                "flex h-full flex-shrink-0 flex-col justify-start overflow-hidden transition-all duration-300",
-                sidebarOpen
-                  ? "absolute z-50 lg:relative lg:w-1/5 lg:max-w-[280px]"
-                  : "w-0",
+                "flex flex-shrink-0 p-2 content-box sticky top-0 h-fit flex-col justify-start transition-all duration-300",
+                // sidebarOpen
+                  // ? "absolute z-50 lg:relative lg:w-1/5 lg:max-w-[280px]"
+                  // : "",
+                // "shadow-sidebar-chat"
               )}
             >
-              <div className="flex h-full flex-col overflow-y-auto border-r border-border bg-muted p-4 text-center custom-scroll dark:bg-canvas">
-                <div className="flex items-center gap-2 pb-8">
-                  <ShadTooltip
+              <div className="flex flex-col overflow-y-auto text-center custom-scroll">
+                <div className="flex items-center gap-2">
+                  {/* <ShadTooltip
                     styleClasses="z-50"
                     side="right"
                     content="Hide sidebar"
@@ -278,12 +289,12 @@ export default function IOModal({
                         className="h-[18px] w-[18px] text-ring"
                       />
                     </Button>
-                  </ShadTooltip>
-                  {sidebarOpen && (
-                    <div className="font-semibold">Playground</div>
-                  )}
+                  </ShadTooltip> */}
+                  {/* {sidebarOpen && (
+                    <div className=" ">Chat</div>
+                  )} */}
                 </div>
-                {sidebarOpen && (
+                {/* {sidebarOpen && ( */}
                   <SidebarOpenView
                     sessions={sessions}
                     setSelectedViewField={setSelectedViewField}
@@ -292,11 +303,11 @@ export default function IOModal({
                     visibleSession={visibleSession}
                     selectedViewField={selectedViewField}
                   />
-                )}
+                {/* )} */}
               </div>
             </div>
-            <div className="flex h-full min-w-96 flex-grow bg-background">
-              {selectedViewField && (
+            <div className="flex flex-grow bg-silver">
+              {/* {selectedViewField && (
                 <SelectedViewField
                   selectedViewField={selectedViewField}
                   setSelectedViewField={setSelectedViewField}
@@ -307,7 +318,7 @@ export default function IOModal({
                   currentFlowId={currentFlowId}
                   nodes={nodes}
                 />
-              )}
+              )} */}
               <ChatViewWrapper
                 selectedViewField={selectedViewField}
                 visibleSession={visibleSession}
@@ -322,13 +333,15 @@ export default function IOModal({
                 messagesFetched={messagesFetched}
                 sessionId={sessionId}
                 sendMessage={sendMessage}
+                // lockChat={lockChat}
+                // setLockChat={setLockChat}
                 canvasOpen={canvasOpen}
                 setOpen={setOpen}
               />
             </div>
           </div>
         )}
-      </BaseModal.Content>
-    </BaseModal>
+      </WindowsModal>
+    </>
   );
 }

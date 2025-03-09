@@ -11,25 +11,29 @@ export default function OutputModal({
 }): JSX.Element {
   const [activeTab, setActiveTab] = useState<"Outputs" | "Logs">("Outputs");
   return (
-    <BaseModal disable={disabled} size="large" className="z-50">
+    <BaseModal disable={disabled} size="large">
       <BaseModal.Header description="Inspect the output of the component below.">
-        <div className="flex items-center">
-          <span className="pr-2">Component Output</span>
+        <div className="w-full flex justify-between">
+          <div className="flex items-center">
+            <span className="pr-2">Component Output</span>
+          </div>
         </div>
-      </BaseModal.Header>
-      <BaseModal.Content>
+
         <Tabs
-          value={activeTab}
-          onValueChange={(value) => setActiveTab(value as "Outputs" | "Logs")}
-          className={
-            "absolute top-6 flex flex-col self-center overflow-hidden rounded-md border bg-muted text-center"
-          }
-        >
-          <TabsList>
-            <TabsTrigger value="Outputs">Outputs</TabsTrigger>
-            <TabsTrigger value="Logs">Logs</TabsTrigger>
-          </TabsList>
-        </Tabs>
+            value={activeTab}
+            onValueChange={(value) => setActiveTab(value as "Outputs" | "Logs")}
+            className={
+              "flex flex-col self-center"
+            }
+          >
+            <TabsList>
+              <TabsTrigger className="bg-white shadow-button" value="Outputs">Outputs</TabsTrigger>
+              <TabsTrigger className="bg-white shadow-button" value="Logs">Logs</TabsTrigger>
+            </TabsList>
+          </Tabs>
+      </BaseModal.Header>
+      
+      <BaseModal.Content>
         <SwitchOutputView
           nodeId={nodeId}
           outputName={outputName}

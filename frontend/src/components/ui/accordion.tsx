@@ -33,7 +33,7 @@ const AccordionTrigger = React.forwardRef<
     >
       <div
         className={cn(
-          "flex flex-1 cursor-pointer items-center justify-between py-4 text-sm font-medium transition-all [&[data-state=open]>svg]:rotate-180",
+          "flex flex-1 cursor-pointer items-center justify-between py-4 text-sm font-medium pr-4 transition-all [&[data-state=open]>svg]:rotate-180",
           className,
         )}
       >
@@ -46,7 +46,7 @@ const AccordionTrigger = React.forwardRef<
           <ChevronDownIcon
             className={cn(
               "h-4 w-4 font-bold transition-transform duration-200",
-              disabled ? "text-muted-foreground" : "text-primary",
+              disabled ? "  " : "text-black",
             )}
           />
         </ShadTooltip>
@@ -68,7 +68,7 @@ const AccordionContent = React.forwardRef<
     )}
     {...props}
   >
-    <div className="pb-4 pt-0">{children}</div>
+    <div className="pt-0">{children}</div>
   </AccordionPrimitive.Content>
 ));
 AccordionContent.displayName = AccordionPrimitive.Content.displayName;

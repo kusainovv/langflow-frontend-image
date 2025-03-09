@@ -29,7 +29,7 @@ export default function HandleTooltipComponent({
           {isConnecting ? (
             isCompatible ? (
               <span>
-                <span className="font-semibold">Connect</span> to
+                <span className=" ">Connect</span> to
               </span>
             ) : (
               <span>Incompatible with</span>
@@ -44,7 +44,7 @@ export default function HandleTooltipComponent({
           )}
           {tooltips.map((word, index) => (
             <Badge
-              className="h-6 rounded-md p-1"
+              className="h-6   p-1"
               key={`${index}-${word.toLowerCase()}`}
               style={{
                 backgroundColor: left

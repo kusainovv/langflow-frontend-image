@@ -31,12 +31,12 @@ export const ErrorView = ({
               key="loading"
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="flex w-full gap-4 rounded-md p-2"
+              className="flex w-full gap-4   p-2"
             >
               <LogoIcon />
               <div className="flex items-center">
-                <TextShimmer className="" duration={1}>
-                  Flow running...
+                <TextShimmer className="text-black" duration={1}>
+                  Thinking...
                 </TextShimmer>
               </div>
             </motion.div>
@@ -46,13 +46,13 @@ export const ErrorView = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
-              className="flex w-full gap-4 rounded-md p-2"
+              className="flex w-full gap-4   p-2"
             >
-              <LogoIcon />
+              {/* <LogoIcon /> */}
               {blocks.map((block, blockIndex) => (
                 <div
                   key={blockIndex}
-                  className="w-full rounded-xl border border-error-red-border bg-error-red p-4 text-[14px] text-foreground"
+                  className="w-full group relative flex text-base border border-black p-4 !text-[#70A1A1]"
                 >
                   {block.contents.map((content, contentIndex) => {
                     if (content.type === "error") {
@@ -60,7 +60,7 @@ export const ErrorView = ({
                         <div className="" key={contentIndex}>
                           <div className="mb-2 flex items-center">
                             <ForwardedIconComponent
-                              className="mr-2 h-[18px] w-[18px] text-destructive"
+                              className="mr-2 h-[18px] w-[18px]  "
                               name="OctagonAlert"
                             />
                             {content.component && (
@@ -87,7 +87,7 @@ export const ErrorView = ({
                             )}
                           </div>
                           <div>
-                            <h3 className="pb-3 font-semibold">
+                            <h3 className="pb-3  ">
                               Error details:
                             </h3>
                             {content.field && (
@@ -111,7 +111,7 @@ export const ErrorView = ({
                                     ),
                                     p({ node, ...props }) {
                                       return (
-                                        <span className="inline-block w-fit max-w-full">
+                                        <span className="inline-block w-fit max-w-full font-extrabold tracking-wide leading-[1.5]">
                                           {props.children}
                                         </span>
                                       );
@@ -170,7 +170,7 @@ export const ErrorView = ({
                             )}
                             {content.solution && (
                               <div className="mt-4">
-                                <h3 className="pb-3 font-semibold">
+                                <h3 className="pb-3  ">
                                   Steps to fix:
                                 </h3>
                                 <ol className="list-decimal pl-5">

@@ -1,4 +1,7 @@
-import { ENABLE_INTEGRATIONS } from "@/customization/feature-flags";
+import {
+  ENABLE_INTEGRATIONS,
+  ENABLE_MVPS,
+} from "@/customization/feature-flags";
 import { useStoreStore } from "@/stores/storeStore";
 import { cloneDeep } from "lodash";
 import { useEffect, useState } from "react";
@@ -26,7 +29,7 @@ export default function ExtraSidebar(): JSX.Element {
   const templates = useTypesStore((state) => state.templates);
   const getFilterEdge = useFlowStore((state) => state.getFilterEdge);
   const setFilterEdge = useFlowStore((state) => state.setFilterEdge);
-  const hasStore = useStoreStore((state) => state.hasStore);
+  const hasStore = false; // useStoreStore((state) => state.hasStore);
   const filterType = useFlowStore((state) => state.filterType);
 
   const featureFlags = useUtilityStore((state) => state.featureFlags);
@@ -182,12 +185,13 @@ export default function ExtraSidebar(): JSX.Element {
           name="search"
           id="search"
           placeholder="Search"
-          className="nopan nodelete nodrag noflow input-search"
+          // className="nopan nodelete nodrag noflow input-search"
           onChange={(event) => {
             handleSearchInput(event.target.value);
             // Set search input state
             setSearch(event.target.value);
           }}
+          className="!pl-8"
           readOnly
           onClick={() =>
             document?.getElementById("search")?.removeAttribute("readonly")
@@ -204,7 +208,7 @@ export default function ExtraSidebar(): JSX.Element {
         >
           <IconComponent
             name={search ? "X" : "Search"}
-            className={`h-5 w-5 stroke-[1.5] text-primary ${
+            className={`h-5 w-5 stroke-[1.5] text-black ${
               search ? "cursor-pointer" : "cursor-default"
             }`}
             aria-hidden="true"
@@ -319,7 +323,7 @@ export default function ExtraSidebar(): JSX.Element {
                 <IconComponent
                   name="Sparkles"
                   strokeWidth={1.5}
-                  className="w-[22px] text-primary"
+                  className="w-[22px] text-black"
                 />
 
                 <span className="components-disclosure-title">

@@ -23,23 +23,23 @@ export default function SettingsPage(): JSX.Element {
     icon: React.ReactNode;
   }[] = [];
 
-  if (showGeneralSettings) {
-    sidebarNavItems.push({
-      title: "General",
-      href: "/settings/general",
-      icon: (
-        <ForwardedIconComponent
-          name="SlidersHorizontal"
-          className="w-4 flex-shrink-0 justify-start stroke-[1.5]"
-        />
-      ),
-    });
-  }
+  // if (showGeneralSettings) {
+  //   sidebarNavItems.push({
+  //     title: "General",
+  //     href: "/settings/general",
+  //     icon: (
+  //       <ForwardedIconComponent
+  //         name="SlidersHorizontal"
+  //         className="w-4 flex-shrink-0 justify-start stroke-[1.5]"
+  //       />
+  //     ),
+  //   });
+  // }
 
   sidebarNavItems.push(
     {
       title: "Global Variables",
-      href: "/settings/global-variables",
+      href: "/settings",
       icon: (
         <ForwardedIconComponent
           name="Globe"
@@ -48,60 +48,61 @@ export default function SettingsPage(): JSX.Element {
       ),
     },
 
-    {
-      title: "Shortcuts",
-      href: "/settings/shortcuts",
-      icon: (
-        <ForwardedIconComponent
-          name="Keyboard"
-          className="w-4 flex-shrink-0 justify-start stroke-[1.5]"
-        />
-      ),
-    },
-    {
-      title: "Messages",
-      href: "/settings/messages",
-      icon: (
-        <ForwardedIconComponent
-          name="MessagesSquare"
-          className="w-4 flex-shrink-0 justify-start stroke-[1.5]"
-        />
-      ),
-    },
+    // {
+    //   title: "Shortcuts",
+    //   href: "/settings/shortcuts",
+    //   icon: (
+    //     <ForwardedIconComponent
+    //       name="Keyboard"
+    //       className="w-4 flex-shrink-0 justify-start stroke-[1.5]"
+    //     />
+    //   ),
+    // },
+    // {
+    //   title: "Messages",
+    //   href: "/settings/messages",
+    //   icon: (
+    //     <ForwardedIconComponent
+    //       name="MessagesSquare"
+    //       className="w-4 flex-shrink-0 justify-start stroke-[1.5]"
+    //     />
+    //   ),
+    // },
   );
 
   if (!ENABLE_DATASTAX_LANGFLOW) {
     const langflowItems = [
-      {
-        title: "Langflow API Keys",
-        href: "/settings/api-keys",
-        icon: (
-          <ForwardedIconComponent
-            name="Key"
-            className="w-4 flex-shrink-0 justify-start stroke-[1.5]"
-          />
-        ),
-      },
-      {
-        title: "Langflow Store",
-        href: "/settings/store",
-        icon: (
-          <ForwardedIconComponent
-            name="Store"
-            className="w-4 flex-shrink-0 justify-start stroke-[1.5]"
-          />
-        ),
-      },
+      // {
+      //   title: "Langflow API Keys",
+      //   href: "/settings/api-keys",
+      //   icon: (
+      //     <ForwardedIconComponent
+      //       name="Key"
+      //       className="w-4 flex-shrink-0 justify-start stroke-[1.5]"
+      //     />
+      //   ),
+      // },
+      // {
+      //   title: "Langflow Store",
+      //   href: "/settings/store",
+      //   icon: (
+      //     <ForwardedIconComponent
+      //       name="Store"
+      //       className="w-4 flex-shrink-0 justify-start stroke-[1.5]"
+      //     />
+      //   ),
+      // },
     ];
 
-    sidebarNavItems.splice(2, 0, ...langflowItems);
+    // sidebarNavItems.splice(2, 0, ...langflowItems);
   }
 
+  {/**Manage the general settings for Langflow */}
   return (
     <PageLayout
       backTo={"/"}
       title="Settings"
-      description="Manage the general settings for Langflow."
+      description=""
     >
       <SidebarProvider width="15rem" defaultOpen={false}>
         <SideBarButtonsComponent items={sidebarNavItems} />

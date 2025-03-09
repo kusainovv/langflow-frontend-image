@@ -17,20 +17,20 @@ export default function DeleteAccountPage() {
   };
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center bg-muted">
+    <div className="flex h-full w-full flex-col items-center justify-center  ">
       <div className="flex w-72 flex-col items-center justify-center gap-2">
-        {ENABLE_NEW_LOGO ? (
+        {/* {ENABLE_NEW_LOGO ? (
           <LangflowLogo
             title="Langflow logo"
             className="mb-4 h-10 w-10 scale-[1.5]"
           />
         ) : (
           <span className="mb-4 text-5xl">⛓️</span>
-        )}
-        <span className="mb-4 text-center text-2xl font-semibold text-primary">
+        )} */}
+        <span className="mb-4 text-center text-2xl   text-black">
           Delete your account
         </span>
-        <Input className="bg-background" placeholder="Confirm password" />
+        <Input placeholder="Confirm password" />
 
         <BaseModal
           open={showConfirmation}

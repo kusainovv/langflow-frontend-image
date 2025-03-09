@@ -3,7 +3,7 @@ import { customStringify } from "@/utils/reactflowUtils";
 import { useEffect, useState } from "react";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
-import { useDarkStore } from "../../stores/darkStore";
+// import { useDarkStore } from "../../stores/darkStore";
 import { NodeDataType } from "../../types/flow";
 import BaseModal from "../baseModal";
 import { EditNodeComponent } from "./components/editNodeComponent";
@@ -17,7 +17,7 @@ const EditNodeModal = ({
   setOpen: (open: boolean) => void;
   data: NodeDataType;
 }) => {
-  const isDark = useDarkStore((state) => state.dark);
+  // const isDark = useDarkStore((state) => state.dark);
 
   const [nodeClass, setNodeClass] = useState<APIClassType>(data.node!);
 
@@ -40,7 +40,7 @@ const EditNodeModal = ({
           {data.node?.display_name ?? data.type}
         </span>
         <div>
-          <Badge size="sm" variant={isDark ? "gray" : "secondary"}>
+          <Badge size="sm">
             ID: {data.id}
           </Badge>
         </div>
@@ -49,8 +49,10 @@ const EditNodeModal = ({
         <EditNodeComponent open={open} nodeClass={nodeClass} nodeId={data.id} />
       </BaseModal.Content>
       <BaseModal.Footer>
-        <div className="flex w-full justify-end gap-2 pt-2">
-          <Button onClick={() => setOpen(false)}>Close</Button>
+        <div className="flex w-full justify-end gap-2">
+          <div className="w-fit">
+            <Button onClick={() => setOpen(false)}>Close</Button>
+          </div>
         </div>
       </BaseModal.Footer>
     </BaseModal>

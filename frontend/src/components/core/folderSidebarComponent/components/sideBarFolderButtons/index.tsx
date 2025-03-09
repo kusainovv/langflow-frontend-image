@@ -88,7 +88,7 @@ const SideBarFoldersButtonsComponent = ({
 
   const checkHoveringFolder = (folderId: string) => {
     if (folderId === folderIdDragging) {
-      return "bg-accent text-accent-foreground";
+      return "    ";
     }
   };
 
@@ -276,7 +276,7 @@ const SideBarFoldersButtonsComponent = ({
   };
 
   const handleDoubleClick = (event, item) => {
-    if (item.name === "My Projects 2") {
+    if (item.name === "My Projects") {
       return;
     }
 
@@ -373,12 +373,11 @@ const SideBarFoldersButtonsComponent = ({
                           onDrop={(e) => onDrop(e, item.id!)}
                           key={item.id}
                           data-testid={`sidebar-nav-${item.name}`}
-                          id={`sidebar-nav-${item.name}`}
                           isActive={checkPathName(item.id!)}
                           onClick={() => handleChangeFolder!(item.id!)}
                           className={cn(
                             "flex-grow pr-8",
-                            hoveredFolderId === item.id && "bg-accent",
+                            hoveredFolderId === item.id && " ",
                             checkHoveringFolder(item.id!),
                           )}
                         >

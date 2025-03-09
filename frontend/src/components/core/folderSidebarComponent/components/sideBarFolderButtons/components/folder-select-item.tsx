@@ -4,7 +4,7 @@ import { cn } from "@/utils/utils";
 export const FolderSelectItem = ({ name, iconName }) => (
   <div
     className={cn(
-      name === "Delete" ? "text-destructive" : "",
+      name === "Delete" ? " " : "",
       "flex items-center font-medium",
     )}
   >

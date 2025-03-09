@@ -10,7 +10,8 @@ import JsonView from "react18-json-view";
 import "react18-json-view/src/dark.css";
 import "react18-json-view/src/style.css";
 import IconComponent from "../../components/common/genericIconComponent";
-import { useDarkStore } from "../../stores/darkStore";
+import { CODE_DICT_DIALOG_SUBTITLE } from "../../constants/constants";
+// import { useDarkStore } from "../../stores/darkStore";
 import BaseModal from "../baseModal";
 
 export default function DictAreaModal({
@@ -25,7 +26,7 @@ export default function DictAreaModal({
   disabled?: boolean;
 }): JSX.Element {
   const [open, setOpen] = useState(false);
-  const isDark = useDarkStore((state) => state.dark);
+  // const isDark = useDarkStore((state) => state.dark);
   const [componentValue, setComponentValue] = useState(value);
 
   useEffect(() => {
@@ -91,7 +92,7 @@ export default function DictAreaModal({
       </span>
       <IconComponent
         name="BookMarked"
-        className="h-6 w-6 pl-1 text-primary"
+        className="h-6 w-6 pl-1 text-black"
         aria-hidden="true"
       />
     </BaseModal.Header>

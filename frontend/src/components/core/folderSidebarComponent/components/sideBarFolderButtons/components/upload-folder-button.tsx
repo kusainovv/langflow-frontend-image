@@ -7,7 +7,7 @@ export const UploadFolderButton = ({ onClick, disabled }) => (
     <Button
       variant="ghost"
       size="icon"
-      className="h-7 w-7 border-0 text-zinc-500 hover:bg-zinc-200 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white"
+      className="h-7 w-7 border-0 text-zinc-500"
       onClick={onClick}
       data-testid="upload-folder-button"
       disabled={disabled}

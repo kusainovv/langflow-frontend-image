@@ -90,7 +90,7 @@ export default function InputGlobalComponent({
   return (
     <InputComponent
       nodeStyle
-      popoverWidth="17.5rem"
+      popoverWidth="315px"
       placeholder={getPlaceholder(disabled, placeholder)}
       id={id}
       editNode={editNode}
@@ -102,10 +102,10 @@ export default function InputGlobalComponent({
       optionsIcon="Globe"
       optionsButton={
         <GlobalVariableModal disabled={disabled}>
-          <CommandItem value="doNotFilter-addNewVariable">
+          <CommandItem value="doNotFilter-addNewVariable" className="cursor-pointer">
             <ForwardedIconComponent
               name="Plus"
-              className={cn("mr-2 h-4 w-4 text-primary")}
+              className={cn("mr-2 h-4 w-4 text-black")}
               aria-hidden="true"
             />
             <span>Add New Variable</span>
@@ -131,7 +131,7 @@ export default function InputGlobalComponent({
             <ForwardedIconComponent
               name="Trash2"
               className={cn(
-                "h-4 w-4 text-primary opacity-0 hover:text-status-red group-hover:opacity-100",
+                "h-4 w-4 text-black opacity-0 hover:text-status-red group-hover:opacity-100",
               )}
               aria-hidden="true"
             />

@@ -78,7 +78,7 @@ export default function TemplateContentComponent({
       <div className="relative mx-3 flex-1 grow-0 py-px">
         <ForwardedIconComponent
           name="Search"
-          className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+          className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2   "
         />
         <Input
           type="search"
@@ -87,7 +87,7 @@ export default function TemplateContentComponent({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           ref={searchInputRef}
-          className="w-3/4 rounded-lg bg-background pl-8 lg:w-2/3"
+          // className="w-3/4   bg-silver pl-8 lg:w-2/3"
         />
       </div>
       <div
@@ -101,7 +101,7 @@ export default function TemplateContentComponent({
           />
         ) : (
           <div className="flex flex-col items-center justify-center px-4 py-12 text-center">
-            <p className="text-sm text-secondary-foreground">
+            <p className="text-sm text-black">
               No templates found.{" "}
               <a
                 className="cursor-pointer underline underline-offset-4"

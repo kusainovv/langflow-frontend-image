@@ -2,12 +2,12 @@ import { ForwardedIconComponent } from "@/components/common/genericIconComponent
 import { SelectItem } from "@/components/ui/select";
 import { SelectContentWithoutPortal } from "@/components/ui/select-custom";
 import ToolbarSelectItem from "@/pages/FlowPage/components/nodeToolbarComponent/toolbarSelectItem";
-import { NoteDataType } from "@/types/flow";
+import { noteDataType } from "@/types/flow";
 
 import { memo } from "react";
 
 export const SelectItems = memo(
-  ({ shortcuts, data }: { shortcuts: any[]; data: NoteDataType }) => (
+  ({ shortcuts, data }: { shortcuts: any[]; data: noteDataType }) => (
     <SelectContentWithoutPortal>
       <SelectItem value="duplicate">
         <ToolbarSelectItem
@@ -45,7 +45,7 @@ export const SelectItems = memo(
             className="relative top-0.5 mr-2 h-4 w-4"
           />
           <span>Delete</span>
-          <span className="absolute right-2 top-2 flex items-center justify-center rounded-sm px-1 py-[0.2]">
+          <span className="absolute right-2 top-2 flex items-center justify-center   px-1 py-[0.2]">
             <ForwardedIconComponent
               name="Delete"
               className="h-4 w-4 stroke-2 text-red-400"

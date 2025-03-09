@@ -1,9 +1,8 @@
 import { getMinOrMaxValue } from "@/components/core/parameterRenderComponent/components/sliderComponent/helpers/get-min-max-value";
 import { InputProps } from "@/components/core/parameterRenderComponent/types";
 import { Case } from "@/shared/components/caseComponent";
-import { useDarkStore } from "@/stores/darkStore";
+// import { useDarkStore } from "@/stores/darkStore";
 import { SliderComponentType } from "@/types/components";
-import { cn } from "@/utils/utils";
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
@@ -87,7 +86,8 @@ export default function SliderComponent({
     return null;
   };
 
-  const isDark = useDarkStore((state) => state.dark);
+  // const isDark = useDarkStore((state) => state.dark);
+  const isDark = false
 
   const getNormalizedValue = (
     value: number,
@@ -103,7 +103,7 @@ export default function SliderComponent({
     colorType: ColorType,
   ): string => {
     const colors = colorType === "background" ? BACKGROUND_COLORS : TEXT_COLORS;
-    const defaultColor = isDark
+    const defaultColor = false
       ? colorType === "background"
         ? DARK_COLOR_BACKGROUND
         : DARK_COLOR_TEXT
@@ -167,46 +167,45 @@ export default function SliderComponent({
 
   const percentage = ((valueAsNumber - min) / (max - min)) * 100;
 
-  if (isDark) {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
+  // if (isDark) {
+  //   document.documentElement.classList.add("dark");
+  // } else {
+  //   document.documentElement.classList.remove("dark");
+  // }
 
   const accentIndigoForeground = getComputedStyle(
     document.documentElement,
   ).getPropertyValue("--accent-indigo-foreground");
 
-  const accentPinkForeground = getComputedStyle(
-    document.documentElement,
-  ).getPropertyValue("--accent-pink-foreground");
+  // const accentPinkForeground = getComputedStyle(
+  //   document.documentElement,
+  // ).getPropertyValue("--accent-pink-foreground");
 
-  const getThumbColor = (percentage) => {
-    if (accentIndigoForeground && accentPinkForeground) {
-      return buildColorByName(
-        accentIndigoForeground,
-        accentPinkForeground,
-        percentage,
-      );
-    }
-    return buildColorByName(
-      DEFAULT_ACCENT_INDIGO_FOREGROUND_COLOR,
-      DEFAULT_ACCENT_PINK_FOREGROUND_COLOR,
-      percentage,
-    );
-  };
+  // const getThumbColor = (percentage) => {
+  //   if (accentIndigoForeground && accentPinkForeground) {
+  //     return buildColorByName(
+  //       accentIndigoForeground,
+  //       accentPinkForeground,
+  //       percentage,
+  //     );
+  //   }
+  //   return buildColorByName(
+  //     DEFAULT_ACCENT_INDIGO_FOREGROUND_COLOR,
+  //     DEFAULT_ACCENT_PINK_FOREGROUND_COLOR,
+  //     percentage,
+  //   );
+  // };
 
   const ringClassInputClass = "ring-[1px] ring-slider-input-border";
 
   return (
-    <div className={cn("w-full rounded-lg", editNode && "mt-3")}>
+    <div className="w-full   pb-2">
       <Case condition={!sliderButtons}>
         <div className="noflow nowheel nopan nodelete nodrag flex items-center justify-end">
           <div
             className={clsx(
               "input-slider-text",
               (isGrabbing || isEditing) && ringClassInputClass,
-              editNode && "relative left-0.5",
             )}
           >
             {isEditing ? (
@@ -216,7 +215,7 @@ export default function SliderComponent({
                 onChange={handleInputChange}
                 onBlur={handleInputBlur}
                 onKeyDown={handleKeyDown}
-                className="relative bottom-[1px] w-full cursor-text rounded-sm bg-transparent text-center font-mono text-sm arrow-hide"
+                className="relative bottom-[1px] w-full cursor-text   bg-transparent text-center font-w95fa text-[0.88rem] arrow-hide"
                 autoFocus
                 data-testid="slider_input"
               />
@@ -227,7 +226,7 @@ export default function SliderComponent({
                   setInputValue(valueAsNumber.toFixed(2));
                 }}
                 data-testid={`default_slider_display_value${editNode ? "_advanced" : ""}`}
-                className="relative bottom-[1px] font-mono text-sm hover:cursor-text"
+                className="relative bottom-[1px] font-w95fa text-sm hover:cursor-text"
               >
                 {valueAsNumber.toFixed(2)}
               </span>
@@ -239,7 +238,7 @@ export default function SliderComponent({
         <div className="relative bottom-1 flex items-center pb-2">
           <span
             data-testid={`button_slider_display_value${editNode ? "_advanced" : ""}`}
-            className="font-mono text-2xl"
+            className="font-w95fa text-2xl"
           >
             {valueAsNumber.toFixed(2)}
           </span>
@@ -259,29 +258,28 @@ export default function SliderComponent({
           <SliderPrimitive.Track
             data-testid={`slider_track${editNode ? "_advanced" : ""}`}
             className={clsx(
-              "relative h-1 w-full grow rounded-full",
-              isDark ? "bg-muted" : "bg-border",
+              "relative h-1 w-full grow  bg-silver",
             )}
           >
             <SliderPrimitive.Range
-              className="absolute h-full rounded-full bg-gradient-to-r from-accent-indigo-foreground to-accent-pink-foreground"
+              className="absolute h-full"
               style={{
                 width: `${percentage}%`,
-                background: `linear-gradient(to right, rgb(79, 70, 229) 0%, ${getThumbColor(percentage)} ${percentage}%)`,
+                // background: `linear-gradient(to right, rgb(79, 70, 229) 0%, ${getThumbColor(percentage)} ${percentage}%)`,
               }}
             />
           </SliderPrimitive.Track>
           <SliderPrimitive.Thumb
             data-testid={`slider_thumb${editNode ? "_advanced" : ""}`}
             className={clsx(
-              "block h-6 w-6 rounded-full border-2 border-background shadow-lg",
+              "block h-6 w-6 border bg-light-gray shadow-button",
               isGrabbing ? "cursor-grabbing" : "cursor-grab",
               valueAsNumber === max && "relative left-1",
             )}
             onPointerDown={() => setIsGrabbing(true)}
             onPointerUp={() => setIsGrabbing(false)}
             style={{
-              backgroundColor: getThumbColor(percentage),
+              // backgroundColor: getThumbColor(percentage),
             }}
           />
         </SliderPrimitive.Root>
@@ -289,7 +287,7 @@ export default function SliderComponent({
 
       {sliderButtons && (
         <div className="my-3">
-          <div className={clsx("flex rounded-md bg-background")}>
+          <div className={clsx("flex   bg-silver")}>
             {sliderButtonsOptions?.map((option) => (
               <button
                 key={option.id}
@@ -299,7 +297,7 @@ export default function SliderComponent({
                   color: getButtonTextColor(option.id),
                 }}
                 className={clsx(
-                  "h-9 flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition-colors duration-200",
+                  "h-9 flex-1   px-3 py-1.5 text-xs font-medium transition-colors duration-200",
                 )}
                 disabled={disabled}
               >

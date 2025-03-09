@@ -11,14 +11,14 @@ const StatusMessage = ({ children, className = "text-foreground" }) => (
 );
 
 const TimeStamp = ({ prefix, time }) => (
-  <div className="flex items-center text-sm text-secondary-foreground">
+  <div className="flex items-center text-sm text-black">
     <div>{prefix}</div>
-    <div className="ml-1 text-secondary-foreground">{time}</div>
+    <div className="ml-1 text-black">{time}</div>
   </div>
 );
 
 const Duration = ({ duration }) => (
-  <div className="flex items-center text-secondary-foreground">
+  <div className="flex items-center text-black">
     <div>Duration:</div>
     <div className="ml-1">{duration}</div>
   </div>

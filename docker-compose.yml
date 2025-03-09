@@ -1,0 +1,26 @@
+services:
+
+  frontend:
+    # image: "langflowai/langflow-frontend:latest"
+    build: 
+      context: .
+      dockerfile: Dockerfile.frontend.prod
+    env_file:
+      - .env
+    restart: on-failure
+    # networks:
+    #   - dokploy-network
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.constraint-label-stack=${TRAEFIK_TAG?Variable not set}
+        - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-http.rule=PathPrefix(`/`)
+        - traefik.http.services.${STACK_NAME?Variable not set}-frontend.loadbalancer.server.port=80
+
+
+networks:
+  # dokploy-network:
+  #   external: true
+  traefik-public:
+    # Allow setting it to false for testing
+    external: false # ${TRAEFIK_PUBLIC_NETWORK_IS_EXTERNAL-true}

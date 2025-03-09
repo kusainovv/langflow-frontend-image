@@ -1,0 +1,25 @@
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+COPY src/frontend/package.json src/frontend/package-lock.json ./
+RUN npm install
+
+COPY src/frontend .
+RUN npm run build
+
+FROM nginx:alpine
+
+# Correct line: copy built files from previous build stage
+COPY --from=builder /app/build /usr/share/nginx/html
+
+# Custom entrypoint scripts (optional, but present in your extracted files)
+COPY images/frontend-files /frontend-files
+
+# Set execution permissions for scripts
+RUN chmod +x /frontend-files/docker-entrypoint.sh /frontend-files/start-nginx.sh
+
+ENTRYPOINT ["/frontend-files/docker-entrypoint.sh"]
+CMD ["/frontend-files/start-nginx.sh"]
+
+EXPOSE 80

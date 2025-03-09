@@ -17,9 +17,9 @@ COPY --from=builder /app/build /usr/share/nginx/html
 # COPY frontend-files /frontend-files
 
 # Set execution permissions for scripts
-RUN chmod +x /docker-entrypoint.sh /start-nginx.sh
+RUN chmod +x docker-entrypoint.sh start-nginx.sh
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["/start-nginx.sh"]
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["start-nginx.sh"]
 
 EXPOSE 80

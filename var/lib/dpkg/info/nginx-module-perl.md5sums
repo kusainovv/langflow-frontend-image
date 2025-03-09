@@ -1,0 +1,8 @@
+78a53ef9234d25975628644cb6065422  usr/lib/nginx/modules/ngx_http_perl_module-debug.so
+a1360931ea9d6bfa462a9b1db84f15b3  usr/lib/nginx/modules/ngx_http_perl_module.so
+fe5a8c4fd6e78126846b3dbfec23b477  usr/lib/x86_64-linux-gnu/perl5/5.36/auto/nginx/nginx.so
+3af0358620482b76e9d497699af32ae2  usr/lib/x86_64-linux-gnu/perl5/5.36/nginx.pm
+c4b122249cd76ccfebaef81ab2beab13  usr/share/doc/nginx-module-perl/changelog.Debian.gz
+9527c2d710fe568dc75f2cc2cf66bdbb  usr/share/doc/nginx-module-perl/changelog.gz
+928c8b677713b532d386034283a8ff17  usr/share/doc/nginx-module-perl/copyright
+96fef17e285a017dca3a4a3434506bb6  usr/share/man/man3/nginx.3pm.gz

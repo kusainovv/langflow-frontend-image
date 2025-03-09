@@ -1,0 +1,5 @@
+0760d87a31cbbd3721ff50bf491d6ed8  usr/lib/nginx/modules/ngx_http_xslt_filter_module-debug.so
+d5b2002034b23211a64e429f1dffac6d  usr/lib/nginx/modules/ngx_http_xslt_filter_module.so
+9aab4afa84f5becb6de755bfa75c3af0  usr/share/doc/nginx-module-xslt/changelog.Debian.gz
+9527c2d710fe568dc75f2cc2cf66bdbb  usr/share/doc/nginx-module-xslt/changelog.gz
+928c8b677713b532d386034283a8ff17  usr/share/doc/nginx-module-xslt/copyright

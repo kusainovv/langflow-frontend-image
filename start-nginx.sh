@@ -24,7 +24,7 @@ fi
 export BACKEND_URL FRONTEND_PORT
 
 # Use envsubst to substitute environment variables in the template
-envsubst '${BACKEND_URL} ${FRONTEND_PORT}' < /etc/nginx/conf.d/default.conf.template > $CONFIG_DIR/default.conf
+# envsubst '${BACKEND_URL} ${FRONTEND_PORT}' < /etc/nginx/conf.d/default.conf.template > $CONFIG_DIR/default.conf
 
 # Start nginx with the new configuration
-exec nginx -c $CONFIG_DIR/default.conf -g 'daemon off;'
+# exec nginx -c $CONFIG_DIR/default.conf -g 'daemon off;'

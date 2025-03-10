@@ -10,8 +10,8 @@ services:
     env_file:
       - .env
     restart: on-failure
-    # networks:
-    #   - dokploy-network
+    networks:
+      - dokploy-network
     deploy:
       labels:
         - traefik.enable=true
@@ -21,8 +21,8 @@ services:
 
 
 networks:
-  # dokploy-network:
-  #   external: true
+  dokploy-network:
+    external: true
   traefik-public:
     # Allow setting it to false for testing
     external: false # ${TRAEFIK_PUBLIC_NETWORK_IS_EXTERNAL-true}
